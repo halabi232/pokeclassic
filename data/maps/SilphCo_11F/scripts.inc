@@ -164,9 +164,11 @@ SilphCo_11F_EventScript_GiovanniTriggerRight::
 	end
 
 SilphCo_11F_EventScript_BattleGiovanni::
-	applymovement LOCALID_GIOVANNI, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_GIOVANNI, Common_Movement_ExclamationMark
 	waitmovement 1
-	delay 25
+	applymovement LOCALID_GIOVANNI, Common_Movement_FaceDown
+	waitmovement 1
+	delay 15
 	msgbox SilphCo_11F_Text_GiovanniIntro
 	closemessage
 	call_if_eq  VAR_TEMP_1, 0, SilphCo_11F_EventScript_GiovanniApproachLeft
@@ -322,7 +324,7 @@ SilphCo_11F_Text_ThanksForRescuingUs::
     .string "are indebted to you.$"
 
 SilphCo_11F_Text_GiovanniIntro::
-    .string "Ah, {PLAYER}!\n"
+    .string "Ah, Young {PLAYER}!\n"
     .string "So we meet again!\p"
     .string "The President and I are discussing\n"
     .string "a vital business proposition.\p"
@@ -335,12 +337,15 @@ SilphCo_11F_Text_GiovanniDefeat::
     .string "I lost again!?$"
 
 SilphCo_11F_Text_GiovanniPostBattle::
-    .string "Blast it all!\n"
-    .string "You ruined our plans for Silph!\p"
+    .string "Blast…!\n"
+    .string "I have little choice, it seems.\p"
+	.string "I will relinquish Silph for now.\n"
     .string "But, Team Rocket will never fall!\p"
-    .string "{PLAYER}! Never forget that all\n"
-    .string "Pokémon exist for Team Rocket!\p"
-    .string "I must go, but I shall return!$"
+    .string "{PLAYER}! Never forget…\p"
+    .string "All Pokémon exist only for\n" 
+	.string "Team Rocket's use!\p"
+    .string "I must leave now…\n"
+	.string "But we will meet again…$"
 
 SilphCo_11F_Text_Grunt2Intro::
     .string "Stop right there!\n"
@@ -503,16 +508,17 @@ SilphCo_11F_LookerMovement_Exit1::
 	walk_left
 	walk_left
 	walk_left
-	walk_up
-	walk_up
-	walk_up
-	walk_up
+	walk_down
+	walk_down
+	walk_down
+	walk_down
 	step_end
 
 SilphCo_11F_RocketMovement_Exit2::
 	walk_left
 SilphCo_11F_LookerMovement_Exit2::
 	walk_left	
+	walk_left
 	walk_left
 	walk_down
 	walk_down

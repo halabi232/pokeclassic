@@ -11,6 +11,11 @@ Route25_OnResume:
 	call Common_EventScript_GetDayOrNight
 	end
 
+Route25_EventScript_ItemTM86::
+	finditem ITEM_TM86, 1
+	release
+	end
+
 Route25_EventScript_SeaCottageSign::
 	msgbox Route25_Text_SeaCottageSign, MSGBOX_SIGN
 	end

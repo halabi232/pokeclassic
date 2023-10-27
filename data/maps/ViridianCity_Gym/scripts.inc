@@ -19,44 +19,59 @@ ViridianCity_Gym_EventScript_Giovanni::
 	msgbox ViridianCity_Gym_Text_GiovanniSpeech, MSGBOX_NPC
 	trainerbattle_single TRAINER_LEADER_GIOVANNI, ViridianCity_Gym_Text_GiovanniIntro, ViridianCity_Gym_Text_GiovanniDefeat, ViridianCity_Gym_EventScript_DefeatedGiovanni
 	goto_if_unset FLAG_GOT_GIOVANNI_REWARD, ViridianCity_Gym_EventScript_GiveTM26
-	msgbox ViridianCity_Gym_Text_GiovanniPostBattle
-	closemessage
-	fadescreen FADE_TO_BLACK
-	removeobject LOCALID_GIOVANNI
-	fadescreen FADE_FROM_BLACK
 	release
 	end
 
 ViridianCity_Gym_Text_GiovanniSpeech::
     .string "Fwahahaha!\n"
+	.string "Well, well if it isn't {PLAYER}!\p"
     .string "Welcome to my hideout!\p"
-    .string "It shall be so until I can restore\n"
-    .string "Team Rocket to its former glory.\p"
-    .string "But, you have found me again.\n"
-    .string "So be it.$"
+	.string "This gym was always the perfect\n"
+	.string "facade for our business venture.\p"
+	.string "A real shame it has been exposed…\l"
+    .string "But it doesn't matter!\p"
+	.string "Once I restore Team Rocket\n"
+    .string "to its former glory,\l"
+	.string "nothing will stop us!\p"
+	.string "Specially brats like you,\n"
+	.string "{PLAYER}!\p"
+	.string "I told you to not interfere\n"
+	.string "with my plans ever again!\p"
+    .string "But yet… Here you are again!\n"
+    .string "Trying to ruin everything!\p"
+	.string "Bah! So be it!$"
 
 ViridianCity_Gym_Text_GiovanniIntro::
     .string "This time, I'm not holding back!\p"
     .string "Once more, you shall face\n"
-    .string "Giovanni, the greatest Trainer!$"
+    .string "Giovanni! The greatest Trainer!$"
 
 ViridianCity_Gym_Text_GiovanniPostBattle::
-    .string "Having lost in this fashion, \n"
-    .string "I can't face my followers.\l"
-    .string "I have betrayed their trust.\p"
-    .string "As of today, Team Rocket is\n"
-    .string "finished forever!\p"
-    .string "As for myself, I shall dedicate\n"
-    .string "my life to training again.\p"
-    .string "Let us meet again someday!\n"
-    .string "Farewell!$"
+    .string "Having lost like this…\l"
+	.string "This feeling…\p"
+    .string "Now I see…\p"
+    .string "You remind me when young.\l"
+	.string "Pokémon were not tools then…\p"
+	.string "And I was a Gym Leader!\n"
+	.string "An example to other trainers…\p"
+	.string "What have I become??\p"
+	.string "Bah! It is decided then!\p"
+    .string "As of today,\n"
+    .string "Team Rocket is finished forever!\p"
+    .string "And for myself?\n"
+	.string "Well, I will pursue another path.\p"
+	.string "I will once again dedicate\n"
+    .string "my life to train Pokémon.\p"
+    .string "Who knows what the future holds?\p"
+	.string "May our paths cross one day!\l"
+	.string "Farewell!$"
 
 ViridianCity_Gym_Text_GiovanniDefeat::
     .string "Ha!\n"
     .string "That was a truly intense fight.$"
 
 ViridianCity_Gym_Text_GiovanniGiveBadge::
-    .string "You have won!\p"
+    .string "You have won! Impressive!\p"
     .string "As proof, here is the Earth Badge!$"
 
 ViridianCity_Gym_Text_ReceivedBadgeFromGiovanni::
@@ -94,16 +109,21 @@ ViridianCity_Gym_EventScript_GiveTM26::
 	additem ITEM_TM26, 1
 	setflag FLAG_GOT_GIOVANNI_REWARD
 	msgbox ViridianCity_Gym_Text_ExplainTM26
+	msgbox ViridianCity_Gym_Text_GiovanniPostBattle
+	closemessage
+	fadescreen FADE_TO_BLACK
+	removeobject LOCALID_GIOVANNI
+	fadescreen FADE_FROM_BLACK
 	release
 	end
 
 ViridianCity_Gym_Text_ExplainEarthBadgeTakeThis::
-    .string "The Earth Badge makes Pokémon of\n"
-    .string "any level obey without question.\p"
-    .string "It is evidence of your mastery as\n"
-    .string "a Pokémon Trainer.\p"
-    .string "With it, you can challenge the\n"
+    .string "The Earth Badge enables you\n"
+    .string "to train Pokémon up to Lv. 80.\p"
+    .string "With it, you also can challenge the\n"
     .string "Pokémon League.\p"
+	.string "Only by beating the Elite Four\n"
+	.string "You can become a master.\p"
     .string "Also, take this TM.\p"
     .string "Consider it a gift for your Pokémon\n"
     .string "League challenge.$"

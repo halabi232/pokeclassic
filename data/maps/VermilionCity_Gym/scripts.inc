@@ -290,10 +290,12 @@ VermilionCity_Gym_Text_ReceivedBadge::
 
 VermilionCity_Gym_Text_ExplainBadge::
     .string "The Thunder Badge certifies your\n"
-    .string "Pokémon to use Fly out of battle.\p"
+    .string "Pokémon to use Rock Smash on field.\p"
     .string "If they know the move, they can get\n" 
-    .string "around lightning-quick anytime!\p"
-    .string "You're special, kid!$"
+    .string "to work in no time!\p"
+	.string "It will also enable you to train\n"
+    .string "Pokémon up to Lv. 45!\p"
+    .string "You're special, kid!\p"
 
 VermilionCity_Gym_EventScript_GetTM::
 	msgbox VermilionCity_Gym_Text_TakeThisWithYou, MSGBOX_DEFAULT

@@ -44,7 +44,7 @@
 #define OBJ_EVENT_GFX_ANIMATED_BALL              	32
 #define OBJ_EVENT_GFX_OW_MON                     	33
 
-#define OBJECT_GFX									OBJ_EVENT_GFX_OW_MON 
+#define OBJECT_GFX									OBJ_EVENT_GFX_OW_MON
 
 //Objects
 #define OBJ_EVENT_GFX_ITEM_BALL                   	OBJECT_GFX + 1
@@ -223,11 +223,11 @@
 #define OBJ_EVENT_GFX_AQUA_MEMBER_F              	EVIL_TEAM_GFX + 4
 #define OBJ_EVENT_GFX_MAGMA_MEMBER_M             	EVIL_TEAM_GFX + 5
 #define OBJ_EVENT_GFX_MAGMA_MEMBER_F             	EVIL_TEAM_GFX + 6
-#define OBJ_EVENT_GFX_GIOVANNI             			EVIL_TEAM_GFX + 7 	
+#define OBJ_EVENT_GFX_GIOVANNI             			EVIL_TEAM_GFX + 7
 #define OBJ_EVENT_GFX_ROCKET_ADMIN             		EVIL_TEAM_GFX + 8 	
-#define OBJ_EVENT_GFX_ROCKET_MEMBER_M             	EVIL_TEAM_GFX + 9 	
+#define OBJ_EVENT_GFX_ROCKET_MEMBER_M             	EVIL_TEAM_GFX + 9
 #define OBJ_EVENT_GFX_ROCKET_MEMBER_F             	EVIL_TEAM_GFX + 10 	
-#define OBJ_EVENT_GFX_JESSIE              			EVIL_TEAM_GFX + 11	
+#define OBJ_EVENT_GFX_JESSIE              			EVIL_TEAM_GFX + 11
 #define OBJ_EVENT_GFX_JAMES	             			EVIL_TEAM_GFX + 12
 
 #define	NPC_GFX										OBJ_EVENT_GFX_JAMES
@@ -236,7 +236,7 @@
 #define OBJ_EVENT_GFX_MOM                        	NPC_GFX + 1
 #define OBJ_EVENT_GFX_PROF_BIRCH                  	NPC_GFX + 2
 #define OBJ_EVENT_GFX_PROF_OAK                  	NPC_GFX + 3 
-#define OBJ_EVENT_GFX_LANETTE                  		NPC_GFX + 4 
+#define OBJ_EVENT_GFX_LANETTE                  		NPC_GFX + 4
 #define OBJ_EVENT_GFX_ZINNIA                  		NPC_GFX + 5 
 #define OBJ_EVENT_GFX_SCOTT                      	NPC_GFX + 6
 #define OBJ_EVENT_GFX_STEVEN                     	NPC_GFX + 7
@@ -320,15 +320,15 @@
 #define OBJ_EVENT_GFX_REPORTER_M                  	GENDERED_NPC_GFX + 19
 #define OBJ_EVENT_GFX_REPORTER_F                  	GENDERED_NPC_GFX + 20
 #define OBJ_EVENT_GFX_PSYCHIC_M                   	GENDERED_NPC_GFX + 21
-#define OBJ_EVENT_GFX_PSYCHIC_F                   	GENDERED_NPC_GFX + 22 
+#define OBJ_EVENT_GFX_PSYCHIC_F                   	GENDERED_NPC_GFX + 22
 #define OBJ_EVENT_GFX_SCHOOL_KID_M                	GENDERED_NPC_GFX + 23
-#define OBJ_EVENT_GFX_SCHOOL_KID_F                	GENDERED_NPC_GFX + 24 
+#define OBJ_EVENT_GFX_SCHOOL_KID_F                	GENDERED_NPC_GFX + 24
 #define OBJ_EVENT_GFX_TUBER_M_SWIMMING           	GENDERED_NPC_GFX + 25
 #define OBJ_EVENT_GFX_TUBER_F_SWIMMING           	GENDERED_NPC_GFX + 26
 #define OBJ_EVENT_GFX_BREEDER_M                		GENDERED_NPC_GFX + 27
-#define OBJ_EVENT_GFX_BREEDER_F                		GENDERED_NPC_GFX + 28 
+#define OBJ_EVENT_GFX_BREEDER_F                		GENDERED_NPC_GFX + 28
 #define OBJ_EVENT_GFX_RANGER_M                		GENDERED_NPC_GFX + 29
-#define OBJ_EVENT_GFX_RANGER_F                		GENDERED_NPC_GFX + 30 
+#define OBJ_EVENT_GFX_RANGER_F                		GENDERED_NPC_GFX + 30
 #define OBJ_EVENT_GFX_COOL_TRAINER_M                GENDERED_NPC_GFX + 31
 #define OBJ_EVENT_GFX_COOL_TRAINER_F                GENDERED_NPC_GFX + 32 
 
@@ -489,7 +489,7 @@
 #define OBJ_EVENT_GFX_UNUSED_PIKACHU_DOLL       DECORATION_GFX + 50
 #define OBJ_EVENT_GFX_UNUSED_PORYGON2_DOLL      DECORATION_GFX + 51
 
-#define NUM_OBJ_EVENT_GFX						DECORATION_GFX + 52 
+#define NUM_OBJ_EVENT_GFX						DECORATION_GFX + 52
 
 // NOTE: By default, the max value for NUM_OBJ_EVENT_GFX is 239.
 //
@@ -522,6 +522,22 @@
 #define OBJ_EVENT_GFX_VAR_E  (OBJ_EVENT_GFX_VARS + 0xE)
 #define OBJ_EVENT_GFX_VAR_F  (OBJ_EVENT_GFX_VARS + 0xF) // 255
 
+#define OBJ_EVENT_GFX_MON_BASE  0x200 // 512
+#define OBJ_EVENT_GFX_SPECIES_BITS 11
+#define OBJ_EVENT_GFX_SPECIES_MASK ((1 << OBJ_EVENT_GFX_SPECIES_BITS) - 1)
+
+#define OW_SPECIES(x) (((x)->graphicsId & OBJ_EVENT_GFX_SPECIES_MASK) - OBJ_EVENT_GFX_MON_BASE)
+#define OW_FORM(x) ((x)->graphicsId >> OBJ_EVENT_GFX_SPECIES_BITS)
+
+// If true, follower pokemon will bob up and down
+// during their idle & walking animations
+#define OW_MON_BOBBING  TRUE
+
+// If true, adds a small amount of overhead
+// to OW code so that large (48x48, 64x64) OWs
+// will display correctly under bridges, etc.
+#define LARGE_OW_SUPPORT TRUE
+
 #define SHADOW_SIZE_S   0
 #define SHADOW_SIZE_M   1
 #define SHADOW_SIZE_L   2
@@ -534,8 +550,14 @@
 #define TRACKS_NONE       0
 #define TRACKS_FOOT       1
 #define TRACKS_BIKE_TIRE  2
+#define TRACKS_SLITHER    3
+#define TRACKS_SPOT       4
+#define TRACKS_BUG        5
 
 #define FIRST_DECORATION_SPRITE_GFX OBJ_EVENT_GFX_PICHU_DOLL
+
+#define OBJ_KIND_NORMAL 0
+#define OBJ_KIND_CLONE  255 // Exclusive to FRLG
 
 // Special object event local ids
 #define OBJ_EVENT_ID_PLAYER 0xFF

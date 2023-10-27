@@ -92,7 +92,7 @@
 #define MAX_STAT_STAGE    12
 
 // Shiny odds
-#define SHINY_ODDS 8 // Actual probability is SHINY_ODDS/65536
+#define SHINY_ODDS 459 // Actual probability is SHINY_ODDS/65536
 
 // Flags for Get(Box)MonData / Set(Box)MonData
 #define MON_DATA_PERSONALITY        0
@@ -257,7 +257,7 @@
 #define LEVEL_UP_MOVE_LV   0xFE00
 #define LEVEL_UP_END       0xFFFF
 
-#define MAX_LEVEL_UP_MOVES       20
+#define MAX_LEVEL_UP_MOVES       25
 
 #define MON_MALE       0x00
 #define MON_FEMALE     0xFE
@@ -274,7 +274,17 @@
 #define FRIENDSHIP_EVENT_FAINT_SMALL      7
 #define FRIENDSHIP_EVENT_FAINT_FIELD_PSN  8
 #define FRIENDSHIP_EVENT_FAINT_LARGE      9 // If opponent was >= 30 levels higher. See AdjustFriendshipOnBattleFaint
-#define FRIENDSHIP_EVENT_EFFORT_BERRIES   10
+#define FRIENDSHIP_EVENT_EFFORT_BERRIES   10// If opponent was >= 30 levels higher. See AdjustFriendshipOnBattleFaint
+
+
+// Constants for GetLeadMonFriendshipScore
+#define FRIENDSHIP_NONE        0
+#define FRIENDSHIP_1_TO_49     1
+#define FRIENDSHIP_50_TO_99    2
+#define FRIENDSHIP_100_TO_149  3
+#define FRIENDSHIP_150_TO_199  4
+#define FRIENDSHIP_200_TO_254  5
+#define FRIENDSHIP_MAX         6
 
 #define MAX_FRIENDSHIP  255
 #define MAX_SHEEN       255
@@ -283,9 +293,13 @@
 #define MAX_PER_STAT_IVS 31
 #define MAX_IV_MASK 31
 #define USE_RANDOM_IVS (MAX_PER_STAT_IVS + 1)
-#define MAX_PER_STAT_EVS 255
+#define MAX_PER_STAT_EVS 252
 #define MAX_TOTAL_EVS 510
-#define EV_ITEM_RAISE_LIMIT 100
+#if I_VITAMIN_EV_CAP >= GEN_8
+#define EV_ITEM_RAISE_LIMIT MAX_PER_STAT_EVS
+#else
+#define EV_ITEM_RAISE_LIMIT 252
+#endif
 
 // Battle move flags
 #define FLAG_MAKES_CONTACT                        (1 << 0)
@@ -386,6 +400,8 @@
 #define EVO_SCRIPT_TRIGGER_DMG            36     // Pokémon has specified HP below max, then player interacts trigger
 #define EVO_DARK_SCROLL                   37     // interacts with Scroll of Darkness
 #define EVO_WATER_SCROLL                  38     // interacts with Scroll of Waters
+#define EVO_ITEM_HOLD                     39
+#define EVO_FRIENDSHIP_MOVE_TYPE          40
 
 #define EVOS_PER_MON 10
 
@@ -404,14 +420,30 @@
 #define MON_PIC_HEIGHT 64
 #define MON_PIC_SIZE (MON_PIC_WIDTH * MON_PIC_HEIGHT / 2)
 
-#define BATTLE_ALIVE_EXCEPT_ACTIVE  0
-#define BATTLE_ALIVE_ATK_SIDE       1
-#define BATTLE_ALIVE_DEF_SIDE       2
+#define BATTLE_ALIVE_EXCEPT_ACTIVE   0
+#define BATTLE_ALIVE_ATK_SIDE        1
+#define BATTLE_ALIVE_DEF_SIDE        2
+#define BATTLE_ALIVE_EXCEPT_ATTACKER 3
 
 #define SKIP_FRONT_ANIM (1 << 7)
 
 #define NUM_ABILITY_SLOTS (NUM_NORMAL_ABILITY_SLOTS + NUM_HIDDEN_ABILITY_SLOTS)
 #define NUM_NORMAL_ABILITY_SLOTS 2
 #define NUM_HIDDEN_ABILITY_SLOTS 1
+
+// Species Flags
+#define SPECIES_FLAG_LEGENDARY          (1 << 0)
+#define SPECIES_FLAG_MYTHICAL           (1 << 1)
+#define SPECIES_FLAG_MEGA_EVOLUTION     (1 << 2)
+#define SPECIES_FLAG_ULTRA_BEAST        (1 << 3)
+#define SPECIES_FLAG_ALOLAN_FORM        (1 << 4)
+#define SPECIES_FLAG_GALARIAN_FORM      (1 << 5)
+#define SPECIES_FLAG_HISUIAN_FORM       (1 << 6)
+#define SPECIES_FLAG_GENDER_DIFFERENCE  (1 << 7)
+#define SPECIES_FLAG_ALL_PERFECT_IVS    (1 << 8)
+#define SPECIES_FLAG_SHINY_LOCKED       (1 << 9)
+#define SPECIES_FLAG_CANNOT_BE_TRADED   (1 << 10)
+
+#define LEGENDARY_PERFECT_IV_COUNT 3
 
 #endif // GUARD_CONSTANTS_POKEMON_H

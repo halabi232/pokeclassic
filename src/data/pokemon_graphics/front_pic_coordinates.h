@@ -2214,10 +2214,81 @@ const struct MonCoords gMonFrontPicCoords[] =
         .size = MON_COORDS_SIZE(24, 40),
         .y_offset = 13,
     },
-// Megas
-    [SPECIES_VENUSAUR_MEGA] =
+    [SPECIES_ELECTIVIRE]  = 
+    { 
+        .size = MON_COORDS_SIZE(64, 64), 
+        .y_offset =  0 
+    },
+    [SPECIES_GLACEON]   = 
+    { 
+        .size = MON_COORDS_SIZE(64, 56), 
+        .y_offset = 10 
+    },
+    [SPECIES_HAPPINY]  = 
+    { 
+        .size = MON_COORDS_SIZE(32, 48), 
+        .y_offset = 12 
+    },
+    [SPECIES_LEAFEON] = 
+    { 
+        .size = MON_COORDS_SIZE(56, 48), 
+        .y_offset =  9 
+    },
+    [SPECIES_LICKILICKY] = 
+    { 
+        .size = MON_COORDS_SIZE(64, 64), 
+        .y_offset =  2 
+    },
+    [SPECIES_MAGMORTAR]   = 
+    { 
+        .size = MON_COORDS_SIZE(64, 64), 
+        .y_offset =  0 
+    },
+    [SPECIES_MAGNEZONE]  = 
+    { 
+        .size = MON_COORDS_SIZE(64, 56), 
+        .y_offset =  4 
+    },
+    [SPECIES_MIME_JR]  = 
+    { 
+        .size = MON_COORDS_SIZE(32, 56), 
+        .y_offset =  9 
+    },
+    [SPECIES_MUNCHLAX] = 
+    { 
+        .size = MON_COORDS_SIZE(48, 48), 
+        .y_offset = 10 
+    },
+    [SPECIES_PORYGON_Z]  = 
+    { 
+        .size = MON_COORDS_SIZE(40, 56), 
+        .y_offset =  6 
+    },
+    [SPECIES_RHYPERIOR]  = 
+    { 
+        .size = MON_COORDS_SIZE(64, 64), 
+        .y_offset =  2 
+    },
+    [SPECIES_SYLVEON]  = 
+    { 
+        .size = MON_COORDS_SIZE(48, 56), 
+        .y_offset =  4 
+    },
+    [SPECIES_TANGROWTH]  = 
+    { 
+        .size = MON_COORDS_SIZE(64, 64), 
+        .y_offset =  2 
+    },
+    [SPECIES_ANNIHILAPE] = 
+    { 
+        .size = MON_COORDS_SIZE(64, 56), 
+        .y_offset =  1 
+    },
+
+    // Megas
+    [SPECIES_VENUSAUR_MEGA]  =
     {
-        .size = MON_COORDS_SIZE(64, 64),
+      .size = MON_COORDS_SIZE(64, 64),
         .y_offset = 3,
     },
     [SPECIES_CHARIZARD_MEGA_X] =
@@ -2289,5 +2360,15 @@ const struct MonCoords gMonFrontPicCoords[] =
     {
         .size = MON_COORDS_SIZE(40, 64),
         .y_offset = 0,
+    },
+    [SPECIES_STEELIX_MEGA] = 
+    { 
+        .size = MON_COORDS_SIZE(64, 64),
+        .y_offset =  0 
+    },
+    [SPECIES_SCIZOR_MEGA]  = 
+    { 
+        .size = MON_COORDS_SIZE(64, 64),
+        .y_offset =  0 
     },
 };

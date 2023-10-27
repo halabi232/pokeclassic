@@ -21,6 +21,11 @@ CeladonCity_EventScript_ItemEther::
 	release
 	end
 
+CeladonCity_EventScript_TM56::
+	finditem ITEM_TM56, 1
+	release
+	end
+
 CeladonCity_EventScript_FatMan::
 	lock
 	faceplayer
@@ -122,7 +127,9 @@ CeladonCity_Text_BlewItAllAtSlots::
     .string "Moan…\n"
     .string "I blew it all at the slots!\p"
     .string "I knew I should have cashed in my\n"
-    .string "Coins for prizes!$"
+    .string "Coins for prizes!/p"
+    .string "If only I could sell the TM\n"
+    .string "I left on the other side...$"
 
 CeladonCity_EventScript_Pervert::
     msgbox CeladonCity_Text_OwOwOw, MSGBOX_NPC

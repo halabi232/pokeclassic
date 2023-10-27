@@ -242,11 +242,13 @@ static const u16 sUnownFormSpeciesIdTable[] = {
 
 static const u16 sSteelixFormSpeciesIdTable[] = {
     SPECIES_STEELIX,
+    SPECIES_STEELIX_MEGA,
     FORM_SPECIES_END,
 };
 
 static const u16 sScizorFormSpeciesIdTable[] = {
     SPECIES_SCIZOR,
+    SPECIES_SCIZOR_MEGA,
     FORM_SPECIES_END,
 };
 

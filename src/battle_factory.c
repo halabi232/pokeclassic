@@ -179,7 +179,7 @@ static const u16 sInitialRentalMonRanges[][2] =
     {FRONTIER_MON_DUGTRIO_1,    FRONTIER_MONS_HIGH_TIER},   // 138 - 343
 
     // Open level
-    {FRONTIER_MON_DUGTRIO_1, FRONTIER_MON_ARCANINE_1}, // 138 - 181
+    {FRONTIER_MON_SANDSLASH_2, FRONTIER_MON_ARCANINE_1}, // 138 - 181
     {FRONTIER_MON_DUGTRIO_2, FRONTIER_MON_ARCANINE_2}, // 182 - 223
     {FRONTIER_MON_DUGTRIO_3, FRONTIER_MON_ARCANINE_3}, // 224 - 267
     {FRONTIER_MON_DUGTRIO_4, FRONTIER_MON_ARCANINE_4}, // 268 - 311
@@ -593,6 +593,7 @@ static void GenerateInitialRentalMons(void)
             continue;
 
         gSaveBlock2Ptr->frontier.rentalMons[i].monId = monId;
+        gSaveBlock2Ptr->frontier.rentalMons[i].abilityNum = gFacilityTrainerMons[monId].ability;
         species[i] = gFacilityTrainerMons[monId].species;
         heldItems[i] = gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId];
         monIds[i] = monId;
@@ -754,6 +755,7 @@ void FillFactoryBrainParty(void)
     int i, j, k;
     u16 species[FRONTIER_PARTY_SIZE];
     u16 heldItems[FRONTIER_PARTY_SIZE];
+    u8 abilityNum;
     u8 friendship;
     int monLevel;
     u8 fixedIV;
@@ -802,6 +804,7 @@ void FillFactoryBrainParty(void)
 
         species[i] = gFacilityTrainerMons[monId].species;
         heldItems[i] = gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId];
+        abilityNum = gFacilityTrainerMons[monId].ability;
         CreateMonWithEVSpreadNatureOTID(&gEnemyParty[i],
                                              gFacilityTrainerMons[monId].species,
                                              monLevel,
@@ -815,6 +818,7 @@ void FillFactoryBrainParty(void)
             SetMonMoveAvoidReturn(&gEnemyParty[i], gFacilityTrainerMons[monId].moves[k], k);
         SetMonData(&gEnemyParty[i], MON_DATA_FRIENDSHIP, &friendship);
         SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
+        SetMonData(&gEnemyParty[i], MON_DATA_ABILITY_NUM, &abilityNum);
         i++;
     }
 }

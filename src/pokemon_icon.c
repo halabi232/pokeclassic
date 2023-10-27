@@ -466,6 +466,20 @@ const u8 *const gMonIconTable[] =
     [SPECIES_UNOWN_EMARK] = gMonIcon_UnownExclamationMark,
     [SPECIES_UNOWN_QMARK] = gMonIcon_UnownQuestionMark,
     [SPECIES_PIKACHU_PARTNER] = gMonIcon_Pikachu,
+    [SPECIES_ELECTIVIRE] = gMonIcon_Electivire,
+    [SPECIES_GLACEON] = gMonIcon_Glaceon,
+    [SPECIES_HAPPINY] = gMonIcon_Happiny,
+    [SPECIES_LEAFEON] = gMonIcon_Leafeon,
+    [SPECIES_LICKILICKY] = gMonIcon_Lickilicky,
+    [SPECIES_MAGMORTAR] = gMonIcon_Magmortar,
+    [SPECIES_MAGNEZONE] = gMonIcon_Magnezone,
+    [SPECIES_MIME_JR] = gMonIcon_MimeJr,
+    [SPECIES_MUNCHLAX] = gMonIcon_Munchlax,
+    [SPECIES_PORYGON_Z] = gMonIcon_PorygonZ,
+    [SPECIES_RHYPERIOR] = gMonIcon_Rhyperior,
+    [SPECIES_SYLVEON] = gMonIcon_Sylveon,
+    [SPECIES_TANGROWTH] = gMonIcon_Tangrowth,
+    [SPECIES_ANNIHILAPE] = gMonIcon_Annihilape,
     //Megas
     [SPECIES_VENUSAUR_MEGA] = gMonIcon_VenusaurMega,
     [SPECIES_CHARIZARD_MEGA_X] = gMonIcon_CharizardMegaX,
@@ -482,6 +496,8 @@ const u8 *const gMonIconTable[] =
     [SPECIES_AERODACTYL_MEGA] = gMonIcon_AerodactylMega,
     [SPECIES_MEWTWO_MEGA_X] = gMonIcon_MewtwoMegaX,
     [SPECIES_MEWTWO_MEGA_Y] = gMonIcon_MewtwoMegaY,
+    [SPECIES_STEELIX_MEGA]  = gMonIcon_SteelixMega,
+    [SPECIES_SCIZOR_MEGA]  = gMonIcon_ScizorMega,
 };
 
 const u8 gMonIconPaletteIndices[] =
@@ -928,6 +944,20 @@ const u8 gMonIconPaletteIndices[] =
     [SPECIES_UNOWN_Z] = 0,
     [SPECIES_UNOWN_EMARK] = 0,
     [SPECIES_UNOWN_QMARK] = 0,
+    [SPECIES_ELECTIVIRE] = 1,
+    [SPECIES_GLACEON] = 0,
+    [SPECIES_HAPPINY] = 0,
+    [SPECIES_LEAFEON] = 1,
+    [SPECIES_LICKILICKY] = 1,
+    [SPECIES_MAGMORTAR] = 0,
+    [SPECIES_MAGNEZONE] = 0,
+    [SPECIES_MIME_JR] = 0,
+    [SPECIES_MUNCHLAX] = 2,
+    [SPECIES_PORYGON_Z] = 0,
+    [SPECIES_RHYPERIOR] = 0,
+    [SPECIES_SYLVEON] = 0,
+    [SPECIES_TANGROWTH] = 0,
+    [SPECIES_ANNIHILAPE] = 0,
     //Megas
     [SPECIES_VENUSAUR_MEGA] = 1,
     [SPECIES_CHARIZARD_MEGA_X] = 0,
@@ -944,6 +974,8 @@ const u8 gMonIconPaletteIndices[] =
     [SPECIES_AERODACTYL_MEGA] = 2,
     [SPECIES_MEWTWO_MEGA_X] = 2,
     [SPECIES_MEWTWO_MEGA_Y] = 2,
+    [SPECIES_STEELIX_MEGA ] = 0,
+    [SPECIES_SCIZOR_MEGA ] = 0,
 };
 
 const struct SpritePalette gMonIconPaletteTable[] =

@@ -96,7 +96,7 @@ BTCutscene_ScottExit::
 BattleTower_Entrance_YouMadeIt::
 	.string "Scott: There you are, Champ!\p"
 	.string "You've finally made it to the\n"
-	.string "big Leagues.\p"
+	.string "big Leagues!\p"
 	.string "What? You don't know what this\n"
 	.string "place is?\p"
 	.string "This is my pride and joy!\p"
@@ -146,7 +146,9 @@ BattleTower_Entrance_ThisIsIt::
 	.string "It's been a blast watching you get\n"
 	.string "get here!\p"
 	.string "I'd probably have to go around the\n"
-	.string "world to find another trainer like you...$"
+	.string "world to find another trainer like you...\p"
+	.string "By the way, come see me in my house later!\n"
+	.string "See ya!$"
 
 BattleTower_Entrance_CoolTrainerM::
 	lock
@@ -290,6 +292,9 @@ BattleTower_Entrance_EventScript_GiveBattlePoints::
 	msgbox BattleTower_Entrance_Text_AwardYouTheseBattlePoints, MSGBOX_DEFAULT
 	frontier_givepoints
 	msgbox BattleFrontier_Text_ObtainedXBattlePoints, MSGBOX_GETPOINTS
+	special LoadPlayerParty
+	special HealPlayerParty
+	tower_save 0
 	tower_get TOWER_DATA_WIN_STREAK
 	goto_if_ne VAR_RESULT, 49, BattleTower_Entrance_EventScript_LookForwardToChallenge
 	msgbox BattleTower_Entrance_Text_AboutToFace50thTrainer, MSGBOX_DEFAULT
@@ -316,6 +321,9 @@ BattleTower_Entrance_EventScript_LostThanksForPlaying::
 	faceplayer
 	message BattleTower_Entrance_Text_ThankYouForPlaying
 	waitmessage
+	special LoadPlayerParty
+	special HealPlayerParty
+	tower_save 0
 	msgbox BattleTower_Entrance_Text_LookForwardToAnotherChallenge, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_TEMP_0, 255

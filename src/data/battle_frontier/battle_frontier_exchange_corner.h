@@ -80,6 +80,18 @@ static const u16 sFrontierExchangeCorner_HoldItems2[] =
     ITEM_POWER_HERB,
     ITEM_WISE_GLASSES,
     ITEM_RED_CARD,
+    ITEM_TOXIC_ORB,
+    ITEM_FLAME_ORB,
+    ITEM_FOCUS_SASH,
+    ITEM_ZOOM_LENS,
+    ITEM_GRIP_CLAW,
+    ITEM_STICKY_BARB,
+    ITEM_AIR_BALLOON,
+    ITEM_BINDING_BAND,
+    ITEM_EJECT_BUTTON,
+    ITEM_WEAKNESS_POLICY,
+    ITEM_ASSAULT_VEST,
+    ITEM_SAFETY_GOGGLES,
     0xFFFF
 };
 
@@ -163,6 +175,18 @@ static const u8 *const sFrontierExchangeCorner_HoldItemsDescriptions2[] =
     BattleFrontier_ExchangeServiceCorner_Text_PowerHerb,
     BattleFrontier_ExchangeServiceCorner_Text_WiseGlasses,
     BattleFrontier_ExchangeServiceCorner_Text_RedCard,
+    BattleFrontier_ExchangeServiceCorner_Text_ToxicOrb,
+    BattleFrontier_ExchangeServiceCorner_Text_FlameOrb,
+    BattleFrontier_ExchangeServiceCorner_Text_FocusSash,
+    BattleFrontier_ExchangeServiceCorner_Text_ZoomLens,
+    BattleFrontier_ExchangeServiceCorner_Text_GripClaw,
+    BattleFrontier_ExchangeServiceCorner_Text_StickyBarb,
+    BattleFrontier_ExchangeServiceCorner_Text_AirBalloon,
+    BattleFrontier_ExchangeServiceCorner_Text_BindingBand,
+    BattleFrontier_ExchangeServiceCorner_Text_EjectButton,
+    BattleFrontier_ExchangeServiceCorner_Text_WeaknessPolicy,
+    BattleFrontier_ExchangeServiceCorner_Text_AssaultVest,
+    BattleFrontier_ExchangeServiceCorner_Text_SafetyGoggles,
     gText_Exit
 };
 

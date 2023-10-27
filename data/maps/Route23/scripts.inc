@@ -29,3 +29,8 @@ Route23_EventScript_ItemTM10::
 	finditem ITEM_TM10, 1
 	release
 	end
+
+Route23_EventScript_ItemTM89::
+	finditem ITEM_TM89, 1
+	release
+	end

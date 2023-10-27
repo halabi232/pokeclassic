@@ -34,13 +34,13 @@ Route15_WestEntrance_2F_Text_SmallIslandOnHorizon::
 Route15_WestEntrance_2F_EventScript_Aide::
     lock
     faceplayer
-    goto_if_set FLAG_RECEIVED_EXP_SHARE, Route15_WestEntrance_2F_EventScript_AlreadyGotReward
+    goto_if_set FLAG_RECEIVED_AIDE_EVERSTONE, Route15_WestEntrance_2F_EventScript_AlreadyGotReward
     msgbox Route15_WestEntrance_2F_Text_GiveReward, MSGBOX_DEFAULT
-    checkitemspace ITEM_EXP_SHARE, 1
+    checkitemspace ITEM_EVERSTONE, 1
     goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
-    giveitem ITEM_EXP_SHARE, 1
+    giveitem ITEM_EVERSTONE, 1
     waitmessage
-    setflag FLAG_RECEIVED_EXP_SHARE
+    setflag FLAG_RECEIVED_AIDE_EVERSTONE
     setflag FLAG_HIDE_AIDE_ROUTE15
     clearflag FLAG_AIDE_LOCATION_5
     clearflag FLAG_QUEUE_AIDE_CALL
@@ -51,13 +51,17 @@ Route15_WestEntrance_2F_EventScript_Aide::
     end
 
 Route15_WestEntrance_2F_Text_GiveReward::
-    .string "{PLAYER}!\p"
-    .string "You're really on a roll.\p"
-    .string "As your journey continues, \n"
-    .string "raising Pokémon may get harder,\l"
-    .string "especially if your team changes!\p"
-    .string "So we came up with a device that\n"
-    .string "might make raising Pokémon easier.$"
+    .string "Oh… {PLAYER}!\n"
+    .string "I've been looking for you!\p"
+    .string "It's me, Cedar, the ever-present\n"
+    .string "aide to Prof. Oak.\p"
+    .string "How's your Pokédex coming along?\p"
+    .string "Give Prof. Oak a call sometime to\n"
+    .string "review your progress!\p"
+    .string "Anyway, he entrusted me with this\n"
+    .string "Everstone.\p"
+    .string "So, {PLAYER}, here you go!.$"
+
 
 Route15_WestEntrance_2F_EventScript_AlreadyGotReward::
     msgbox Route15_WestEntrance_2F_Text_ExplainReward, MSGBOX_DEFAULT
@@ -65,9 +69,11 @@ Route15_WestEntrance_2F_EventScript_AlreadyGotReward::
     end
 
 Route15_WestEntrance_2F_Text_ExplainReward::
-    .string "You can turn Exp. Share on in you\n"
-    .string "Key Items bag.\p"
-    .string "It spreads EXP. Points to Pokémon\n"
-    .string "in your party, even if they didn't\l"
-    .string "participate in the battle.\p"
-    .string "You can turn it off at any time, too!$"
+    .string "Making Pokémon evolve certainly\n"
+    .string "can add to the Pokédex.\p"
+    .string "However, at times, you may not\n"
+    .string "want a certain Pokémon to evolve.\p"
+    .string "In that case, give the Everstone\n"
+    .string "to that Pokémon.\p"
+    .string "It will prevent evolution according\n"
+    .string "to the Professor.$"

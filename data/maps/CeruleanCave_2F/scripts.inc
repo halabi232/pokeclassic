@@ -16,12 +16,17 @@ CeruleanCave_2F_EventScript_ItemPPUp::
 	release
 	end
 
-CeruleanCave_2F_EventScript_MewtoniteY::
+CeruleanCave_2F_EventScript_TM87::
+	finditem ITEM_TM87, 1
+	release
+	end
+
+CeruleanCave_2F_EventScript_MewtowniteY::
 	finditem ITEM_MEWTWONITE_Y, 1
 	release
 	end
 
-CeruleanCave_2F_EventScript_MewtoniteX::
+CeruleanCave_2F_EventScript_MewtowniteX::
 	finditem ITEM_MEWTWONITE_X, 1
 	release
 	end

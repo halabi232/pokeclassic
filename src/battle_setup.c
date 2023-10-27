@@ -275,7 +275,7 @@ const struct RematchTrainer gRematchTable[REMATCH_TABLE_ENTRIES] =
     [REMATCH_OLIVIA] = REMATCH(REMATCHABLE_TRAINER_BEAUTY_OLIVIA_1, REMATCHABLE_TRAINER_BEAUTY_OLIVIA_2, REMATCHABLE_TRAINER_BEAUTY_OLIVIA_3, ROUTE15),
     [REMATCH_RICHIE] = REMATCH(REMATCHABLE_TRAINER_TUBER_RICHIE_1, REMATCHABLE_TRAINER_TUBER_RICHIE_2, REMATCHABLE_TRAINER_TUBER_RICHIE_3, ROUTE19),
     [REMATCH_ROGER] = REMATCH(REMATCHABLE_TRAINER_DRAGON_TAMER_ROGER_1, REMATCHABLE_TRAINER_DRAGON_TAMER_ROGER_2, REMATCHABLE_TRAINER_DRAGON_TAMER_ROGER_3, ROUTE20),
-    [REMATCH_JOHAN] = REMATCH(REMATCHABLE_TRAINER_JUGGLER_JOHAN_1, REMATCHABLE_TRAINER_JUGGLER_JOHAN_2, REMATCHABLE_TRAINER_JUGGLER_JOHAN_3, ROUTE21_SOUTH),
+    [REMATCH_JARED] = REMATCH(REMATCHABLE_TRAINER_JUGGLER_JARED_1, REMATCHABLE_TRAINER_JUGGLER_JARED_2, REMATCHABLE_TRAINER_JUGGLER_JARED_3, ROUTE21_SOUTH),
     [REMATCH_ANRI] = REMATCH(REMATCHABLE_TRAINER_COOLTRAINER_ANRI_1, REMATCHABLE_TRAINER_COOLTRAINER_ANRI_2, REMATCHABLE_TRAINER_COOLTRAINER_ANRI_3, ROUTE21_NORTH),
 };
 
@@ -644,8 +644,8 @@ u8 BattleSetup_GetTerrainId(void)
         if (MetatileBehavior_IsBridgeOverWater(tileBehavior) == TRUE)
             return BATTLE_TERRAIN_WATER;
     }
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE113) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE113))
-        return BATTLE_TERRAIN_SAND;
+    //if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE113) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE113))
+    //    return BATTLE_TERRAIN_SAND;
     if (GetSavedWeather() == WEATHER_SANDSTORM)
         return BATTLE_TERRAIN_SAND;
 
@@ -778,7 +778,12 @@ u8 GetTrainerBattleTransition(void)
     if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
         return B_TRANSITION_CHAMPION;
 
-    if (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_OAK)
+    if (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_OAK \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass ==TRAINER_CLASS_LORELEI \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass ==TRAINER_CLASS_BRUNO \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass ==TRAINER_CLASS_AGATHA \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass ==TRAINER_CLASS_LANCE)
     {
         if (gTrainerBattleOpponent_A == TRAINER_ELITE_FOUR_LORELEI || gTrainerBattleOpponent_A == POSTGAME_ELITE_FOUR_LORELEI)
             return B_TRANSITION_LORELEI;

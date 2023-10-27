@@ -6,6 +6,10 @@ MtMoon_1F_OnTransition::
 	call_if_unset FLAG_DAILY_MT_MOON_MUSHROOMS, MtMoon_1F_ResetMushrooms
 	end
 
+MtMoon_B1F_EventScript_ItemTM93::
+	finditem ITEM_TM93, 1
+	end
+
 MtMoon_1F_ResetMushrooms::
 	clearflag FLAG_HIDDEN_ITEM_MT_MOON_B1F_TINY_MUSHROOM
 	clearflag FLAG_HIDDEN_ITEM_MT_MOON_B1F_TINY_MUSHROOM_2

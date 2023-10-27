@@ -78,7 +78,9 @@ FuchsiaCity_Gym_Text_ReceivedBadge::
 
 FuchsiaCity_Gym_Text_ExplainBadge::
     .string "The Soul Badge will allow you\n"
-   .string "to SURF outside of battle.$"
+   	.string "to use Strength outside of battle.\p"
+	.string "It will also enable you to train\n"
+    .string "Pokémon up to Lv. 55!\p"
 
 FuchsiaCity_Gym_EventScript_GetTM::
 	msgbox FuchsiaCity_Gym_Text_TakeThisWithYou, MSGBOX_DEFAULT

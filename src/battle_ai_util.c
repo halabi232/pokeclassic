@@ -3375,7 +3375,7 @@ bool32 IsStatBoostingBerry(u16 item)
     case ITEM_APICOT_BERRY:
     //case ITEM_LANSAT_BERRY:
     case ITEM_STARF_BERRY:
-    #ifdef ITEM_EXPANSION
+    #ifndef ITEM_EXPANSION
     case ITEM_MICLE_BERRY:
     #endif
         return TRUE;

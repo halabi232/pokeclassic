@@ -642,7 +642,7 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
             if (FlagGet(FLAG_AIDE_LOCATION_2) == TRUE)
                 {
                     FlagClear(FLAG_HIDE_AIDE_ROUTE10);
-                    ScriptContext1_SetupScript(MatchCall_EventScript_AideEverstoneReady);
+                    ScriptContext1_SetupScript(MatchCall_EventScript_AideExpShareReady);
                 }
             if (FlagGet(FLAG_AIDE_LOCATION_3) == TRUE)
                 {
@@ -657,7 +657,7 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
             if (FlagGet(FLAG_AIDE_LOCATION_5) == TRUE)
                 {
                     FlagClear(FLAG_HIDE_AIDE_ROUTE15);
-                    ScriptContext1_SetupScript(MatchCall_EventScript_AideExpShareReady);
+                    ScriptContext1_SetupScript(MatchCall_EventScript_AideEverstoneReady);
                 }
             return TRUE;
         }

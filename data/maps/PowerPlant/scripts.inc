@@ -120,7 +120,7 @@ PowerPlant_EventScript_Zapdos::
 	playmoncry SPECIES_ZAPDOS, CRY_MODE_ENCOUNTER
 	waitmoncry
 	delay 20
-	seteventmon SPECIES_ZAPDOS, 50
+	seteventmon SPECIES_ZAPDOS, 70
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	waitstate
@@ -156,6 +156,11 @@ PowerPlant_EventScript_ItemTM25::
 
 PowerPlant_EventScript_ItemTM17::
 	finditem ITEM_TM17, 1
+	release
+	end
+
+PowerPlant_EventScript_ItemTM70::
+	finditem ITEM_TM70, 1
 	release
 	end
 

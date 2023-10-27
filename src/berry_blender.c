@@ -1839,7 +1839,7 @@ static void Task_HandleOpponent1(u8 taskId)
                 u8 rand = Random() / 655;
                 if (sBerryBlender->speed < 500)
                 {
-                    if (rand > 75)
+                    if (rand > 65)
                         gRecvCmds[1][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_BEST;
                     else
                         gRecvCmds[1][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_GOOD;
@@ -1851,16 +1851,16 @@ static void Task_HandleOpponent1(u8 taskId)
                 }
                 else if (sBerryBlender->speed < 1500)
                 {
-                    if (rand > 80)
+                    if (rand > 70)
                     {
                         gRecvCmds[1][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_BEST;
                     }
                     else
                     {
                         u8 value = rand - 21;
-                        if (value < 60)
+                        if (value < 70)
                             gRecvCmds[1][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_GOOD;
-                        else if (rand < 10)
+                        else if (rand < 5)
                             CreateOpponentMissTask(1, 5);
                     }
                 }
@@ -1869,7 +1869,7 @@ static void Task_HandleOpponent1(u8 taskId)
                     u8 value = rand - 71;
                     if (value < 20)
                         gRecvCmds[1][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_GOOD;
-                    else if (rand < 30)
+                    else if (rand < 10)
                         CreateOpponentMissTask(1, 5);
                 }
                 else
@@ -1904,7 +1904,7 @@ static void Task_HandleOpponent2(u8 taskId)
                 u8 rand = Random() / 655;
                 if (sBerryBlender->speed < 500)
                 {
-                    if (rand > 66)
+                    if (rand > 50)
                         gRecvCmds[2][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_BEST;
                     else
                         gRecvCmds[2][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_GOOD;
@@ -1912,12 +1912,12 @@ static void Task_HandleOpponent2(u8 taskId)
                 else
                 {
                     u8 value;
-                    if (rand > 65)
+                    if (rand > 55)
                         gRecvCmds[2][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_BEST;
                     value = rand - 41;
-                    if (value < 25)
+                    if (value < 35)
                         gRecvCmds[2][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_GOOD;
-                    if (rand < 10)
+                    if (rand < 2)
                         CreateOpponentMissTask(2, 5);
                 }
 
@@ -1949,25 +1949,25 @@ static void Task_HandleOpponent3(u8 taskId)
                 u8 rand = (Random() / 655);
                 if (sBerryBlender->speed < 500)
                 {
-                    if (rand > 88)
+                    if (rand > 10)
                         gRecvCmds[3][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_BEST;
                     else
                         gRecvCmds[3][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_GOOD;
                 }
                 else
                 {
-                    if (rand > 60)
+                    if (rand > 35)
                     {
                         gRecvCmds[3][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_BEST;
                     }
                     else
                     {
-                        s8 value = rand - 56; // makes me wonder what the original code was
+                        s8 value = rand - 10; // makes me wonder what the original code was
                         u8 value2 = value;
-                        if (value2 < 5)
+                        if (value2 < 15)
                             gRecvCmds[3][BLENDER_COMM_SCORE] = LINKCMD_BLENDER_SCORE_GOOD;
                     }
-                    if (rand < 5)
+                    if (rand < 2)
                         CreateOpponentMissTask(3, 5);
                 }
                 gTasks[taskId].tDidInput = TRUE;

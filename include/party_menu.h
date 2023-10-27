@@ -61,6 +61,7 @@ void ItemUseCB_PPUp(u8 taskId, TaskFunc task);
 u16 ItemIdToBattleMoveId(u16 item);
 bool8 IsMoveHm(u16 move);
 bool8 MonKnowsMove(struct Pokemon *mon, u16 move);
+bool8 BoxMonKnowsMove(struct BoxPokemon *boxMon, u16 move);
 void ItemUseCB_TMHM(u8 taskId, TaskFunc task);
 void ItemUseCB_RareCandy(u8 taskId, TaskFunc task);
 void ItemUseCB_SacredAsh(u8 taskId, TaskFunc task);
@@ -87,6 +88,7 @@ bool8 CB2_FadeFromPartyMenu(void);
 void ChooseContestMon(void);
 void ChoosePartyMon(void);
 void ChooseMonForMoveRelearner(void);
+void ChooseMonForEggMoveRelearner(void);
 void BattlePyramidChooseMonHeldItems(void);
 void DoBattlePyramidMonsHaveHeldItem(void);
 void IsSelectedMonEgg(void);
@@ -103,5 +105,11 @@ void ItemUseCB_AbilityPatch(u8 taskId, TaskFunc task);
 void ItemUseCB_ReduceIV(u8 taskId, TaskFunc task);
 void ItemUseCB_IncreaseIV(u8 taskId, TaskFunc task);
 void ItemUseCB_PokeBall(u8 taskId, TaskFunc task);
+
+#ifndef BATTLE_ENGINE
+bool8 CanLearnTutorMove(u16, u8);
+#else
+u16 GetTMHMMoves(u16 position);
+#endif
 
 #endif // GUARD_PARTY_MENU_H

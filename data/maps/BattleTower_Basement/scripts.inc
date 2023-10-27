@@ -477,3 +477,96 @@ BattleTower_Basement_Text_CantFigureOutStaffHints:
 	.string "Well, I'm a full-grown man, but I have\n"
 	.string "trouble figuring out their hints.$"
 
+
+BattleTower_Basement_EventScript_EggTutor::
+	lockall
+	faceplayer
+	msgbox BattleTower_Basement_Text_ImTheMoveTutor, MSGBOX_DEFAULT
+	goto BattleTower_Basement_EventScript_AskTeachMove
+	end
+
+BattleTower_Basement_EventScript_AskTeachMove::
+	checkitem ITEM_BIG_MUSHROOM
+	goto_if_eq VAR_RESULT, FALSE, BattleTower_Basement_EventScript_ComeBackWithMushroom
+	msgbox BattleTower_Basement_Text_WantMeToTeachMove, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, BattleTower_Basement_EventScript_ComeBackWithMushroom
+	goto BattleTower_Basement_EventScript_ChooseMon
+	end
+
+BattleTower_Basement_EventScript_ChooseMon::
+	msgbox BattleTower_Basement_Text_TutorWhichMon, MSGBOX_DEFAULT
+	special ChooseMonForEggMoveRelearner
+	waitstate
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, Common_EventScript_End
+	special IsSelectedMonEgg
+	goto_if_eq VAR_RESULT, TRUE, BattleTower_Basement_EventScript_CantTeachEgg
+	goto_if_eq VAR_0x8005, 0, BattleTower_Basement_EventScript_NoMoveToTeachMon
+	goto BattleTower_Basement_EventScript_ChooseMove
+	end
+
+BattleTower_Basement_EventScript_ChooseMove::
+	msgbox BattleTower_Basement_Text_TeachWhichMove, MSGBOX_DEFAULT
+	special TeachEggMoveRelearnerMove
+	waitstate
+	goto_if_eq VAR_0x8004, 0, BattleTower_Basement_EventScript_ChooseMon
+	msgbox BattleTower_Basement_Text_HandedOverMushroom, MSGBOX_DEFAULT
+	removeitem ITEM_BIG_MUSHROOM
+	goto BattleTower_Basement_EventScript_ComeBackWithMushroom
+	releaseall
+	end
+
+BattleTower_Basement_EventScript_NoMoveToTeachMon::
+	msgbox BattleTower_Basement_Text_DontHaveMoveToTeachPokemon, MSGBOX_DEFAULT
+	goto BattleTower_Basement_EventScript_ChooseMon
+	end
+
+BattleTower_Basement_EventScript_CantTeachEgg::
+	msgbox BattleTower_Basement_Text_CantTeachEgg, MSGBOX_DEFAULT
+	goto BattleTower_Basement_EventScript_ChooseMon
+	end
+
+BattleTower_Basement_EventScript_ComeBackWithMushroom::
+	msgbox BattleTower_Basement_Text_ComeBackWithMushroom, MSGBOX_DEFAULT
+	releaseall
+	end
+
+BattleTower_Basement_Text_ImTheMoveTutor:
+	.string "Hmm… Oui?\p"
+	.string "Ah! Me? Well…\n"
+	.string "I'm a Pokémon Heritage conoisseur!\p"
+	.string "I know all the moves a Pokémon can\n"
+	.string "possibly inherit from their parents!\l"
+	.string "And I can teach them all!\p"
+	.string "Well… for a price…\p"
+	.string "If you have a Big Mushroom,\n"
+	.string "I can teach a move to a Pokémon\l"
+	.string "of yours if you'd like.$"
+
+BattleTower_Basement_Text_TutorWhichMon:
+	.string "Which Pokémon needs tutoring?$"
+
+BattleTower_Basement_Text_WantMeToTeachMove:
+	.string "Uhlala!! That's a fragrant\n"
+	.string "and beautiful Big Mushroom!\p"
+	.string "Are you in need to teach a Pokémon?$"
+
+BattleTower_Basement_Text_TeachWhichMove:
+	.string "Which move should I teach?$"
+
+BattleTower_Basement_Text_DontHaveMoveToTeachPokemon:
+	.string "Excuse moi…\p"
+	.string "This Pokémon canno inherit any moves.$"
+
+BattleTower_Basement_Text_CantTeachEgg:
+	.string "What? It is not possible\n"
+	.string "to teach any move to an Egg.$"
+
+BattleTower_Basement_Text_HandedOverMushroom:
+	.string "{PLAYER} handed over one Big Mushroom\n"
+	.string "in exchange.$"
+
+BattleTower_Basement_Text_ComeBackWithMushroom:
+	.string "If your require my knowledge,\n"
+	.string "please return with a delicious\l"
+	.string "Big Mushroom! I will be waiting.$"

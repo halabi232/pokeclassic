@@ -3,6 +3,11 @@
 PokemonTower_2F_MapScripts::
 	.byte 0
 
+PokemonTower_2F_EventScript_TM64::
+	finditem ITEM_TM64, 1
+	release
+	end
+
 PokemonTower_2F_EventScript_Channeler::
 	msgbox PokemonTower_2F_Text_SilphScopeCouldUnmaskGhosts, MSGBOX_NPC
 	end

@@ -4,6 +4,16 @@ SafariZone_SecretHouse_MapScripts::
 SafariZone_SecretHouse_EventScript_Attendant::
 	lock
 	faceplayer
+	goto_if_unset FLAG_RECEIVED_HM03, SafariZone_SecretHouse_EventScript_HM03
+	goto_if_unset FLAG_RECEIVED_HM07, SafariZone_SecretHouse_EventScript_HM07
+	goto_if_set FLAG_RECEIVED_HM07, SafariZone_SecretHouse_EventScript_CheckDailyPrize
+	goto_if_set FLAG_RECEIVED_HM03, SafariZone_SecretHouse_EventScript_CheckDailyPrize
+	release
+	end
+
+SafariZone_SecretHouse_EventScript_HM03::
+	lock
+	faceplayer
 	goto_if_set FLAG_RECEIVED_HM03, SafariZone_SecretHouse_EventScript_CheckDailyPrize
 	msgbox SafariZone_SecretHouse_Text_CongratsYouveWon
 	checkitemspace ITEM_HM03, 1
@@ -15,8 +25,26 @@ SafariZone_SecretHouse_EventScript_Attendant::
 	additem ITEM_HM03, 1
 	msgbox SafariZone_SecretHouse_Text_ExplainSurf
 	setflag FLAG_RECEIVED_HM03
-	setflag FLAG_DAILY_SAFARI_GAME_PRIZE
+	goto_if_unset FLAG_RECEIVED_HM07, SafariZone_SecretHouse_EventScript_HM07
 	release
+	end
+
+SafariZone_SecretHouse_EventScript_HM07::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECEIVED_HM07, SafariZone_SecretHouse_EventScript_CheckDailyPrize
+	msgbox SafariZone_SecretHouse_Text_BonusPrize
+	checkitemspace ITEM_HM07, 1
+	goto_if_eq VAR_RESULT, FALSE, SafariZone_SecretHouse_EventScript_NoRoomForHM07
+	playfanfare MUS_OBTAIN_TMHM
+	message SafariZone_SecretHouse_Text_ReceivedHM07FromAttendant
+	waitfanfare
+	waitmessage
+	additem ITEM_HM07, 1
+	msgbox SafariZone_SecretHouse_Text_ExplainWaterfall
+	setflag FLAG_RECEIVED_HM07
+	setflag FLAG_DAILY_SAFARI_GAME_PRIZE
+	releaseall
 	end
 
 SafariZone_SecretHouse_Text_CongratsYouveWon::
@@ -34,8 +62,6 @@ SafariZone_SecretHouse_Text_ExplainSurf::
     .string "HM03 is Surf.\p"
     .string "Pokémon will be able to ferry you\n"
     .string "across water using it.\p"
-    .string "You're super lucky for winning this\n"
-    .string "fabulous prize!$"
 
 SafariZone_SecretHouse_Text_ReceivedHM03FromAttendant::
     .string "{PLAYER} received HM03\n"
@@ -46,15 +72,36 @@ SafariZone_SecretHouse_EventScript_NoRoomForHM03::
 	release
 	end
 
+SafariZone_SecretHouse_Text_BonusPrize::
+	.string "You also receive this bonus prize!$"
+
+SafariZone_SecretHouse_Text_ExplainWaterfall::
+    .string "HM07 is Waterfall.\p"
+    .string "It is not very usefull around Kanto\n"
+    .string "but still is a powerfull move!\p"
+	.string "It teachs how the physical strength\n"
+	.string "of a Pokémon can be used to climb\l"
+	.string "even the highest of the waterfalls!\p"
+    .string "You're super lucky for winning this\n"
+    .string "fabulous prizes!$"
+
+SafariZone_SecretHouse_Text_ReceivedHM07FromAttendant::
+    .string "{PLAYER} received HM07\n"
+    .string "from the attendant!$"
+
+SafariZone_SecretHouse_EventScript_NoRoomForHM07::
+	msgbox SafariZone_SecretHouse_Text_DontHaveRoomForPrize
+	release
+	end
+
 SafariZone_SecretHouse_Text_DontHaveRoomForPrize::
     .string "You don't have room for this\n"
     .string "fabulous prize!$"
 
-@TODO: replace this prize with a BOTTLE CAP
 SafariZone_SecretHouse_EventScript_CheckDailyPrize::
 	goto_if_set FLAG_DAILY_SAFARI_GAME_PRIZE, SafariZone_SecretHouse_EventScript_ExplainDailyPrize
 	msgbox SafariZone_SecretHouse_Text_WinDailyPrize
-	giveitem ITEM_RARE_CANDY
+	giveitem ITEM_ABILITY_PATCH
 	setflag FLAG_DAILY_SAFARI_GAME_PRIZE
 	release
 	end

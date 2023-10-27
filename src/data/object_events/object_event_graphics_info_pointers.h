@@ -422,8 +422,8 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PremierBall;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SafariBall;
 
 // Begin pokemon event objects
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimatedBall;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Follower;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimatedBall;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Follower;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,

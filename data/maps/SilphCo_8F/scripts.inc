@@ -11,6 +11,11 @@ SilphCo_8F_EventScript_ItemIron::
 	release
 	end
 
+SilphCo_8F_EventScript_ItemTM88::
+	finditem ITEM_TM88, 1
+	release
+	end
+
 SilphCo_8F_EventScript_WorkerM::
 	lock
 	faceplayer

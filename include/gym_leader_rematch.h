@@ -20,7 +20,7 @@ enum {
     REMATCH_OLIVIA,
     REMATCH_RICHIE,
     REMATCH_ROGER,
-    REMATCH_JOHAN,
+    REMATCH_JARED,
     REMATCH_ANRI,
     REMATCH_SPECIAL_TRAINER, //Entries above this are considered normal trainers, from here below are special trainers
     REMATCH_ELITE_FOUR, // Entries from SIDNEY below are considered part of REMATCH_ELITE_FOUR_ENTRIES. 

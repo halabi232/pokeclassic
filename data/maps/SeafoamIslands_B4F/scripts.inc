@@ -59,7 +59,7 @@ SeafoamIslands_B4F_EventScript_Articuno::
 	playmoncry SPECIES_ARTICUNO, CRY_MODE_ENCOUNTER
 	waitmoncry
 	delay 20
-	seteventmon SPECIES_ARTICUNO, 50
+	seteventmon SPECIES_ARTICUNO, 70
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	waitstate
@@ -85,6 +85,11 @@ SeafoamIslands_B4F_EventScript_RanFromArticuno::
 
 SeafoamIslands_B4F_EventScript_ItemUltraBall::
 	finditem ITEM_ULTRA_BALL, 1
+	release
+	end
+
+SeafoamIslands_B4F_EventScript_TM75::
+	finditem ITEM_TM75, 1
 	release
 	end
 

@@ -7,6 +7,11 @@
 PokemonTower_7F_MapScripts::
 	.byte 0
 
+PokemonTower_7F_EventScript_TM73::
+	finditem ITEM_TM73, 1
+	release
+	end
+
 PokemonTower_7F_EventScript_MrFuji::
     lock
     faceplayer

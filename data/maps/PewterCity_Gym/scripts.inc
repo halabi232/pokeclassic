@@ -76,6 +76,9 @@ PewterCity_Gym_Text_ReceivedBadge::
 PewterCity_Gym_Text_ExplainBadge::
 	.string "Just having the Boulder Badge makes\n"
     .string "your Pokémon more powerful.\p"
+	.string "You can now train Pokémon\n"
+    .string "up to Lv. 30!\l"
+	.string "They will obey you without hesitation.\p"
     .string "It also enables the use of the\n"
     .string "move Flash outside of battle.\p"
     .string "Of course, a Pokémon must know the\n"

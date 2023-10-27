@@ -177,23 +177,23 @@
 #define FLAG_DOJO_DEFENSE_1 				0x9F
 #define FLAG_DOJO_DEFENSE_2              	0xA0
 #define FLAG_DOJO_DEFENSE_3            		0xA1
-#define FLAG_UNUSED_0x0A2              		0xA2
-#define FLAG_UNUSED_0x0A3             		0xA3
-#define FLAG_UNUSED_0x0A4            		0xA4
-#define FLAG_UNUSED_0x0A5                   0xA5
-#define FLAG_UNUSED_0x0A6                  	0xA6
-#define FLAG_UNUSED_0x0A7                  	0xA7
-#define FLAG_UNUSED_0x0A8                   0xA8
-#define FLAG_UNUSED_0x0A9                   0xA9
-#define FLAG_UNUSED_0x0AA                  	0xAA
-#define FLAG_UNUSED_0x0AB                  	0xAB
-#define FLAG_UNUSED_0x0AC                  	0xAC
-#define FLAG_UNUSED_0x0AD        			0xAD
-#define FLAG_UNUSED_0x0AE                   0xAE
-#define FLAG_UNUSED_0x0AF                   0xAF
-#define FLAG_UNUSED_0x0B0                   0xB0
-#define FLAG_UNUSED_0x0B1                   0xB1
-#define FLAG_UNUSED_0x0B2               	0xB2
+#define FLAG_RECEIVED_OFFENSE_TM       		0xA2
+#define FLAG_RECEIVED_DEFENSE_TM            0xA3
+#define FLAG_RECEIVED_HM07           		0xA4
+#define FLAG_RECEIVED_CONTEST_PASS          0xA5
+#define FLAG_ENTERED_CONTEST                0xA6
+#define FLAG_HIDE_LILYCOVE_MUSEUM_CURATOR   0xA7
+#define FLAG_TOUGH_PAINTING_MADE            0xA8
+#define FLAG_CUTE_PAINTING_MADE             0xA9
+#define FLAG_BEAUTY_PAINTING_MADE           0xAA
+#define FLAG_COOL_PAINTING_MADE             0xAB
+#define FLAG_SMART_PAINTING_MADE            0xAC
+#define FLAG_HIDE_LILYCOVE_MUSEUM_TOURISTS  0xAD
+#define FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_4  0xAE
+#define FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_3  0xAF
+#define FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_2  0xB0
+#define FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_1  0xB1
+#define FLAG_HIDE_LILYCOVE_CONTEST_HALL_CONTEST_ATTENDANT_1             	0xB2
 #define FLAG_UNUSED_0x0B3                 	0xB3
 #define FLAG_UNUSED_0x0B4                  	0xB4
 #define FLAG_UNUSED_0x0B5                 	0xB5
@@ -387,7 +387,7 @@
 #define FLAG_REMATCH_OLIVIA                  0x16C // Beauty Olivia on Route 15
 #define FLAG_REMATCH_RICHIE                  0x16D // Tuber Richie on Route 19
 #define FLAG_REMATCH_ROGER                   0x16E // Dragon Tamer Roger on Route 20
-#define FLAG_REMATCH_JOHAN                   0x16F // Juggler Johan on Route 21 South
+#define FLAG_REMATCH_JARED                   0x16F // Juggler Jared on Route 21 South
 #define FLAG_REMATCH_ANRI                    0x170 // Cooltrainer Anri on Route 21 North
 #define FLAG_REMATCH_SPECIAL_TRAINER         0x171 //Special Rematches Start here. Unused aside from rematch enums
 #define FLAG_REMATCH_ELITE_FOUR              0x172 // Unused aside from rematch enums
@@ -506,7 +506,7 @@
 #define FLAG_DOJO_HP          				 0x1D6
 #define FLAG_GOT_RECORD_SETTING_MAGIKARP     0x1D7
 #define FLAG_QUEUE_FOSSIL_RESURRECTION 	     0x1D8
-#define FLAG_UNUSED_0x1D9        			 0x1D9
+#define FLAG_RECEIVED_EXHIBIT_GIFT  		 0x1D9
 #define FLAG_UNUSED_0x1DA                    0x1DA
 #define FLAG_UNUSED_0x1DB		             0x1DB
 #define FLAG_UNUSED_0x1DC                 	 0x1DC
@@ -649,9 +649,9 @@
 #define FLAG_HIDDEN_ITEM_FUCHSIA_GYM_SMOKE_BALL        	                          (FLAG_HIDDEN_ITEMS_START + 0x6C)
 #define FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_MIRACLE_SEED           	              (FLAG_HIDDEN_ITEMS_START + 0x6D)
 #define FLAG_HIDDEN_ITEM_POWER_PLANT_METAL_COAT                                   (FLAG_HIDDEN_ITEMS_START + 0x6E)
-#define FLAG_HIDDEN_ITEM_111            (FLAG_HIDDEN_ITEMS_START + 0x6F)
+#define FLAG_HIDDEN_ITEM_111                                                      (FLAG_HIDDEN_ITEMS_START + 0x6F)
+#define FLAG_HIDDEN_ITEM_CELADON_CITY_TM95                                        (FLAG_HIDDEN_ITEMS_START + 0x70)
 
-#define FLAG_UNUSED_0x264  0x264 // Unused Flag
 #define FLAG_UNUSED_0x265  0x265 // Unused Flag
 #define FLAG_UNUSED_0x266  0x266 // Unused Flag
 #define FLAG_UNUSED_0x267  0x267 // Unused Flag
@@ -883,8 +883,8 @@
 #define FLAG_HIDE_SCOTT_HALLWAY                                   	0x345
 #define FLAG_GOT_RED_CARD     									    0x346
 #define FLAG_HIDE_SCOTT_AT_HOUSE                           		    0x347
-#define FLAG_HIDE_UNUSED_114                      					0x348
-#define FLAG_HIDE_UNUSED_115               							0x349
+#define FLAG_HIDE_LILYCOVE_CONTEST_HALL_BLEND_MASTER_REPLACEMENT	0x348
+#define FLAG_EXP_SHARE               							    0x349
 #define FLAG_HIDE_UNUSED_116                       					0x34A
 #define FLAG_HIDE_UNUSED_117                   						0x34B
 #define FLAG_HIDE_UNUSED_118                           				0x34C
@@ -1182,25 +1182,25 @@
 #define FLAG_HIDE_POKEMON_MANSION_3F_CHARCOAL                       0x46E
 #define FLAG_HIDE_DIGLETTS_CAVE_SMOOTH_ROCK                         0x46F
 #define FLAG_HIDE_VICTORY_ROAD_HEAT_ROCK                            0x470
-#define FLAG_UNUSED_ITEM_0x471                                   	0x471
-#define FLAG_UNUSED_ITEM_0x472                                      0x472
-#define FLAG_UNUSED_ITEM_0x473                              		0x473
-#define FLAG_UNUSED_ITEM_0x474                                		0x474
-#define FLAG_UNUSED_ITEM_0x475                                 		0x475
-#define FLAG_UNUSED_ITEM_0x476                                  	0x476
-#define FLAG_UNUSED_ITEM_0x477                            			0x477
-#define FLAG_UNUSED_ITEM_0x478                             			0x478
-#define FLAG_UNUSED_ITEM_0x479                                      0x479
-#define FLAG_UNUSED_ITEM_0x47A                                 		0x47A
-#define FLAG_UNUSED_ITEM_0x47B                                		0x47B
-#define FLAG_UNUSED_ITEM_0x47C                                  	0x47C
-#define FLAG_UNUSED_ITEM_0x47D                                 		0x47D
-#define FLAG_UNUSED_ITEM_0x47E                                  	0x47E
-#define FLAG_UNUSED_ITEM_0x47F                       				0x47F
-#define FLAG_UNUSED_ITEM_0x480                                  	0x480
-#define FLAG_UNUSED_ITEM_0x481                            			0x481
-#define FLAG_UNUSED_ITEM_0x482                             			0x482
-#define FLAG_UNUSED_ITEM_0x483                             			0x483
+#define FLAG_HIDE_CELADON_CITY_TM56                                	0x471
+#define FLAG_HIDE_POKEMON_TOWER_TM64                                0x472
+#define FLAG_HIDE_POKEMON_TOWER_TM73                          		0x473
+#define FLAG_HIDE_ROCK_TUNNEL_B1F_TM69                         		0x474
+#define FLAG_HIDE_SEAFOAM_ISLANDS_B4F_TM75                          0x475
+#define FLAG_HIDE_SEAFOAM_ISLANDS_B2F_TM58                          0x476
+#define FLAG_HIDE_ROUTE3_TM57                            			0x477
+#define FLAG_HIDE_ROUTE10_TM59                             			0x478
+#define FLAG_HIDE_POKEMON_MANSION_B1F_TM61                          0x479
+#define FLAG_HIDE_CERULEAN_CAVE_2F_TM87                        		0x47A
+#define FLAG_HIDE_MTMOON_TM93                                		0x47B
+#define FLAG_HIDE_POKEMON_TOWER_TM94                                0x47C
+#define FLAG_HIDE_POKEMON_TOWER_TM81                          		0x47D
+#define FLAG_HIDE_ROUTE_2_TM82                                  	0x47E
+#define FLAG_HIDE_ROUTE_13_TM55                       				0x47F
+#define FLAG_HIDE_ROUTE_25_TM86                                  	0x480
+#define FLAG_HIDE_ROUTE_23_TM89                            			0x481
+#define FLAG_HIDE_ROUTE_21_TM54                            			0x482
+#define FLAG_HIDE_SAFARI_ZONE_CENTER_TM72                  			0x483
 
 //Mega Stones
 #define FLAG_HIDE_VENUSAURITE                                		0x484
@@ -1216,18 +1216,18 @@
 #define FLAG_HIDE_PINSIRITE                       				    0x48E
 #define FLAG_HIDE_GYARDOSITE                        				0x48F
 #define FLAG_HIDE_AERODACTYLITE                       				0x490
-#define FLAG_HIDE_MEWTONITE_Y                     					0x491
-#define FLAG_HIDE_MEWTONITE_X                  					    0x492
+#define FLAG_HIDE_MEWTWONITE_Y                     					0x491
+#define FLAG_HIDE_MEWTWONITE_X                  					0x492
+#define FLAG_HIDE_STEELIXITE                                        0x493 
+#define FLAG_HIDE_SCIZORITE                                         0x494 
 
-#define FLAG_UNUSED_0x493                                           0x493 // Unused Flag
-#define FLAG_UNUSED_0x494                                           0x494 // Unused Flag
-#define FLAG_UNUSED_0x495                                           0x495 // Unused Flag
-#define FLAG_UNUSED_0x496                                           0x496 // Unused Flag
-#define FLAG_UNUSED_0x497                                           0x497 // Unused Flag
-#define FLAG_UNUSED_0x498                                           0x498 // Unused Flag
-#define FLAG_UNUSED_0x499                                           0x499 // Unused Flag
-#define FLAG_UNUSED_0x49A                                           0x49A // Unused Flag
-#define FLAG_UNUSED_0x49B                                           0x49B // Unused Flag
+#define FLAG_HIDE_POWER_PLANT_TM70                                  0x495 
+#define FLAG_HIDE_SILPH_CO_8F_TM88                                  0x496
+#define FLAG_HIDE_ROCK_TUNNEL_1F_TM68                               0x497
+#define FLAG_HIDE_ROCK_TUNNEL_1F_TM71                               0x498
+#define FLAG_HIDE_VICTORY_ROAD_3F_TM74                              0x499
+#define FLAG_HIDE_VIRIDIAN_FOREST_TM77                              0x49A 
+#define FLAG_HIDE_VIRIDIAN_FOREST_TM85                              0x49B 
 #define FLAG_UNUSED_0x49C                                           0x49C // Unused Flag
 #define FLAG_UNUSED_0x49D                                           0x49D // Unused Flag
 #define FLAG_UNUSED_0x49E                                           0x49E // Unused Flag

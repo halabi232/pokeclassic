@@ -1,4 +1,6 @@
 Happy (Special):
+Specific map:
+Landscape/map feature:
 {STR_VAR_1} greeted your mom.
 Your pokemon is staring intently at the mountain peak.
 {STR_VAR_1} is staring straight at the pokemon league.
@@ -9,6 +11,7 @@ Your pokemon is staring intently at the mountain peak.
 {STR_VAR_1} is very composed and sure of itself (in a gym with a type advantage).
 {STR_VAR_1} greeted Amphy!
 Neutral (Special):
+Specific map:
 (CELEBI) danced happily ( Pokemon Exclusive ).
 (CELEBI) danced beautiful ( Pokemon Exclusive ).
 Sniff sniff, something smells good! ( Day care center ).
@@ -24,6 +27,8 @@ Why is it doing warm-up exercises? (Cerulean Gym).
 (TYPHLOSION) emitted fire and shouted ( Pokemon Exclusive ).
 {STR_VAR_1} is vigorously breathing fire ( must be fire type).
 (MAGIKARP) is leaping around more than usual (lake of rage, During team rockets broadcast) ( Pokemon Exclusive ).
+Map feature:
+Your pokemon is smelling the scent of the flowers. (When next to flowers in Cherrygrove City).
 {STR_VAR_1} Greeted Slowbro (Cerulean city, in front of Slowbro).
 {STR_VAR_1} seems happy to have taken a shower! (Celadon gym) (Grass,Water type).
 {STR_VAR_1} is fidgeting in front of everyone (maybe baby pokemon).
@@ -36,16 +41,39 @@ Your pokemon is staring intently at the sea!
 {STR_VAR_1} is stomping on the grass!
 {STR_VAR_1} seems highly interested in the tree.
 {STR_VAR_1} is playing around, Picking bits of grass.
+{STR_VAR_1} seems highly interested in the tree.
 {STR_VAR_1} is looking outside and frolicking!
+
+Pokemon exclusive:
+(MAGIKARP) is leaping around more than usual (lake of rage, During team rockets broadcast) ( Pokemon Exclusive ).
+
+Pokemon feature:
+{STR_VAR_1} seems happy to have taken a shower! (Celadon gym) (Grass,Water type).
+
+Misc:
+{STR_VAR_1} seems dazzled after seeing the sky.
+{STR_VAR_1} is fidgeting in front of everyone (maybe baby pokemon).
+{STR_VAR_1} roared!
 {STR_VAR_1} spun around in a circle!
+
 Sad (Special):
+Pokemon feature:
 {STR_VAR_1}'s burn looks painful! (when burnt).
 Upset (Special):
+Specific map(s):
 {STR_VAR_1} is taking shelter in the grass from the rain.
 {STR_VAR_1} is splashing around in the wet grass.
 It seems to have eaten something strange. It's making an odd face... (Olivine Cafe).
 {STR_VAR_1} is staring at the crumbling floor (burnt tower).
 {STR_VAR_1} seems to think that (Player) has disappeared! ( Morty's Gym ).
+
+Map feature:
+{STR_VAR_1} is splashing around in the wet grass.
+
+Pokemon feature:
+Your pokemon doesn't like splashing around on the ground (must be fire type).
+
+Misc:
 {STR_VAR_1} seems to feel a little claustrophobic.
 {STR_VAR_1} is a bit nervous about the narrow space!
 {STR_VAR_1} is splashing around in the grass (must be fire type).
@@ -57,11 +85,14 @@ Your pokemon doesn't like splashing around on the ground (must be fire type).
 {STR_VAR_1} seems somehow sad... (Cemetery).
 {STR_VAR_1} is growling softly (Dragon type in Dragons Den).
 Angry (Special):
+Map feature:
 {STR_VAR_1} is staring at the Persian statue and glaring.
 {STR_VAR_1} is glaring at the PERSIAN statue!
 {STR_VAR_1} is glaring at your foe!
 {STR_VAR_1} is intimidating your foe!
+
 Pensive (Special):
+Specific map(s):
 {STR_VAR_1} is staring intently at the goods on display!
 {STR_VAR_1} is staring at its reflection in the water.
 {STR_VAR_1} is staring intently at the reflection of its face.
@@ -79,7 +110,16 @@ Your pokemon is drooling a little (Olivine Cafe).
 {STR_VAR_1} seems very interested in the bicycles (bike shop).
 {STR_VAR_1} is preoccupied by the floor, which seems like it may collapse (burnt tower).
 {STR_VAR_1} is nervous ( in a gym before beating gym leader ) ( must have type disadvantage ).
+Map feature:
+{STR_VAR_1} is staring intently at the reflection of its face.
+{STR_VAR_1} seems interested in Amphy...
+{STR_VAR_1} has a sleepy look on its face... (Near Jigglypuff in Radio Tower.).
+
+Misc:
+Your pokemon turned to face the other way, showing a defiant expression.
+
 Music (Special):
+Map feature:
 {STR_VAR_1} is pulling out the grass.
 Waah! your pokemon suddenly splashed water! (on a shore).
 {STR_VAR_1} is happy to see what's out doors!
@@ -96,7 +136,9 @@ Your pokemon seems to be enjoying sliding around!
 {STR_VAR_1} is touching the ice.
 {STR_VAR_1} is steadily observing the flow of the river.
 {STR_VAR_1} is noticing the scent of the grass.
+Misc:
 {STR_VAR_1} is playing around, plucking bits of grass.
+{STR_VAR_1} seems happy at the sight of water on the window!
 {STR_VAR_1} is looking up at the ceiling.
 {STR_VAR_1} seems to be enjoying this a little bit!
 {STR_VAR_1} is wandering around enjoying the forest scenery.

@@ -64,6 +64,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
+#include "constants/spreads.h"
 #include "cable_club.h"
 
 extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
@@ -85,12 +86,12 @@ static void EndLinkBattleInSteps(void);
 static void CB2_InitAskRecordBattle(void);
 static void CB2_AskRecordBattle(void);
 static void AskRecordBattle(void);
-static void SpriteCb_MoveWildMonToRight(struct Sprite *sprite);
-static void SpriteCb_WildMonShowHealthbox(struct Sprite *sprite);
-static void SpriteCb_WildMonAnimate(struct Sprite *sprite);
+static void SpriteCB_MoveWildMonToRight(struct Sprite *sprite);
+static void SpriteCB_WildMonShowHealthbox(struct Sprite *sprite);
+static void SpriteCB_WildMonAnimate(struct Sprite *sprite);
 static void SpriteCB_Flicker(struct Sprite *sprite);
 static void SpriteCB_AnimFaintOpponent(struct Sprite *sprite);
-static void SpriteCb_BlinkVisible(struct Sprite *sprite);
+static void SpriteCB_BlinkVisible(struct Sprite *sprite);
 static void SpriteCB_Idle(struct Sprite *sprite);
 static void SpriteCB_BattleSpriteSlideLeft(struct Sprite *sprite);
 static void TurnValuesCleanUp(bool8 var0);
@@ -243,6 +244,7 @@ EWRAM_DATA u8 gLastUsedBall = 0;
 EWRAM_DATA u16 gLastThrownBall = 0;
 EWRAM_DATA u8 gPartyCriticalHits[PARTY_SIZE] = {0};
 EWRAM_DATA static u8 sTriedEvolving = 0;
+EWRAM_DATA bool8 gExpShareCheck = 0;
 
 void (*gPreBattleCallback1)(void);
 void (*gBattleMainFunc)(void);
@@ -309,6 +311,128 @@ const struct OamData gOamData_BattleSpritePlayerSide =
 };
 
 static const s8 sCenterToCornerVecXs[8] ={-32, -16, -16, -32, -32};
+
+// format: attacking type, defending type, damage multiplier
+// the multiplier is a (decimal) fixed-point number:
+// 20 is ×2.0 TYPE_MUL_SUPER_EFFECTIVE
+// 10 is ×1.0 TYPE_MUL_NORMAL
+// 05 is ×0.5 TYPE_MUL_NOT_EFFECTIVE
+// 00 is ×0.0 TYPE_MUL_NO_EFFECT
+const u8 gTypeEffectiveness[336] =
+{
+    TYPE_NORMAL, TYPE_ROCK, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_NORMAL, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIRE, TYPE_FIRE, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIRE, TYPE_WATER, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIRE, TYPE_GRASS, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FIRE, TYPE_ICE, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FIRE, TYPE_BUG, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FIRE, TYPE_ROCK, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIRE, TYPE_DRAGON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIRE, TYPE_STEEL, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_WATER, TYPE_FIRE, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_WATER, TYPE_WATER, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_WATER, TYPE_GRASS, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_WATER, TYPE_GROUND, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_WATER, TYPE_ROCK, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_WATER, TYPE_DRAGON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ELECTRIC, TYPE_WATER, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ELECTRIC, TYPE_ELECTRIC, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ELECTRIC, TYPE_GRASS, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ELECTRIC, TYPE_GROUND, TYPE_MUL_NO_EFFECT,
+    TYPE_ELECTRIC, TYPE_FLYING, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ELECTRIC, TYPE_DRAGON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GRASS, TYPE_FIRE, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GRASS, TYPE_WATER, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_GRASS, TYPE_GRASS, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GRASS, TYPE_POISON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GRASS, TYPE_GROUND, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_GRASS, TYPE_FLYING, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GRASS, TYPE_BUG, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GRASS, TYPE_ROCK, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_GRASS, TYPE_DRAGON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GRASS, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ICE, TYPE_WATER, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ICE, TYPE_GRASS, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ICE, TYPE_ICE, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ICE, TYPE_GROUND, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ICE, TYPE_FLYING, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ICE, TYPE_DRAGON, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ICE, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ICE, TYPE_FIRE, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_NORMAL, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_ICE, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_POISON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_FLYING, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_PSYCHIC, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_BUG, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_ROCK, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_DARK, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_STEEL, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_POISON, TYPE_GRASS, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_POISON, TYPE_POISON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_POISON, TYPE_GROUND, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_POISON, TYPE_ROCK, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_POISON, TYPE_GHOST, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_POISON, TYPE_STEEL, TYPE_MUL_NO_EFFECT,
+    TYPE_GROUND, TYPE_FIRE, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_GROUND, TYPE_ELECTRIC, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_GROUND, TYPE_GRASS, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GROUND, TYPE_POISON, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_GROUND, TYPE_FLYING, TYPE_MUL_NO_EFFECT,
+    TYPE_GROUND, TYPE_BUG, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GROUND, TYPE_ROCK, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_GROUND, TYPE_STEEL, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FLYING, TYPE_ELECTRIC, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FLYING, TYPE_GRASS, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FLYING, TYPE_FIGHTING, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FLYING, TYPE_BUG, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FLYING, TYPE_ROCK, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FLYING, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_PSYCHIC, TYPE_FIGHTING, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_PSYCHIC, TYPE_POISON, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_PSYCHIC, TYPE_PSYCHIC, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_PSYCHIC, TYPE_DARK, TYPE_MUL_NO_EFFECT,
+    TYPE_PSYCHIC, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_BUG, TYPE_FIRE, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_BUG, TYPE_GRASS, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_BUG, TYPE_FIGHTING, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_BUG, TYPE_POISON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_BUG, TYPE_FLYING, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_BUG, TYPE_PSYCHIC, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_BUG, TYPE_GHOST, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_BUG, TYPE_DARK, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_BUG, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ROCK, TYPE_FIRE, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ROCK, TYPE_ICE, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ROCK, TYPE_FIGHTING, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ROCK, TYPE_GROUND, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_ROCK, TYPE_FLYING, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ROCK, TYPE_BUG, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_ROCK, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GHOST, TYPE_NORMAL, TYPE_MUL_NO_EFFECT,
+    TYPE_GHOST, TYPE_PSYCHIC, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_GHOST, TYPE_DARK, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GHOST, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GHOST, TYPE_GHOST, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_DRAGON, TYPE_DRAGON, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_DRAGON, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_DARK, TYPE_FIGHTING, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_DARK, TYPE_PSYCHIC, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_DARK, TYPE_GHOST, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_DARK, TYPE_DARK, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_DARK, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_STEEL, TYPE_FIRE, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_STEEL, TYPE_WATER, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_STEEL, TYPE_ELECTRIC, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_STEEL, TYPE_ICE, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_STEEL, TYPE_ROCK, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_STEEL, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FORESIGHT, TYPE_FORESIGHT, TYPE_MUL_NO_EFFECT,
+    TYPE_NORMAL, TYPE_GHOST, TYPE_MUL_NO_EFFECT,
+    TYPE_FIGHTING, TYPE_GHOST, TYPE_MUL_NO_EFFECT,
+    TYPE_ENDTABLE, TYPE_ENDTABLE, TYPE_MUL_NO_EFFECT
+};
 
 const u8 gTypeNames[NUMBER_OF_MON_TYPES][TYPE_NAME_LENGTH + 1] =
 {
@@ -410,7 +534,112 @@ const struct TrainerMoney gTrainerMoneyTable[] =
     {TRAINER_CLASS_COOL_COUPLE, 6 },
     {TRAINER_CLASS_CRUSH_KIN, 6 },
     {TRAINER_CLASS_OAK, 30 },
+    {TRAINER_CLASS_BROCK, 25 },
+    {TRAINER_CLASS_MISTY, 25 },
+    {TRAINER_CLASS_LTSURGE, 25 },
+    {TRAINER_CLASS_ERIKA, 25 },
+    {TRAINER_CLASS_KOGA, 25 },
+    {TRAINER_CLASS_SABRINA, 25 },
+    {TRAINER_CLASS_BLAINE, 25 },
+    {TRAINER_CLASS_GIOVANNI, 25 },
+    {TRAINER_CLASS_LORELEI, 25 },
+    {TRAINER_CLASS_BRUNO, 25 }, 
+    {TRAINER_CLASS_AGATHA, 25 },
+    {TRAINER_CLASS_LANCE, 25 },
     {0xFF, 5}, // Any trainer class not listed above uses this
+};
+
+// Determines which Poke Ball type is used by each trainer class
+const struct TrainerBall gTrainerBallTable[] =
+{
+    {TRAINER_CLASS_TEAM_AQUA, ITEM_NET_BALL},
+    {TRAINER_CLASS_AQUA_ADMIN, ITEM_NET_BALL},
+    {TRAINER_CLASS_AQUA_LEADER, ITEM_MASTER_BALL},
+    {TRAINER_CLASS_AROMA_LADY, ITEM_FRIEND_BALL},
+    {TRAINER_CLASS_RUIN_MANIAC, ITEM_DUSK_BALL},
+    {TRAINER_CLASS_INTERVIEWER, ITEM_REPEAT_BALL},
+    {TRAINER_CLASS_TUBER_F, ITEM_DIVE_BALL},
+    {TRAINER_CLASS_TUBER_M, ITEM_DIVE_BALL},
+    {TRAINER_CLASS_SIS_AND_BRO, ITEM_POKE_BALL},
+    {TRAINER_CLASS_COOLTRAINER, ITEM_ULTRA_BALL},
+    {TRAINER_CLASS_HEX_MANIAC, ITEM_DUSK_BALL},
+    {TRAINER_CLASS_LADY, ITEM_LUXURY_BALL},
+    {TRAINER_CLASS_BEAUTY, ITEM_LOVE_BALL},
+    {TRAINER_CLASS_RICH_BOY, ITEM_LUXURY_BALL},
+    {TRAINER_CLASS_POKEMANIAC, ITEM_MOON_BALL},
+    {TRAINER_CLASS_SWIMMER_M, ITEM_DIVE_BALL},
+    {TRAINER_CLASS_BLACK_BELT, ITEM_HEAVY_BALL},
+    {TRAINER_CLASS_GUITARIST, ITEM_FAST_BALL},
+    {TRAINER_CLASS_KINDLER, ITEM_POKE_BALL},
+    {TRAINER_CLASS_CAMPER, ITEM_NEST_BALL},
+    {TRAINER_CLASS_OLD_COUPLE, ITEM_POKE_BALL},
+    {TRAINER_CLASS_BUG_MANIAC, ITEM_NET_BALL},
+    {TRAINER_CLASS_PSYCHIC, ITEM_DREAM_BALL},
+    {TRAINER_CLASS_GENTLEMAN, ITEM_LUXURY_BALL},
+    {TRAINER_CLASS_ELITE_FOUR, ITEM_ULTRA_BALL},
+    {TRAINER_CLASS_LEADER, ITEM_ULTRA_BALL},
+    {TRAINER_CLASS_SCHOOL_KID, ITEM_POKE_BALL},
+    {TRAINER_CLASS_SR_AND_JR, ITEM_POKE_BALL},
+    {TRAINER_CLASS_POKEFAN, ITEM_LOVE_BALL},
+    {TRAINER_CLASS_EXPERT, ITEM_TIMER_BALL},
+    {TRAINER_CLASS_YOUNGSTER, ITEM_POKE_BALL},
+    {TRAINER_CLASS_CHAMPION, ITEM_CHERISH_BALL},
+    {TRAINER_CLASS_FISHERMAN, ITEM_LURE_BALL},
+    {TRAINER_CLASS_TRIATHLETE, ITEM_FAST_BALL},
+    {TRAINER_CLASS_DRAGON_TAMER, ITEM_LEVEL_BALL},
+    {TRAINER_CLASS_BIRD_KEEPER, ITEM_QUICK_BALL},
+    {TRAINER_CLASS_NINJA_BOY, ITEM_QUICK_BALL},
+    {TRAINER_CLASS_BATTLE_GIRL, ITEM_HEAVY_BALL},
+    {TRAINER_CLASS_PARASOL_LADY, ITEM_POKE_BALL},
+    {TRAINER_CLASS_SWIMMER_F, ITEM_DIVE_BALL},
+    {TRAINER_CLASS_PICNICKER, ITEM_FRIEND_BALL},
+    {TRAINER_CLASS_TWINS, ITEM_POKE_BALL},
+    {TRAINER_CLASS_SAILOR, ITEM_DIVE_BALL},
+    {TRAINER_CLASS_COLLECTOR, ITEM_REPEAT_BALL},
+    {TRAINER_CLASS_RIVAL, ITEM_POKE_BALL},
+    {TRAINER_CLASS_PKMN_BREEDER, ITEM_TIMER_BALL},
+    {TRAINER_CLASS_PKMN_RANGER, ITEM_SAFARI_BALL},
+    {TRAINER_CLASS_TEAM_MAGMA, ITEM_NEST_BALL},
+    {TRAINER_CLASS_MAGMA_ADMIN, ITEM_NEST_BALL},
+    {TRAINER_CLASS_MAGMA_LEADER, ITEM_MASTER_BALL},
+    {TRAINER_CLASS_LASS, ITEM_FRIEND_BALL},
+    {TRAINER_CLASS_BUG_CATCHER, ITEM_NET_BALL},
+    {TRAINER_CLASS_HIKER, ITEM_HEAVY_BALL},
+    {TRAINER_CLASS_YOUNG_COUPLE, ITEM_LOVE_BALL},
+    {TRAINER_CLASS_WINSTRATE, ITEM_POKE_BALL},
+    {TRAINER_CLASS_TEAM_ROCKET, ITEM_POKE_BALL},
+    {TRAINER_CLASS_ROCKET_DUO, ITEM_GREAT_BALL},
+    {TRAINER_CLASS_ROCKET_BOSS, ITEM_LUXURY_BALL},
+    {TRAINER_CLASS_SUPER_NERD, ITEM_GREAT_BALL},
+    {TRAINER_CLASS_BURGLAR, ITEM_DUSK_BALL},
+    {TRAINER_CLASS_CRUSH_GIRL, ITEM_HEAVY_BALL},
+    {TRAINER_CLASS_JUGGLER, ITEM_SPORT_BALL},
+    {TRAINER_CLASS_PAINTER, ITEM_FRIEND_BALL},
+    {TRAINER_CLASS_TAMER, ITEM_LEVEL_BALL},
+    {TRAINER_CLASS_ENGINEER, ITEM_GREAT_BALL},
+    {TRAINER_CLASS_BIKER, ITEM_DUSK_BALL},
+    {TRAINER_CLASS_GAMBLER, ITEM_REPEAT_BALL},
+    {TRAINER_CLASS_SCIENTIST, ITEM_GREAT_BALL},
+    {TRAINER_CLASS_CUE_BALL, ITEM_DUSK_BALL},
+    {TRAINER_CLASS_CHANNELER, ITEM_MOON_BALL},
+    {TRAINER_CLASS_ROCKER, ITEM_FAST_BALL},
+    {TRAINER_CLASS_COOL_COUPLE, ITEM_GREAT_BALL},
+    {TRAINER_CLASS_CRUSH_KIN, ITEM_HEAVY_BALL},
+    {TRAINER_CLASS_OAK, ITEM_POKE_BALL},
+    {TRAINER_CLASS_BROCK, ITEM_HEAVY_BALL},
+    {TRAINER_CLASS_MISTY, ITEM_DIVE_BALL},
+    {TRAINER_CLASS_LTSURGE, ITEM_FAST_BALL},
+    {TRAINER_CLASS_ERIKA, ITEM_FRIEND_BALL},
+    {TRAINER_CLASS_KOGA, ITEM_MOON_BALL},
+    {TRAINER_CLASS_SABRINA, ITEM_TIMER_BALL},
+    {TRAINER_CLASS_BLAINE, ITEM_LEVEL_BALL},
+    {TRAINER_CLASS_GIOVANNI, ITEM_MASTER_BALL},
+    {TRAINER_CLASS_LORELEI, ITEM_PREMIER_BALL},
+    {TRAINER_CLASS_BRUNO, ITEM_HEAVY_BALL},
+    {TRAINER_CLASS_AGATHA, ITEM_DUSK_BALL},
+    {TRAINER_CLASS_LANCE, ITEM_LEVEL_BALL},
+    {0xFF, ITEM_POKE_BALL}, 
+
 };
 
 #include "data/text/abilities.h"
@@ -1853,21 +2082,18 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
     u8 fixedIV;
     s32 i, j;
     u8 monsCount;
-
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
-
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !(gBattleTypeFlags & (BATTLE_TYPE_FRONTIER
                                                                         | BATTLE_TYPE_EREADER_TRAINER
                                                                         | BATTLE_TYPE_TRAINER_HILL)))
     {
         if (firstTrainer == TRUE)
             ZeroEnemyPartyMons();
-
         if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
         {
-            if (gTrainers[trainerNum].partySize > PARTY_SIZE / 2)
-                monsCount = PARTY_SIZE / 2;
+            if (gTrainers[trainerNum].partySize > 3)
+                monsCount = 3;
             else
                 monsCount = gTrainers[trainerNum].partySize;
         }
@@ -1875,45 +2101,36 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
         {
             monsCount = gTrainers[trainerNum].partySize;
         }
-
         for (i = 0; i < monsCount; i++)
         {
-
             if (gTrainers[trainerNum].doubleBattle == TRUE)
                 personalityValue = 0x80;
-            else if (gTrainers[trainerNum].encounterMusic_gender & F_TRAINER_FEMALE)
-                personalityValue = 0x78; // Use personality more likely to result in a female Pokémon
+            else if (gTrainers[trainerNum].encounterMusic_gender & 0x80)
+                personalityValue = 0x78;
             else
-                personalityValue = 0x88; // Use personality more likely to result in a male Pokémon
-
+                personalityValue = 0x88;
             for (j = 0; gTrainers[trainerNum].trainerName[j] != EOS; j++)
                 nameHash += gTrainers[trainerNum].trainerName[j];
-
             switch (gTrainers[trainerNum].partyFlags)
             {
             case 0:
             {
                 const struct TrainerMonNoItemDefaultMoves *partyData = gTrainers[trainerNum].party.NoItemDefaultMoves;
-
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
                     nameHash += gSpeciesNames[partyData[i].species][j];
-
                 personalityValue += nameHash << 8;
-                fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
+                fixedIV = partyData[i].iv * 31 / 255;
                 CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
                 break;
             }
             case F_TRAINER_PARTY_CUSTOM_MOVESET:
             {
                 const struct TrainerMonNoItemCustomMoves *partyData = gTrainers[trainerNum].party.NoItemCustomMoves;
-
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
                     nameHash += gSpeciesNames[partyData[i].species][j];
-
                 personalityValue += nameHash << 8;
-                fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
+                fixedIV = partyData[i].iv * 31 / 255;
                 CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
-
                 for (j = 0; j < MAX_MON_MOVES; j++)
                 {
                     SetMonData(&party[i], MON_DATA_MOVE1 + j, &partyData[i].moves[j]);
@@ -1924,43 +2141,57 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
             case F_TRAINER_PARTY_HELD_ITEM:
             {
                 const struct TrainerMonItemDefaultMoves *partyData = gTrainers[trainerNum].party.ItemDefaultMoves;
-
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
                     nameHash += gSpeciesNames[partyData[i].species][j];
-
                 personalityValue += nameHash << 8;
-                fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
+                fixedIV = partyData[i].iv * 31 / 255;
                 CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
-
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
                 break;
             }
             case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
             {
                 const struct TrainerMonItemCustomMoves *partyData = gTrainers[trainerNum].party.ItemCustomMoves;
-
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
-                fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
 
+                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, 31, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+
+                SetMonData(&party[i], MON_DATA_NATURE, &gSets[partyData[i].spread].nature);
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
+                SetMonData(&party[i], MON_DATA_ABILITY_NUM, &partyData[i].ability);
 
-                for (j = 0; j < MAX_MON_MOVES; j++)
+                // Set EVs and IVs from premade spreads
+                for (j = 0; j < 6; j++)
                 {
-                    SetMonData(&party[i], MON_DATA_MOVE1 + j, &partyData[i].moves[j]);
-                    SetMonData(&party[i], MON_DATA_PP1 + j, &gBattleMoves[partyData[i].moves[j]].pp);
+                    SetMonData(&party[i], MON_DATA_HP_EV + j, &gSets[partyData[i].spread].EVs[j]);
+                    SetMonData(&party[i], MON_DATA_HP_IV + j, &gSets[partyData[i].spread].IVs[j]);
                 }
-                break;
+
+                CalculateMonStats(&party[i]); // called twice; fix in future
+
+                    for (j = 0; j < MAX_MON_MOVES; j++)
+                    {
+                        if(partyData[i].moves[j] != MOVE_STRUGGLE){
+                        SetMonData(&party[i], MON_DATA_MOVE1 + j, &partyData[i].moves[j]);
+                        SetMonData(&party[i], MON_DATA_PP1 + j, &gBattleMoves[partyData[i].moves[j]].pp);
+                        }
+                    }
+                    break;
             }
             }
+            for (j = 0; gTrainerBallTable[j].classId != 0xFF; j++)
+            {
+                if (gTrainerBallTable[j].classId == gTrainers[trainerNum].trainerClass)
+                    break;
+            }
+            SetMonData(&party[i], MON_DATA_POKEBALL, &gTrainerBallTable[j].Ball);
         }
 
         gBattleTypeFlags |= gTrainers[trainerNum].doubleBattle;
     }
-
     return gTrainers[trainerNum].partySize;
 }
 
@@ -2547,9 +2778,9 @@ u32 GetBattleWindowTemplatePixelWidth(u32 windowsType, u32 tableId)
 #define sBattler            data[0]
 #define sSpeciesId          data[2]
 
-void SpriteCb_WildMon(struct Sprite *sprite)
+void SpriteCB_WildMon(struct Sprite *sprite)
 {
-    sprite->callback = SpriteCb_MoveWildMonToRight;
+    sprite->callback = SpriteCB_MoveWildMonToRight;
     StartSpriteAnimIfDifferent(sprite, 0);
     if (WILD_DOUBLE_BATTLE)
         BeginNormalPaletteFade((0x10000 << sprite->sBattler) | (0x10000 << BATTLE_PARTNER(sprite->sBattler)), 0, 10, 10, RGB(8, 8, 8));
@@ -2557,25 +2788,25 @@ void SpriteCb_WildMon(struct Sprite *sprite)
         BeginNormalPaletteFade((0x10000 << sprite->sBattler), 0, 10, 10, RGB(8, 8, 8));
 }
 
-static void SpriteCb_MoveWildMonToRight(struct Sprite *sprite)
+static void SpriteCB_MoveWildMonToRight(struct Sprite *sprite)
 {
     if ((gIntroSlideFlags & 1) == 0)
     {
         sprite->x2 += 2;
         if (sprite->x2 == 0)
         {
-            sprite->callback = SpriteCb_WildMonShowHealthbox;
+            sprite->callback = SpriteCB_WildMonShowHealthbox;
         }
     }
 }
 
-static void SpriteCb_WildMonShowHealthbox(struct Sprite *sprite)
+static void SpriteCB_WildMonShowHealthbox(struct Sprite *sprite)
 {
     if (sprite->animEnded)
     {
         StartHealthboxSlideIn(sprite->sBattler);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[sprite->sBattler]);
-        sprite->callback = SpriteCb_WildMonAnimate;
+        sprite->callback = SpriteCB_WildMonAnimate;
         StartSpriteAnimIfDifferent(sprite, 0);
         if (WILD_DOUBLE_BATTLE)
             BeginNormalPaletteFade((0x10000 << sprite->sBattler) | (0x10000 << BATTLE_PARTNER(sprite->sBattler)), 0, 10, 0, RGB(8, 8, 8));
@@ -2584,7 +2815,7 @@ static void SpriteCb_WildMonShowHealthbox(struct Sprite *sprite)
     }
 }
 
-static void SpriteCb_WildMonAnimate(struct Sprite *sprite)
+static void SpriteCB_WildMonAnimate(struct Sprite *sprite)
 {
     if (!gPaletteFade.active)
     {
@@ -2693,14 +2924,14 @@ static void SpriteCB_AnimFaintOpponent(struct Sprite *sprite)
 }
 
 // Used when selecting a move, which can hit multiple targets, in double battles.
-void SpriteCb_ShowAsMoveTarget(struct Sprite *sprite)
+void SpriteCB_ShowAsMoveTarget(struct Sprite *sprite)
 {
     sprite->data[3] = 8;
     sprite->data[4] = sprite->invisible;
-    sprite->callback = SpriteCb_BlinkVisible;
+    sprite->callback = SpriteCB_BlinkVisible;
 }
 
-static void SpriteCb_BlinkVisible(struct Sprite *sprite)
+static void SpriteCB_BlinkVisible(struct Sprite *sprite)
 {
     if (--sprite->data[3] == 0)
     {
@@ -2709,7 +2940,7 @@ static void SpriteCb_BlinkVisible(struct Sprite *sprite)
     }
 }
 
-void SpriteCb_HideAsMoveTarget(struct Sprite *sprite)
+void SpriteCB_HideAsMoveTarget(struct Sprite *sprite)
 {
     sprite->invisible = sprite->data[4];
     sprite->data[4] = FALSE;
@@ -3004,6 +3235,7 @@ static void BattleStartClearSetData(void)
 	gBattleScripting.monCaught = FALSE;
 
     gMultiHitCounter = 0;
+    gBattleScripting.savedDmg = 0;
     gBattleOutcome = 0;
     gBattleControllerExecFlags = 0;
     gPaydayMoney = 0;
@@ -4822,6 +5054,8 @@ static void TurnValuesCleanUp(bool8 var0)
 
         if (gDisableStructs[gActiveBattler].substituteHP == 0)
             gBattleMons[gActiveBattler].status2 &= ~STATUS2_SUBSTITUTE;
+
+        gSpecialStatuses[gActiveBattler].parentalBondState = PARENTAL_BOND_OFF;
     }
 
     gSideStatuses[0] &= ~(SIDE_STATUS_QUICK_GUARD | SIDE_STATUS_WIDE_GUARD | SIDE_STATUS_CRAFTY_SHIELD | SIDE_STATUS_MAT_BLOCK);
@@ -5040,6 +5274,18 @@ static void HandleEndTurn_BattleWon(void)
         case TRAINER_CLASS_CHAMPION:
         case TRAINER_CLASS_ELITE_FOUR:
         case TRAINER_CLASS_OAK:
+        case TRAINER_CLASS_BROCK:
+        case TRAINER_CLASS_MISTY:
+        case TRAINER_CLASS_LTSURGE:
+        case TRAINER_CLASS_ERIKA:
+        case TRAINER_CLASS_KOGA:
+        case TRAINER_CLASS_SABRINA:
+        case TRAINER_CLASS_BLAINE:
+        case TRAINER_CLASS_GIOVANNI:
+        case TRAINER_CLASS_LORELEI:
+        case TRAINER_CLASS_BRUNO:
+        case TRAINER_CLASS_AGATHA:
+        case TRAINER_CLASS_LANCE:
             PlayBGM(MUS_RG_VICTORY_GYM_LEADER);
             break;
         default:
@@ -5526,4 +5772,43 @@ void SetTotemBoost(void)
 bool32 IsWildMonSmart(void)
 {
     return (B_SMART_WILD_AI_FLAG != 0 && FlagGet(B_SMART_WILD_AI_FLAG));
+}
+
+enum LevelCap {
+    LEVEL_CAP_NO_BADGES,
+    LEVEL_CAP_BADGE_1,
+    LEVEL_CAP_BADGE_2,
+    LEVEL_CAP_BADGE_3,
+    LEVEL_CAP_BADGE_4,
+    LEVEL_CAP_BADGE_5,
+    LEVEL_CAP_BADGE_6,
+    LEVEL_CAP_BADGE_7,
+    LEVEL_CAP_BADGE_8
+};
+static const u8 sLevelCapTable[] = 
+{
+    [LEVEL_CAP_NO_BADGES]   = 20,
+    [LEVEL_CAP_BADGE_1]     = 30,
+    [LEVEL_CAP_BADGE_2]     = 40,
+    [LEVEL_CAP_BADGE_3]     = 45,
+    [LEVEL_CAP_BADGE_4]     = 50,
+    [LEVEL_CAP_BADGE_5]     = 55,
+    [LEVEL_CAP_BADGE_6]     = 60,
+    [LEVEL_CAP_BADGE_7]     = 70,
+    [LEVEL_CAP_BADGE_8]     = 80,
+};
+
+u8 GetCurrentPartyLevelCap(void)
+{
+    u16 i, badgeCount = 0;
+    for (i = FLAG_BADGE01_GET; i < FLAG_BADGE01_GET + NUM_BADGES; i++) //count badges
+    {
+        if (FlagGet(i))
+            badgeCount++;
+    }
+
+    if (FlagGet(FLAG_IS_CHAMPION)) //after beating the E4 remove the cap
+        return MAX_LEVEL;
+    else
+        return sLevelCapTable[badgeCount];
 }

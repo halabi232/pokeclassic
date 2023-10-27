@@ -13,6 +13,11 @@ Route21_North_OnResume:
 	call Common_EventScript_GetDayOrNight
 	end
 
+Route21_North_EventScript_ItemTM54::
+	finditem ITEM_TM54, 1
+	release
+	end
+
 Route21_North_EventScript_Anri::
 	trainerbattle_single REMATCHABLE_TRAINER_COOLTRAINER_ANRI_1, Route21_North_Text_AnriIntro, Route21_North_Text_AnriDefeat, Route21_North_EventScript_RegisterAnriAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle

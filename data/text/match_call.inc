@@ -391,7 +391,7 @@ MatchCall_EventScript_AideEverstoneReady::
 	waitmessage
 	delay 30
 	closemessage
-	clearflag FLAG_HIDE_AIDE_ROUTE10
+	clearflag FLAG_HIDE_AIDE_ROUTE15
 	clearflag FLAG_QUEUE_AIDE_CALL
 	releaseall
 	end
@@ -402,7 +402,7 @@ MatchCall_Text_AideEverstoneReady::
 	.string "another Gym Badge!\p"
 	.string "Professor Oak would like to\n"
 	.string "give you a reward.\p"
-	.string "If you meet me on Route 10, \n"
+	.string "If you meet me on Route 15, \n"
 	.string "I will deliver it to you!$"
 
 MatchCall_Text_AideOnMyWayRoute10::
@@ -475,7 +475,7 @@ MatchCall_EventScript_AideExpShareReady::
 	waitmessage
 	delay 30
 	closemessage
-	clearflag FLAG_HIDE_AIDE_ROUTE15
+	clearflag FLAG_HIDE_AIDE_ROUTE10
 	clearflag FLAG_QUEUE_AIDE_CALL
 	releaseall
 	end
@@ -486,7 +486,7 @@ MatchCall_Text_AideExpShareReady::
 	.string "another Gym Badge!\p"
 	.string "Professor Oak would like to\n"
 	.string "give you a reward.\p"
-	.string "If you meet me on Route 15,\n"
+	.string "If you meet me on Route 10,\n"
 	.string "I will deliver it to you!$"
 
 MatchCall_Text_AideOnMyWayRoute15::

@@ -202,13 +202,14 @@ SaffronCity_Gym_Text_ReceivedBadge::
 
 SaffronCity_Gym_Text_ExplainBadge::
     .string "The Marsh Badge allows your\n"
-    .string "Pokémon to use Rock Smash.\p"
-    .string "It will also make Pokémon up\n"
-    .string "to Lv. 70 obey you.\p"
+    .string "Pokémon to use Surf.\p"
+    .string "It will also enable to train\n"
+    .string "Pokémon up to Lv. 60!\p"
+	.string "Pokémon obtained from trades\n"
+	.string "will also only obey you up to\l"
+	.string "Lv. 60.\p"
     .string "Stronger Pokémon will become wild,\n"
     .string "ignoring your orders in battle.\p"
-    .string "Just don't raise your Pokémon too\n"
-    .string "much to avoid that problem.$"
 
 SaffronCity_Gym_EventScript_GetTM::
 	msgbox SaffronCity_Gym_Text_TakeThisWithYou, MSGBOX_DEFAULT
@@ -385,3 +386,4 @@ SaffronCity_Gym_Text_GymStatuePlayerWon::
     .string "Leader: Sabrina\p"
     .string "Winning Trainers:\n"
     .string "{RIVAL}, {PLAYER}$"
+

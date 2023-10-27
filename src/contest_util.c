@@ -319,9 +319,10 @@ static const struct BgTemplate sBgTemplates[] =
     }
 };
 
-static const struct WindowTemplate sWindowTemplates[] =
+// Window IDs are implicitly shared with contestant IDs in LoadContestMonName
+static const struct WindowTemplate sWindowTemplates[CONTESTANT_COUNT + 1] =
 {
-    {
+    { // Contestant 1
         .bg = 1,
         .tilemapLeft = 7,
         .tilemapTop = 4,
@@ -330,7 +331,7 @@ static const struct WindowTemplate sWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 770
     },
-    {
+    { // Contestant 2
         .bg = 1,
         .tilemapLeft = 7,
         .tilemapTop = 7,
@@ -339,7 +340,7 @@ static const struct WindowTemplate sWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 794
     },
-    {
+    { // Contestant 3
         .bg = 1,
         .tilemapLeft = 7,
         .tilemapTop = 10,
@@ -348,7 +349,7 @@ static const struct WindowTemplate sWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 818
     },
-    {
+    { // Contestant 4
         .bg = 1,
         .tilemapLeft = 7,
         .tilemapTop = 13,
@@ -357,7 +358,7 @@ static const struct WindowTemplate sWindowTemplates[] =
         .paletteNum = 15,
         .baseBlock = 842
     },
-    DUMMY_WIN_TEMPLATE,
+    DUMMY_WIN_TEMPLATE
 };
 
 static const struct OamData sOamData_WirelessIndicatorWindow =
@@ -2266,7 +2267,7 @@ void Task_LinkContest_FinalizeConnection(u8 taskId)
         DestroyTask(taskId);
         SetDynamicWarp(0, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE);
         ScriptContext2_Disable();
-        EnableBothScriptContexts();
+EnableBothScriptContexts();
     }
 }
 
@@ -2282,7 +2283,7 @@ static void Task_LinkContest_WaitDisconnect(u8 taskId)
     {
         DestroyTask(taskId);
         ScriptContext2_Disable();
-        EnableBothScriptContexts();
+EnableBothScriptContexts();
     }
 }
 
@@ -2505,6 +2506,12 @@ void SetLinkContestPlayerGfx(void)
     }
 }
 
+// copied from event_object_movement
+#define OBJ_EVENT_PAL_TAG_BRENDAN                 0x1100
+#define OBJ_EVENT_PAL_TAG_MAY                     0x1110
+#define OBJ_EVENT_PAL_TAG_RS_BRENDAN              0x1122
+#define OBJ_EVENT_PAL_TAG_RS_MAY                  0x1123
+
 void LoadLinkContestPlayerPalettes(void)
 {
     int i;
@@ -2513,28 +2520,28 @@ void LoadLinkContestPlayerPalettes(void)
     struct Sprite *sprite;
     static const u8 sContestantLocalIds[CONTESTANT_COUNT] = { 3, 4, 5, 14 };
 
-    gReservedSpritePaletteCount = 12;
+    // gReservedSpritePaletteCount = 12;
+    // TODO: Does dynamically allocating link player palettes break link contests?
     if (gLinkContestFlags & LINK_CONTEST_FLAG_IS_LINK)
     {
         for (i = 0; i < gNumLinkContestPlayers; i++)
         {
             objectEventId = GetObjectEventIdByLocalIdAndMap(sContestantLocalIds[i], gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
             sprite = &gSprites[gObjectEvents[objectEventId].spriteId];
-            sprite->oam.paletteNum = 6 + i;
             version = (u8)gLinkPlayers[i].version;
             if (version == VERSION_RUBY || version == VERSION_SAPPHIRE)
             {
                 if (gLinkPlayers[i].gender == MALE)
-                    LoadPalette(gObjectEventPal_RubySapphireBrendan, 0x160 + i * 0x10, 0x20);
+                    sprite->oam.paletteNum = LoadObjectEventPalette(OBJ_EVENT_PAL_TAG_RS_BRENDAN);
                 else
-                    LoadPalette(gObjectEventPal_RubySapphireMay, 0x160 + i * 0x10, 0x20);
+                    sprite->oam.paletteNum = LoadObjectEventPalette(OBJ_EVENT_PAL_TAG_RS_MAY);
             }
             else
             {
                 if (gLinkPlayers[i].gender == MALE)
-                    LoadPalette(gObjectEventPal_Brendan, 0x160 + i * 0x10, 0x20);
+                    sprite->oam.paletteNum = LoadObjectEventPalette(OBJ_EVENT_PAL_TAG_BRENDAN);
                 else
-                    LoadPalette(gObjectEventPal_May, 0x160 + i * 0x10, 0x20);
+                    sprite->oam.paletteNum = LoadObjectEventPalette(OBJ_EVENT_PAL_TAG_MAY);
             }
         }
     }

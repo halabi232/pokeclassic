@@ -7,6 +7,12 @@ struct TrainerMoney
     u8 value;
 };
 
+struct TrainerBall
+{
+    u8 classId;
+    u8 Ball;
+};
+
 // For displaying a multi battle partner's Pokémon in the party menu
 struct MultiPartnerMenuPokemon
 {
@@ -21,6 +27,21 @@ struct MultiPartnerMenuPokemon
     /*0x1C*/ u8 gender;
     /*0x1D*/ u8 language;
 };
+
+// defines for the u8 array gTypeEffectiveness
+#define TYPE_EFFECT_ATK_TYPE(i)((gTypeEffectiveness[i + 0]))
+#define TYPE_EFFECT_DEF_TYPE(i)((gTypeEffectiveness[i + 1]))
+#define TYPE_EFFECT_MULTIPLIER(i)((gTypeEffectiveness[i + 2]))
+
+// defines for the gTypeEffectiveness multipliers
+#define TYPE_MUL_NO_EFFECT          0
+#define TYPE_MUL_NOT_EFFECTIVE      5
+#define TYPE_MUL_NORMAL             10
+#define TYPE_MUL_SUPER_EFFECTIVE    20
+
+// special type table Ids
+#define TYPE_FORESIGHT  0xFE
+#define TYPE_ENDTABLE   0xFF
 
 #if B_EXPANDED_ABILITY_NAMES
 #define ABILITY_NAME_LENGTH 16
@@ -41,11 +62,11 @@ void SpriteCB_VsLetterInit(struct Sprite *sprite);
 void CB2_InitEndLinkBattle(void);
 u32 GetBattleBgTemplateData(u8 arrayId, u8 caseId);
 u32 GetBattleWindowTemplatePixelWidth(u32 setId, u32 tableId);
-void SpriteCb_WildMon(struct Sprite *sprite);
+void SpriteCB_WildMon(struct Sprite *sprite);
 void SpriteCallbackDummy_2(struct Sprite *sprite);
 void SpriteCB_FaintOpponentMon(struct Sprite *sprite);
-void SpriteCb_ShowAsMoveTarget(struct Sprite *sprite);
-void SpriteCb_HideAsMoveTarget(struct Sprite *sprite);
+void SpriteCB_ShowAsMoveTarget(struct Sprite *sprite);
+void SpriteCB_HideAsMoveTarget(struct Sprite *sprite);
 void SpriteCB_OpponentMonFromBall(struct Sprite *sprite);
 void SpriteCB_BattleSpriteStartSlideLeft(struct Sprite *sprite);
 void SpriteCB_FaintSlideAnim(struct Sprite *sprite);
@@ -73,12 +94,14 @@ bool8 TryRunFromBattle(u8 battlerId);
 void SpecialStatusesClear(void);
 void SetTypeBeforeUsingMove(u16 move, u8 battlerAtk);
 bool32 IsWildMonSmart(void);
+u8 GetCurrentPartyLevelCap(void);
 
 extern struct MultiPartnerMenuPokemon gMultiPartnerParty[MULTI_PARTY_SIZE];
 
 extern const struct SpriteTemplate gUnusedBattleInitSprite;
 extern const struct OamData gOamData_BattleSpriteOpponentSide;
 extern const struct OamData gOamData_BattleSpritePlayerSide;
+extern const u8 gTypeEffectiveness[336];
 extern const u8 gTypeNames[NUMBER_OF_MON_TYPES][TYPE_NAME_LENGTH + 1];
 extern const struct TrainerMoney gTrainerMoneyTable[];
 extern const u8 gAbilityNames[][ABILITY_NAME_LENGTH + 1];

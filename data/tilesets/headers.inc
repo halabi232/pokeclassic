@@ -1479,3 +1479,14 @@ gTileset_HallOfFame::
 	.4byte gMetatiles_HallOfFame
 	.4byte gMetatileAttributes_HallOfFame
 	.4byte 0x0
+
+	.align 2
+gTileset_ContestPrim::
+	.byte TRUE @ is compressed
+	.byte FALSE @ is secondary
+	.2byte 0
+	.4byte gTilesetTiles_ContestPrim
+	.4byte gTilesetPalettes_ContestPrim
+	.4byte gMetatiles_ContestPrim
+	.4byte gMetatileAttributes_ContestPrim
+	.4byte NULL

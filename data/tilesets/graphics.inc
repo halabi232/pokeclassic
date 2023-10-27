@@ -3086,3 +3086,23 @@ gTilesetPalettes_DepartmentStore::
     .incbin "data/tilesets/secondary/department_store/palettes/13.gbapal"
     .incbin "data/tilesets/secondary/department_store/palettes/14.gbapal"
     .incbin "data/tilesets/secondary/department_store/palettes/15.gbapal"
+
+	.align 2
+gTilesetPalettes_ContestPrim::
+	.incbin "data/tilesets/primary/contestprim/palettes/00.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/01.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/02.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/03.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/04.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/05.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/06.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/07.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/08.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/09.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/10.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/11.gbapal"
+	.incbin "data/tilesets/primary/contestprim/palettes/12.gbapal"
+
+	.align 2
+gTilesetTiles_ContestPrim::
+	.incbin "data/tilesets/primary/contestprim/tiles.4bpp.lz"

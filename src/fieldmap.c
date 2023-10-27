@@ -82,7 +82,7 @@ void InitMap(void)
     InitMapLayoutData(&gMapHeader);
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     RunOnLoadMapScript();
-    CacheLightMetatiles();
+CacheLightMetatiles();
 }
 
 void InitMapFromSavedGame(void)
@@ -92,7 +92,7 @@ void InitMapFromSavedGame(void)
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     LoadSavedMapView();
     RunOnLoadMapScript();
-    CacheLightMetatiles();
+CacheLightMetatiles();
     UpdateTVScreensOnMap(gBackupMapLayout.width, gBackupMapLayout.height);
 }
 
@@ -888,19 +888,20 @@ static void CopyTilesetToVramUsingHeap(struct Tileset const *tileset, u16 numTil
     }
 }
 
-static void FieldmapPaletteDummy(u16 offset, u16 size)
+// Below two are dummied functions from FRLG, used to tint the overworld palettes for the Quest Log
+static void ApplyGlobalTintToPaletteEntries(u16 offset, u16 size)
 {
 
 }
 
-static void FieldmapUnkDummy(void)
+static void ApplyGlobalTintToPaletteSlot(u8 slot, u8 count)
 {
 
 }
 
-void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u16 size)
+void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u16 size, bool8 skipFaded)
 {
-    u16 black = RGB_BLACK;
+u16 black = RGB_BLACK;
     u32 low = 0;
     u32 high = 0;
 
@@ -909,8 +910,8 @@ void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u16 size)
         if (tileset->isSecondary == FALSE)
         {
             LoadPalette(&black, destOffset, 2);
-            LoadPalette(((u16*)tileset->palettes) + 1, destOffset + 1, size - 2);
-            FieldmapPaletteDummy(destOffset + 1, (size - 2) >> 1);
+                LoadPalette(((u16*)tileset->palettes) + 1, destOffset + 1, size - 2);
+            ApplyGlobalTintToPaletteEntries(destOffset + 1, (size - 2) >> 1);
             low = 0;
             high = NUM_PALS_IN_PRIMARY;
         }
@@ -923,7 +924,7 @@ void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u16 size)
         else
         {
             LoadCompressedPalette((u32*)tileset->palettes, destOffset, size);
-            FieldmapPaletteDummy(destOffset, size >> 1);
+            ApplyGlobalTintToPaletteEntries(destOffset, size >> 1);
         }
         if (tileset->isSecondary == FALSE || tileset->isSecondary == TRUE) {
             u32 i;
@@ -956,12 +957,12 @@ void CopySecondaryTilesetToVramUsingHeap(struct MapLayout const *mapLayout)
 
 static void LoadPrimaryTilesetPalette(struct MapLayout const *mapLayout)
 {
-    LoadTilesetPalette(mapLayout->primaryTileset, 0, NUM_PALS_IN_PRIMARY * 16 * 2);
+    LoadTilesetPalette(mapLayout->primaryTileset, 0, NUM_PALS_IN_PRIMARY * 16 * 2, FALSE);
 }
 
-void LoadSecondaryTilesetPalette(struct MapLayout const *mapLayout)
+void LoadSecondaryTilesetPalette(struct MapLayout const *mapLayout, bool8 skipFaded)
 {
-    LoadTilesetPalette(mapLayout->secondaryTileset, NUM_PALS_IN_PRIMARY * 16, (NUM_PALS_TOTAL - NUM_PALS_IN_PRIMARY) * 16 * 2);
+    LoadTilesetPalette(mapLayout->secondaryTileset, NUM_PALS_IN_PRIMARY * 16, (NUM_PALS_TOTAL - NUM_PALS_IN_PRIMARY) * 16 * 2, skipFaded);
 }
 
 void CopyMapTilesetsToVram(struct MapLayout const *mapLayout)
@@ -978,6 +979,6 @@ void LoadMapTilesetPalettes(struct MapLayout const *mapLayout)
     if (mapLayout)
     {
         LoadPrimaryTilesetPalette(mapLayout);
-        LoadSecondaryTilesetPalette(mapLayout);
+        LoadSecondaryTilesetPalette(mapLayout, FALSE);
     }
 }

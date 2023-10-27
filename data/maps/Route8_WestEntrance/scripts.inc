@@ -132,7 +132,8 @@ Route8_WestEntrance_EventScript_Jenny::
 Route8_WestEntrance_Text_TipAboutTeamRocket::
 	.string "We received a tip that Team Rocket\n"
 	.string "may be passing this way, so we can't\l"
-	.string "let anyone through right now.$"
+	.string "let anyone through right now.\p"
+	.string "If only we got our hands on their plans…$"
 
 Route8_WestEntrance_EventScript_DeliverRocketPlans::
 	removeitem ITEM_ROCKET_PLANS

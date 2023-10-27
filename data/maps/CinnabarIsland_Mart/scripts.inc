@@ -6,7 +6,7 @@ CinnabarIsland_Mart_EventScript_Clerk::
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemart CinnabarIsland_Pokemart
+	pokemart 0
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
@@ -20,6 +20,26 @@ CinnabarIsland_Pokemart::
 	.2byte ITEM_FULL_HEAL
 	.2byte ITEM_ESCAPE_ROPE
 	.2byte ITEM_MAX_REPEL
+	.2byte ITEM_NONE
+	release
+	end
+
+CinnabarIsland_Mart_EventScript_TM::
+	lock
+	faceplayer
+	message gText_HowMayIServeYou
+	waitmessage
+	pokemart CinnabarIsland_TM
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+CinnabarIsland_TM::
+	.2byte ITEM_TM52
+	.2byte ITEM_TM60
+	.2byte ITEM_TM62
+	.2byte ITEM_TM53
 	.2byte ITEM_NONE
 	release
 	end

@@ -2,14 +2,14 @@
 #define GUARD_CONSTANTS_ITEM_EFFECTS_H
 
 // field 0 masks
-#ifndef ITEM_EXPANSION
+#ifdef ITEM_EXPANSION
 #define ITEM0_X_ATTACK          0x0F
 #endif
 #define ITEM0_DIRE_HIT          0x30 // Works the same way as the move Focus Energy.
 #define ITEM0_SACRED_ASH        0x40
 #define ITEM0_INFATUATION       0x80
 
-#ifndef ITEM_EXPANSION
+#ifdef ITEM_EXPANSION
 // field 1 masks
 #define ITEM1_X_SPEED           0x0F
 #define ITEM1_X_DEFEND          0xF0
@@ -73,8 +73,8 @@
 #define ITEM6_HEAL_PP_FULL   0x7F
 
 // Amount of EV modified by ITEM4_EV_HP, ITEM4_EV_ATK, ITEM5_EV_DEF, ITEM5_EV_SPEED, ITEM5_EV_SPDEF and ITEM5_EV_SPATK
-#define ITEM6_ADD_EV       10
-#define ITEM6_SUBTRACT_EV -10
+#define ITEM6_ADD_EV       24
+#define ITEM6_SUBTRACT_EV -24
 
 // Used for GetItemEffectType.
 #define ITEM_EFFECT_X_ITEM 0

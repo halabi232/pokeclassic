@@ -269,6 +269,25 @@ IndigoPlateau_PokemonCenter_1F_Pokemart::
 	release
 	end
 
+IndigoPlateau_PokemonCenter_1F_EventScript_TM::
+	lock
+	faceplayer
+	message gText_HowMayIServeYou
+	waitmessage
+	pokemart IndigoPlateau_PokemonCenter_1F_Pokemart_TM
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+IndigoPlateau_PokemonCenter_1F_Pokemart_TM::
+	.2byte ITEM_TM51
+	.2byte ITEM_TM66
+	.2byte ITEM_TM78
+	.2byte ITEM_TM91
+	.2byte ITEM_NONE
+	release
+	end
 
 IndigoPlateau_PokemonCenter_1F_EventScript_BattleGirl::
 	lock

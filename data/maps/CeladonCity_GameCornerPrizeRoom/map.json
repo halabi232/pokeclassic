@@ -45,7 +45,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_LADY",
       "in_connection": false,
-      "x": 4,
+      "x": 3,
       "y": 2,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -73,7 +73,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_ROOFTOP_SALE_WOMAN",
       "in_connection": false,
-      "x": 6,
+      "x": 5,
       "y": 2,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_NONE",
@@ -82,6 +82,20 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "CeladonCity_GameCorner_EventScript_PrizeCornerCushions",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
+      "in_connection": false,
+      "x": 6,
+      "y": 2,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CeladonCity_GameCorner_EventScript_PrizeCornerTMs",
       "flag": "0"
     }
   ],

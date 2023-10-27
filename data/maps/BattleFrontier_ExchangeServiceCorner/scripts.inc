@@ -766,149 +766,196 @@ BattleFrontier_ExchangeServiceCorner_Text_ConfirmMildMint:
 
 
 BattleFrontier_ExchangeServiceCorner_Text_AdamantMintDesc::
- 	.string "Loved by Pokémon!\n"
-    .string "This mint has an Adamant flavor.$"
+	.string "Loved by Pokémon!\n"
+	.string "This mint has an Adamant flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_BoldMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Bold flavor.$"
+	.string "This mint has a Bold flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_BraveMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Brave flavor.$"
+	.string "This mint has a Brave flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_CalmMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Calm flavor.$"
+	.string "This mint has a Calm flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_CarefulMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Careful flavor.$"
+	.string "This mint has a Careful flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_GentleMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Gentle flavor.$"
+	.string "This mint has a Gentle flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_HastyMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Hasty flavor.$"
+	.string "This mint has a Hasty flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_ImpishMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string  "This mint has an Impish flavor.$"
+	.string  "This mint has an Impish flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_JollyMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Jolly flavor.$"
+	.string "This mint has a Jolly flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_LaxMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Lax flavor.$"
+	.string "This mint has a Lax flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_LonelyMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Lonely flavor.$"
+	.string "This mint has a Lonely flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_MildMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Mild flavor.$"
+	.string "This mint has a Mild flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_ModestMintDesc::
-    .string "Loved by Pokémon!\n"
-    .string "This mint has a Modest flavor.$"
+	.string "Loved by Pokémon!\n"
+	.string "This mint has a Modest flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_NaiveMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Naive flavor.$"
+	.string "This mint has a Naive flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_NaughtyMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Naughty flavor.$"
+	.string "This mint has a Naughty flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_QuietMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Quiet flavor.$"
+	.string "This mint has a Quiet flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_RashMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Rash flavor.$"
+	.string "This mint has a Rash flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_RelaxedMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Relaxed flavor.$"
+	.string "This mint has a Relaxed flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_SassyMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Sassy flavor.$"
+	.string "This mint has a Sassy flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_SeriousMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Serious flavor.$"
+	.string "This mint has a Serious flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_TimidMintDesc::
 	.string "Loved by Pokémon!\n"
-    .string "This mint has a Timid flavor.$"
+	.string "This mint has a Timid flavor.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_RazorFang::
-    .string "A hold item that may cause\n"
-    .string "flinching when the foe is hit.$"
+	.string "A hold item that may cause\n"
+	.string "flinching when the foe is hit.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_RazorClaw::
-    .string "A hooked claw that ups the\n"
-    .string "holder's critical-hit ratio.$"
+	.string "A hooked claw that ups the\n"
+	.string "holder's critical-hit ratio.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_ChoiceSpecs::
-    .string "Boosts Sp. Atk, but allows\n"
-    .string "the use of only one move.$"
+	.string "Boosts Sp. Atk, but allows\n"
+	.string "the use of only one move.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_ChoiceScarf::
-    .string "Boosts Speed, but allows\n"
-    .string "the use of only one move.$"
+	.string "Boosts Speed, but allows\n"
+	.string "the use of only one move.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_MuscleBand::
-    .string "A headband that boosts\n"
-    .string "the power of physical moves.$"
+	.string "A headband that boosts\n"
+	.string "the power of physical moves.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_LifeOrb::
-    .string "Boosts the power of moves at\n"
-    .string "the cost of some HP per turn.$"
+	.string "Boosts the power of moves at\n"
+	.string "the cost of some HP per turn.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_PowerHerb::
-    .string "Allows immediate use of\n"
-    .string "a move that charges first.$"
+	.string "Allows immediate use of\n"
+	.string "a move that charges first.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_WiseGlasses::
-    .string "A pair of glasses that ups\n"
-    .string "the power of special moves.$"
+	.string "A pair of glasses that ups\n"
+	.string "the power of special moves.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_RedCard::
-    .string "Switches out the foe\n"
-    .string "if they hit the holder.$"
+	.string "Switches out the foe\n"
+	.string "if they hit the holder.$"
 
+BattleFrontier_ExchangeServiceCorner_Text_ToxicOrb::
+	.string "An orb that badly poisons\n" 
+	.string "the holder in battle.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_FlameOrb::
+	.string "An orb that inflictsa burn\n"
+	.string "on the holder in battle.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_FocusSash::
+	.string "If the holder has full HP,\n"
+	.string "it endures KO with 1 HP.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_ZoomLens::
+	.string "If the holder moves after,\n"
+	.string "it'll boost move accuracy.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_GripClaw::
+	.string "Makes binding moves used\n"
+	.string "go on for 7 turns.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_StickyBarb::
+	.string "Damages the holder each turn.\n"
+	.string "May latch on to foes.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_AirBalloon::
+	.string "Levitates the holder.\n"
+	.string "If hit, this item will burst.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_BindingBand::
+	.string "Increases the power of\n"
+	.string "binding moves when held.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_EjectButton::
+	.string "Switches out the user\n"
+	.string "if they're hit by the foe.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_WeaknessPolicy::
+	.string "If hit by a Super Eff. move,\n"
+	.string "raise Atk and Sp. Atk.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_AssaultVest::
+	.string "Raises Sp. Def but\n"
+	.string "prevents the use of status moves.$"
+
+BattleFrontier_ExchangeServiceCorner_Text_SafetyGoggles::
+	.string "Protect from weather damage\n"
+	.string "and powder moves.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_PowerAnklet::
-    .string "A hold item that promotes\n"
-    .string "Spd gain, but reduces Speed.$"
+	.string "A hold item that promotes\n"
+	.string "Spd gain, but reduces Speed.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_PowerBracer::
-    .string "A hold item that promotes\n"
-    .string "Atk gain, but reduces Speed.$"
+	.string "A hold item that promotes\n"
+	.string "Atk gain, but reduces Speed.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_PowerBelt::
-    .string "A hold item that promotes\n"
-    .string "Def gain, but reduces Speed.$"
+	.string "A hold item that promotes\n"
+	.string "Def gain, but reduces Speed.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_PowerBand::
-    .string "A hold item that promotes\n"
-    .string "Sp. Def gain, but reduces Speed.$"
+	.string "A hold item that promotes\n"
+	.string "Sp. Def gain, but reduces Speed.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_PowerWeight::
-    .string "A hold item that promotes\n"
-    .string "HP gain, but reduces Speed.$"
+	.string "A hold item that promotes\n"
+	.string "HP gain, but reduces Speed.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_PowerLens::
-    .string "A hold item that promotes\n"
-    .string "Sp. Atk gain, reduces Speed.$"
+	.string "A hold item that promotes\n"
+	.string "Sp. Atk gain, reduces Speed.$"
 
 BattleFrontier_ExchangeServiceCorner_EventScript_HoldItemClerk2::
 	lock
@@ -934,7 +981,19 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2::
 	case 6, BattleFrontier_ExchangeServiceCorner_EventScript_PowerHerb
 	case 7, BattleFrontier_ExchangeServiceCorner_EventScript_WiseGlasses
 	case 8, BattleFrontier_ExchangeServiceCorner_EventScript_RedCard
-	case 9, BattleFrontier_ExchangeServiceCorner_EventScript_ClerkGoodbye
+	case 9, BattleFrontier_ExchangeServiceCorner_EventScript_ToxicOrb
+	case 10, BattleFrontier_ExchangeServiceCorner_EventScript_FlameOrb
+	case 11, BattleFrontier_ExchangeServiceCorner_EventScript_FocusSash
+	case 12, BattleFrontier_ExchangeServiceCorner_EventScript_ZoomLens
+	case 13, BattleFrontier_ExchangeServiceCorner_EventScript_GripClaw
+	case 14, BattleFrontier_ExchangeServiceCorner_EventScript_StickyBarb
+	case 15, BattleFrontier_ExchangeServiceCorner_EventScript_AirBalloon
+	case 16, BattleFrontier_ExchangeServiceCorner_EventScript_BindingBand
+	case 17, BattleFrontier_ExchangeServiceCorner_EventScript_EjectButton
+	case 18, BattleFrontier_ExchangeServiceCorner_EventScript_WeaknessPolicy
+	case 19, BattleFrontier_ExchangeServiceCorner_EventScript_AssaultVest
+	case 20, BattleFrontier_ExchangeServiceCorner_EventScript_SafetyGoggles
+	case 21, BattleFrontier_ExchangeServiceCorner_EventScript_ClerkGoodbye
 	case MULTI_B_PRESSED, BattleFrontier_ExchangeServiceCorner_EventScript_ClerkGoodbye
 	end
 
@@ -1044,6 +1103,150 @@ BattleFrontier_ExchangeServiceCorner_EventScript_RedCard::
 
 BattleFrontier_ExchangeServiceCorner_Text_ConfirmRedCard:
 	.string "You've chosen the Red Card.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_ToxicOrb::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmToxicOrb, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 32
+	setvar VAR_0x8009, ITEM_TOXIC_ORB
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmToxicOrb:
+	.string "You've chosen the Toxic Orb.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_FlameOrb::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmFlameOrb, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 32
+	setvar VAR_0x8009, ITEM_FLAME_ORB
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmFlameOrb:
+	.string "You've chosen the Flame Orb.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_FocusSash::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmFocusSash, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 16
+	setvar VAR_0x8009, ITEM_FOCUS_SASH
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmFocusSash:
+	.string "You've chosen the Focus Sash.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_ZoomLens::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmZoomLens, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 32
+	setvar VAR_0x8009, ITEM_ZOOM_LENS
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmZoomLens:
+	.string "You've chosen the Zoom Lens.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_GripClaw::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmGripClaw, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 32
+	setvar VAR_0x8009, ITEM_GRIP_CLAW
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmGripClaw:
+	.string "You've chosen the Grip Claw.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_StickyBarb::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmStickyBarb, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 16
+	setvar VAR_0x8009, ITEM_STICKY_BARB
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmStickyBarb:
+	.string "You've chosen the Sticky Barb.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_AirBalloon::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmAirBalloon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 16
+	setvar VAR_0x8009, ITEM_AIR_BALLOON
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmAirBalloon:
+	.string "You've chosen the Air Balloon.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_BindingBand::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmBindingBand, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 32
+	setvar VAR_0x8009, ITEM_BINDING_BAND
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmBindingBand:
+	.string "You've chosen the Binding Band.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_EjectButton::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmEjectButton, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 32
+	setvar VAR_0x8009, ITEM_EJECT_BUTTON
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmEjectButton:
+	.string "You've chosen the Eject Button.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_WeaknessPolicy::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmWeaknessPolicy, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 48
+	setvar VAR_0x8009, ITEM_WEAKNESS_POLICY
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmWeaknessPolicy:
+	.string "You've chosen the Weakness Policy.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_AssaultVest::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmAssaultVest, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 48
+	setvar VAR_0x8009, ITEM_ASSAULT_VEST
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmAssaultVest:
+	.string "You've chosen the Assault Vest.\n"
+	.string "Is that correct?$"
+
+BattleFrontier_ExchangeServiceCorner_EventScript_SafetyGoggles::
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmSafetyGoggles, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem2
+	setvar VAR_0x8008, 32
+	setvar VAR_0x8009, ITEM_SAFETY_GOGGLES
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
+	end
+
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmSafetyGoggles:
+	.string "You've chosen the Safety Goggles.\n"
 	.string "Is that correct?$"
 
 BattleFrontier_ExchangeServiceCorner_EventScript_PowerItemClerk::

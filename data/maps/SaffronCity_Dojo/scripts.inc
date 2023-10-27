@@ -40,10 +40,41 @@ SaffronCity_Dojo_OffenseMaster::
 	goto_if_eq VAR_RESULT, 2, SaffronCity_Dojo_EventScript_NoRoomForPokemon
 	end
 
+SaffronCity_Dojo_EventScript_GetOffenseTM::
+	goto_if_set FLAG_RECEIVED_OFFENSE_TM, SaffronCity_Dojo_TrainWithMyPupils
+	msgbox SaffronCity_Dojo_Text_TakeThisWithYou, MSGBOX_DEFAULT
+	checkitem ITEM_TM100, 1
+	goto_if_eq VAR_RESULT, TRUE, SaffronCity_Dojo_EventScript_NoRoomForTM
+	playfanfare MUS_OBTAIN_TMHM
+	msgbox SaffronCity_Dojo_Text_ReceivedOffenseTM, MSGBOX_DEFAULT
+	waitfanfare
+	additem ITEM_TM100
+	msgbox SaffronCity_Dojo_Text_ExplainOffenseTM, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_OFFENSE_TM
+	release
+	end
+
+SaffronCity_Dojo_Text_ReceivedOffenseTM::
+	.string "{PLAYER} received TM100\n"
+    .string "from the Dojo Master.$"
+
+SaffronCity_Dojo_Text_ExplainOffenseTM::
+    .string "TM100 is Close Combat.\p"
+    .string "It is the ultimate offensive move!\l"
+    .string "It trades defense for maximum ofense!$"
+
+SaffronCity_Dojo_EventScript_NoRoomForTM::
+	msgbox SaffronCity_Dojo_Text_NoRoomForTM, MSGBOX_DEFAULT
+	release
+	end
+
+SaffronCity_Dojo_Text_NoRoomForTM::
+    .string "You already have this item.$"
+
 SaffronCity_Dojo_Text_IAmTheOffenseMaster::
 	.string "I am the Offense Master.\p"
 	.string "My pupils have mastered the art\n"
-	.string "offense, and their Pokémon all\l"
+	.string "of offense, and their Pokémon all\l"
 	.string "reflect that.$"
 
 SaffronCity_Dojo_EventScript_DefeatMyPupils::
@@ -74,7 +105,7 @@ SaffronCityDojo_Text_ProvedYourselfOffensive::
 	.string "I see you've proven yourself capable\n"
 	.string "of surviving the strongest offense!\p"
 	.string "For that, you have earned this\n"
-	.string "Pokémon... Hitmonchan!$"
+	.string "Pokémon… Hitmonchan!$"
 
 SaffronCity_Dojo_EventScript_HitmonchanParty::
 	call SaffronCity_Dojo_EventScript_GetHitmonchan
@@ -94,11 +125,12 @@ SaffronCity_Dojo_EventScript_GetHitmonchan::
 	return
 
 SaffronCity_Dojo_EventScript_Text_EarnedHitmonchan::
-	.string "{PLAYER} mastered the art of Offense\n"
+	.string "{PLAYER} mastered the art of Offense\l"
 	.string "and earned the Dojo's Hitmonchan!$"
 
 SaffronCity_Dojo_EventScript_GotHitmonchan::
 	setflag FLAG_RECEIVED_HITMONCHAN
+	goto SaffronCity_Dojo_EventScript_GetOffenseTM
 	releaseall
 	end
 
@@ -131,10 +163,37 @@ SaffronCity_Dojo_DefenseMaster::
 	goto_if_eq VAR_RESULT, 2, SaffronCity_Dojo_EventScript_NoRoomForPokemon
 	end
 
+SaffronCity_Dojo_EventScript_GetDefenseTM::
+	goto_if_set FLAG_RECEIVED_DEFENSE_TM, SaffronCity_Dojo_TrainWithMyPupilsDefense
+	msgbox SaffronCity_Dojo_Text_TakeThisWithYou, MSGBOX_DEFAULT
+	checkitem ITEM_TM96, 1
+	goto_if_eq VAR_RESULT, TRUE, SaffronCity_Dojo_EventScript_NoRoomForTM
+	playfanfare MUS_OBTAIN_TMHM
+	msgbox SaffronCity_Dojo_Text_ReceivedDefenseTM, MSGBOX_DEFAULT
+	waitfanfare
+	additem ITEM_TM96
+	msgbox SaffronCity_Dojo_Text_ExplainDefenseTM, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_DEFENSE_TM
+	release
+	end
+
+SaffronCity_Dojo_Text_TakeThisWithYou::
+    .string "Also, take this TM with you.$"
+
+SaffronCity_Dojo_Text_ReceivedDefenseTM::
+	.string "{PLAYER} received TM96\n"
+    .string "from the Dojo Master.$"
+
+SaffronCity_Dojo_Text_ExplainDefenseTM::
+    .string "TM96 is Drain Punch.\p"
+    .string "It is the ultimate defensive move!\p"
+    .string "It makes the Pokémon recover health\l"
+	.string "with each hit!$"
+
 SaffronCity_Dojo_Text_IAmTheDefenseMaster::
 	.string "I am the Defense Master.\p"
 	.string "My pupils have mastered the art\n"
-	.string "defense, and their Pokémon all\l"
+	.string "of defense, and their Pokémon all\l"
 	.string "reflect that.$"
 
 SaffronCity_Dojo_TrainWithMyPupilsDefense::
@@ -155,7 +214,7 @@ SaffronCityDojo_Text_ProvedYourselfDefensive::
 	.string "I see you've proven yourself capable\n"
 	.string "of breaking the strongest defense!\p"
 	.string "For that, you have earned this\n"
-	.string "Pokémon... Hitmonlee!$"
+	.string "Pokémon… Hitmonlee!$"
 
 SaffronCity_Dojo_EventScript_HitmonleeParty::
 	call SaffronCity_Dojo_EventScript_GetHitmonlee
@@ -175,11 +234,12 @@ SaffronCity_Dojo_EventScript_GetHitmonlee::
 	return
 
 SaffronCity_Dojo_EventScript_Text_EarnedHitmonlee::
-	.string "{PLAYER} mastered the art of Defense\n"
+	.string "{PLAYER} mastered the art of Defense\l"
 	.string "and earned the Dojo's Hitmonlee!$"
 
 SaffronCity_Dojo_EventScript_GotHitmonlee::
 	setflag FLAG_RECEIVED_HITMONLEE
+	goto SaffronCity_Dojo_EventScript_GetDefenseTM
 	releaseall
 	end
 
@@ -497,4 +557,4 @@ SaffronCity_Dojo_Unworthy::
 
 SaffronCity_Dojo_Text_Unworthy::
 	.string "You don't feel worthy of it.$"
-
+	

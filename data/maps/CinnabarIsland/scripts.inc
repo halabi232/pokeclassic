@@ -105,7 +105,6 @@ CinnabarIsland_EventScript_Depart::
 	call_if_eq VAR_FACING, DIR_NORTH, CinnabarIsland_EventScript_PlayerNorth
 	call_if_eq VAR_FACING, DIR_SOUTH, CinnabarIsland_EventScript_PlayerSouth
 	call_if_eq VAR_FACING, DIR_EAST, CinnabarIsland_EventScript_PlayerEast
-	call_if_eq VAR_FACING, DIR_WEST, CinnabarIsland_EventScript_PlayerWest
 	waitmovement 0
 	setvar VAR_0x8004, LOCALID_BOAT
 	call Common_EventScript_FerryDepart
@@ -132,11 +131,7 @@ CinnabarIsland_EventScript_Text_LetsSail:
 	.string "this Old Sea Map!$"
 
 Movement_CaptainEnterShip::
-	walk_up
-	walk_up
-	walk_up
 	face_right
-	walk_in_place_faster_right
 	walk_in_place_faster_right
 	set_invisible
 	step_end
@@ -153,48 +148,23 @@ CinnabarIsland_EventScript_PlayerEast::
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_PlayerEnterShipEast
 	return
 
-CinnabarIsland_EventScript_PlayerWest::
-	applymovement OBJ_EVENT_ID_PLAYER, Movement_PlayerEnterShipWest
-	return
-
 Movement_PlayerEnterShipNorth::
 	walk_up
-	walk_up
-	walk_up
-	walk_up
 	face_right
-	walk_in_place_faster_right
 	walk_in_place_faster_right
 	set_invisible
 	step_end
 
 Movement_PlayerEnterShipSouth::
-	walk_up
-	walk_up
+	walk_down
 	face_right
-	walk_in_place_faster_right
 	walk_in_place_faster_right
 	set_invisible
 	step_end
 
 Movement_PlayerEnterShipEast::
 	walk_right
-	walk_up
-	walk_up
-	walk_up
 	face_right
-	walk_in_place_faster_right
-	walk_in_place_faster_right
-	set_invisible
-	step_end
-
-Movement_PlayerEnterShipWest::
-	walk_left
-	walk_up
-	walk_up
-	walk_up
-	face_right
-	walk_in_place_faster_right
 	walk_in_place_faster_right
 	set_invisible
 	step_end

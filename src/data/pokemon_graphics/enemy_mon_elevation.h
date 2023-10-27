@@ -63,6 +63,8 @@ const u8 gEnemyMonElevation[NUM_SPECIES] =
     [SPECIES_JIRACHI] = 12,
     [SPECIES_DEOXYS] = 8,
     [SPECIES_CHIMECHO] = 12,
+    [SPECIES_MAGNEZONE] = 4,
+    [SPECIES_PORYGON_Z] = 12,
     // Megas
     [SPECIES_BEEDRILL_MEGA] = 5,
     [SPECIES_PIDGEOT_MEGA] = 8,

@@ -1196,8 +1196,10 @@ void ItemUseOutOfBattle_AbilityCapsule(u8 taskId)
 
 void ItemUseOutOfBattle_ExpShare(u8 taskId)
 {
-    if (!gSaveBlock2Ptr->expShare)
+    bool8  expShareOn = FlagGet(FLAG_EXP_SHARE);
+    if (!expShareOn)
     {
+        FlagSet(FLAG_EXP_SHARE);
         PlaySE(SE_EXP_MAX);
         if (!gTasks[taskId].data[2]) // to account for pressing select in the overworld
             DisplayItemMessageOnField(taskId, gOtherText_ExpShareOn, Task_CloseCantUseKeyItemMessage);
@@ -1206,13 +1208,13 @@ void ItemUseOutOfBattle_ExpShare(u8 taskId)
     }
     else
     {
+        FlagClear(FLAG_EXP_SHARE);
         PlaySE(SE_PC_OFF);
         if (!gTasks[taskId].data[2]) // to account for pressing select in the overworld
             DisplayItemMessageOnField(taskId, gOtherText_ExpShareOff, Task_CloseCantUseKeyItemMessage);
         else
             DisplayItemMessage(taskId, 1, gOtherText_ExpShareOff, CloseItemMessage);
     }
-    gSaveBlock2Ptr->expShare = !gSaveBlock2Ptr->expShare;
 }
 
 void ItemUseOutOfBattle_ReduceIV(u8 taskId)

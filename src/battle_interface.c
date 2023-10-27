@@ -4,6 +4,7 @@
 #include "pokemon.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
+#include "battle_main.h"
 #include "battle_z_move.h"
 #include "graphics.h"
 #include "sprite.h"
@@ -181,8 +182,8 @@ static void SpriteCB_StatusSummaryBalls_Enter(struct Sprite *);
 static void SpriteCB_StatusSummaryBalls_Exit(struct Sprite *);
 static void SpriteCB_StatusSummaryBalls_OnSwitchout(struct Sprite *);
 
-static void SpriteCb_MegaTrigger(struct Sprite *);
-static void SpriteCb_MegaIndicator(struct Sprite *);
+static void SpriteCB_MegaTrigger(struct Sprite *);
+static void SpriteCB_MegaIndicator(struct Sprite *);
 
 static u8 GetStatusIconForBattlerId(u8, u8);
 static s32 CalcNewBarValue(s32, s32, s32, s32 *, u8, u16);
@@ -190,7 +191,7 @@ static u8 GetScaledExpFraction(s32, s32, s32, u8);
 static void MoveBattleBarGraphically(u8, u8);
 static u8 CalcBarFilledPixels(s32, s32, s32, s32 *, u8 *, u8);
 
-static void SpriteCb_AbilityPopUp(struct Sprite *);
+static void SpriteCB_AbilityPopUp(struct Sprite *);
 static void Task_FreeAbilityPopUpGfx(u8);
 
 static void SpriteCB_LastUsedBall(struct Sprite *);
@@ -644,7 +645,7 @@ static const struct SpriteTemplate sSpriteTemplate_MegaTrigger =
     .anims = sSpriteAnimTable_MegaTrigger,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCb_MegaTrigger
+    .callback = SpriteCB_MegaTrigger
 };
 
 static const u8 sMegaIndicatorGfx[] = INCBIN_U8("graphics/battle_interface/mega_indicator.4bpp");
@@ -706,7 +707,7 @@ static const struct SpriteTemplate sSpriteTemplate_MegaIndicator =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCb_MegaIndicator,
+    .callback = SpriteCB_MegaIndicator,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_AlphaIndicator =
@@ -717,7 +718,7 @@ static const struct SpriteTemplate sSpriteTemplate_AlphaIndicator =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCb_MegaIndicator,
+    .callback = SpriteCB_MegaIndicator,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_OmegaIndicator =
@@ -728,7 +729,7 @@ static const struct SpriteTemplate sSpriteTemplate_OmegaIndicator =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCb_MegaIndicator,
+    .callback = SpriteCB_MegaIndicator,
 };
 
 // Because the healthbox is too large to fit into one sprite, it is divided into two sprites.
@@ -1462,7 +1463,7 @@ void CreateMegaTriggerSprite(u8 battlerId, u8 palId)
     ChangeMegaTriggerSprite(gBattleStruct->mega.triggerSpriteId, palId);
 }
 
-static void SpriteCb_MegaTrigger(struct Sprite *sprite)
+static void SpriteCB_MegaTrigger(struct Sprite *sprite)
 {
     s32 xSlide, xPriority, xOptimal;
     s32 yDiff;
@@ -1524,11 +1525,10 @@ bool32 IsMegaTriggerSpriteActive(void)
 
 void HideMegaTriggerSprite(void)
 {
-    if (gBattleStruct->mega.triggerSpriteId != 0xFF)
-    {
-        ChangeMegaTriggerSprite(gBattleStruct->mega.triggerSpriteId, 0);
-        gSprites[gBattleStruct->mega.triggerSpriteId].tHide = TRUE;
-    }
+    if (gBattleStruct->mega.triggerSpriteId >= MAX_SPRITES)
+        return;
+    ChangeMegaTriggerSprite(gBattleStruct->mega.triggerSpriteId, 0);
+    gSprites[gBattleStruct->mega.triggerSpriteId].tHide = TRUE;
 }
 
 void HideTriggerSprites(void)
@@ -1630,7 +1630,7 @@ void DestroyMegaIndicatorSprite(u32 healthboxSpriteId)
     }
 }
 
-static void SpriteCb_MegaIndicator(struct Sprite *sprite)
+static void SpriteCB_MegaIndicator(struct Sprite *sprite)
 {
 
 }
@@ -2517,7 +2517,7 @@ static void MoveBattleBarGraphically(u8 battlerId, u8 whichBar)
                     &gBattleSpritesDataPtr->battleBars[battlerId].currValue,
                     array, B_EXPBAR_PIXELS / 8);
         level = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]], MON_DATA_LEVEL);
-        if (level == MAX_LEVEL)
+        if (level >= GetCurrentPartyLevelCap())
         {
             for (i = 0; i < 8; i++)
                 array[i] = 0;
@@ -2833,7 +2833,7 @@ static const struct SpriteTemplate sSpriteTemplate_AbilityPopUp1 =
     .anims = sSpriteAnimTable_AbilityPopUp1,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCb_AbilityPopUp
+    .callback = SpriteCB_AbilityPopUp
 };
 
 static const union AnimCmd sSpriteAnim_AbilityPopUp2[] =
@@ -2855,7 +2855,7 @@ static const struct SpriteTemplate sSpriteTemplate_AbilityPopUp2 =
     .anims = sSpriteAnimTable_AbilityPopUp2,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCb_AbilityPopUp
+    .callback = SpriteCB_AbilityPopUp
 };
 
 #define ABILITY_POP_UP_POS_X_DIFF 64
@@ -3204,7 +3204,7 @@ void UpdateAbilityPopup(u8 battlerId)
 
 #define FRAMES_TO_WAIT 48
 
-static void SpriteCb_AbilityPopUp(struct Sprite *sprite)
+static void SpriteCB_AbilityPopUp(struct Sprite *sprite)
 {
     if (!sprite->tHide) // Show
     {

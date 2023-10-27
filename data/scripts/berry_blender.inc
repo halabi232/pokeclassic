@@ -380,6 +380,17 @@ BerryBlender_EventScript_Blender2NoCase:
 	releaseall
 	end
 
+BerryBlender_EventScript_OutOfOrder::
+	lockall
+	msgbox BerryBlender_Text_OutOfOrder, MSGBOX_DEFAULT
+	closemessage
+	releaseall
+	end
+
+BerryBlender_Text_OutOfOrder:
+	.string "Out of Order!\n"
+	.string "Please use another Blender$"
+
 BerryBlender_EventScript_BerryBlender3::
 	lockall
 	setvar VAR_0x8008, LOCALID_POKEFAN_F

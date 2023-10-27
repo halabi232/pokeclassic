@@ -158,11 +158,15 @@
 // gTileset_CinnabarIsland
 #define METATILE_CinnabarIsland_LabDoor  0x2AD
 
+// gTileset_ContestPrim
+#define METATILE_ContestPrim_PC_Off  0x004
+#define METATILE_ContestPrim_PC_On   0x005
+
 // gTileset_Contest
-#define METATILE_Contest_CounterFlap_Bottom  0x2D9
-#define METATILE_Contest_CounterFlap_Top     0x2D1
-#define METATILE_Contest_FloorShadow         0x261
-#define METATILE_Contest_WallShadow          0x221
+#define METATILE_Contest_CounterFlap_Bottom  0x359
+#define METATILE_Contest_CounterFlap_Top     0x351
+#define METATILE_Contest_FloorShadow         0x2E1
+#define METATILE_Contest_WallShadow          0x2A1
 
 // gTileset_DepartmentStore
 #define METATILE_DepartmentStore_ElevatorDoor  0x28D
@@ -322,16 +326,16 @@
 #define METATILE_LavenderTown_Door  0x2A2
 
 // gTileset_LilycoveMuseum
-#define METATILE_LilycoveMuseum_Painting0_Left   0x25A
-#define METATILE_LilycoveMuseum_Painting0_Right  0x25B
-#define METATILE_LilycoveMuseum_Painting1_Left   0x25C
-#define METATILE_LilycoveMuseum_Painting1_Right  0x25D
-#define METATILE_LilycoveMuseum_Painting2_Left   0x25E
-#define METATILE_LilycoveMuseum_Painting2_Right  0x25F
-#define METATILE_LilycoveMuseum_Painting3_Left   0x260
-#define METATILE_LilycoveMuseum_Painting3_Right  0x261
-#define METATILE_LilycoveMuseum_Painting4_Left   0x262
-#define METATILE_LilycoveMuseum_Painting4_Right  0x263
+#define METATILE_LilycoveMuseum_Painting0_Left   0x2DA
+#define METATILE_LilycoveMuseum_Painting0_Right  0x2DB
+#define METATILE_LilycoveMuseum_Painting1_Left   0x2DC
+#define METATILE_LilycoveMuseum_Painting1_Right  0x2DD
+#define METATILE_LilycoveMuseum_Painting2_Left   0x2DE
+#define METATILE_LilycoveMuseum_Painting2_Right  0x2DF
+#define METATILE_LilycoveMuseum_Painting3_Left   0x2E0
+#define METATILE_LilycoveMuseum_Painting3_Right  0x2E1
+#define METATILE_LilycoveMuseum_Painting4_Left   0x2E2
+#define METATILE_LilycoveMuseum_Painting4_Right  0x2E3
 
 // gTileset_Lilycove
 #define METATILE_Lilycove_Door             0x246

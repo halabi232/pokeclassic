@@ -239,7 +239,7 @@
       "x": 5,
       "y": 6,
       "elevation": 0,
-      "var": "VAR_SECRET_BATTLE_CLEAR",
+      "var": "VAR_IS_CHAMPION",
       "var_value": "1",
       "script": "PlayersHouse_2F_EventScript_PostGame1"
     },
@@ -248,18 +248,18 @@
       "x": 7,
       "y": 6,
       "elevation": 0,
-      "var": "VAR_SECRET_BATTLE_CLEAR",
+      "var": "VAR_IS_CHAMPION",
       "var_value": "1",
-      "script": "PlayersHouse_2F_EventScript_PostGame2"
+      "script": "PlayersHouse_2F_EventScript_PostGame3"
     },
     {
       "type": "trigger",
       "x": 6,
       "y": 7,
       "elevation": 0,
-      "var": "VAR_SECRET_BATTLE_CLEAR",
+      "var": "VAR_IS_CHAMPION",
       "var_value": "1",
-      "script": "PlayersHouse_2F_EventScript_PostGame3"
+      "script": "PlayersHouse_2F_EventScript_PostGame2"
     }
   ],
   "bg_events": [

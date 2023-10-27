@@ -4,6 +4,7 @@
 #include "battle_ai_util.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
+#include "battle_main.h"
 #include "battle_message.h"
 #include "battle_interface.h"
 #include "battle_setup.h"
@@ -1604,7 +1605,7 @@ static void PlayerPartnerHandleExpUpdate(void)
 {
     u8 monId = gBattleResources->bufferA[gActiveBattler][1];
 
-    if (GetMonData(&gPlayerParty[monId], MON_DATA_LEVEL) >= MAX_LEVEL)
+    if (GetMonData(&gPlayerParty[monId], MON_DATA_LEVEL) >= GetCurrentPartyLevelCap())
     {
         PlayerPartnerBufferExecCompleted();
     }

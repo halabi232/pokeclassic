@@ -7702,9 +7702,9 @@ void AnimTask_GetTimeOfDay(u8 taskId)
     gBattleAnimArgs[0] = 0; //Daytime is default
 
     RtcCalcLocalTime();
-    if (gLocalTime.hours >= 20 || gLocalTime.hours < 4)
+    if (gLocalTime.hours >= 19 || gLocalTime.hours < 5)
         gBattleAnimArgs[0] = 1;
-    else if (gLocalTime.hours >= 17 && gLocalTime.hours < 20)
+    else if (gLocalTime.hours >= 18 && gLocalTime.hours < 19)
         gBattleAnimArgs[0] = 2;
     
     DestroyAnimVisualTask(taskId);
@@ -7893,5 +7893,14 @@ void AnimTask_TerrainPulse(u8 taskId)
     {
         gBattleAnimArgs[0] = 0;
     }
+    DestroyAnimVisualTask(taskId);
+}
+
+void AnimTask_AffectionHangedOn(u8 taskId)
+{
+    int side = GetBattlerSide(gBattleAnimTarget);
+    struct Pokemon *party = (side == B_SIDE_PLAYER) ? gPlayerParty : gEnemyParty;
+
+    gBattleAnimArgs[0] = GetBattlerFriendshipScore(gBattleAnimTarget);
     DestroyAnimVisualTask(taskId);
 }

@@ -57,7 +57,7 @@ VictoryRoad_MoltresCave_EventScript_Moltres::
 	playmoncry SPECIES_MOLTRES, CRY_MODE_ENCOUNTER
 	waitmoncry
 	delay 20
-	seteventmon SPECIES_MOLTRES, 50
+	seteventmon SPECIES_MOLTRES, 70
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	waitstate

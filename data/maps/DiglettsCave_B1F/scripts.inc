@@ -18,3 +18,8 @@ DiglettCave_RocketFugitive::
     waitse
     fadescreen FADE_FROM_BLACK
     end
+
+DiglettsCave_B1F_EventScript_Steelixite::
+	finditem ITEM_STEELIXITE, 1
+	release
+	end

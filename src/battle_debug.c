@@ -1953,7 +1953,7 @@ static const u8 sText_HoldEffectPsychicPower[] = _("Psychic Power");
 static const u8 sText_HoldEffectFirePower[] = _("Fire Power");
 static const u8 sText_HoldEffectDragonPower[] = _("Dragon Power");
 static const u8 sText_HoldEffectNormalPower[] = _("Normal Power");
-#ifdef ITEM_EXPANSION
+#ifndef ITEM_EXPANSION
 static const u8 sText_HoldEffectUpgrade[] = _("Upgrade");
 #else
 static const u8 sText_HoldEffectUpgrade[] = _("Up Grade");
@@ -1962,7 +1962,7 @@ static const u8 sText_HoldEffectShellBell[] = _("Shell Bell");
 static const u8 sText_HoldEffectLuckyPunch[] = _("Lucky Punch");
 static const u8 sText_HoldEffectMetalPowder[] = _("Metal Powder");
 static const u8 sText_HoldEffectThickClub[] = _("Thick Club");
-#ifdef ITEM_EXPANSION
+#ifndef ITEM_EXPANSION
 static const u8 sText_HoldEffectLeek[] = _("Leek");
 #else
 static const u8 sText_HoldEffectLeek[] = _("Stick");

@@ -17,11 +17,14 @@ SECTIONS {
         . = 0x1C000;
 
         INCLUDE "sym_ewram.ld"
+        src/*.o(ewram_data);
+        gflib/*.o(ewram_data);
+
         *libc.a:impure.o(.data);
         *libc.a:locale.o(.data);
         *libc.a:mallocr.o(.data);
         . = 0x40000;
-}
+    }
 
     . = 0x3000000;
 
@@ -30,6 +33,9 @@ SECTIONS {
     {
         /* .bss starts at 0x3000000 */
         INCLUDE "sym_bss.ld"
+        src/*.o(.bss);
+        gflib/*.o(.bss);
+        data/*.o(.bss);
 
         /* .bss.code starts at 0x3001AA8 */
         src/m4a.o(.bss.code);
@@ -85,11 +91,11 @@ SECTIONS {
         src/battle_controllers.o(.text);
         src/decompress.o(.text);
         src/digit_obj_util.o(.text);
-	src/ss_anne.o(.text);
+src/ss_anne.o(.text);
         src/battle_bg.o(.text);
         src/battle_main.o(.text);
         src/battle_util.o(.text);
-        src/battle_z_move.o(.text);
+src/battle_z_move.o(.text);
         src/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
         src/battle_controller_player.o(.text);
@@ -97,13 +103,13 @@ SECTIONS {
         src/battle_controller_opponent.o(.text);
         src/battle_ai_switch_items.o(.text);
         src/battle_controller_link_opponent.o(.text);
-        src/battle_debug.o(.text);
+src/battle_debug.o(.text);
         src/pokemon.o(.text);
         src/trig.o(.text);
         src/random.o(.text);
         src/util.o(.text);
         src/daycare.o(.text);
-        src/debug.o(.text);
+src/debug.o(.text);
         src/egg_hatch.o(.text);
         src/battle_interface.o(.text);
         src/battle_anim_smokescreen.o(.text);
@@ -120,6 +126,7 @@ SECTIONS {
         src/field_door.o(.text);
         src/field_player_avatar.o(.text);
         src/event_object_movement.o(.text);
+        src/follower_helper.o(.text);
         src/field_message_box.o(.text);
         src/event_object_lock.o(.text);
         src/text_window.o(.text);
@@ -202,7 +209,7 @@ SECTIONS {
         src/battle_anim_ground.o(.text);
         src/battle_anim_normal.o(.text);
         src/battle_anim_utility_funcs.o(.text);
-        src/battle_anim_new.o(.text);
+src/battle_anim_new.o(.text);
         src/battle_intro.o(.text);
         src/bike.o(.text);
         src/easy_chat.o(.text);
@@ -340,7 +347,7 @@ SECTIONS {
         src/gym_leader_rematch.o(.text);
         src/battle_transition_frontier.o(.text);
         src/international_string_util.o(.text);
-	src/surfable_pokemon.o(.text);
+src/surfable_pokemon.o(.text);
 	src/dexnav.o(.text);
     } =0
 
@@ -352,7 +359,7 @@ SECTIONS {
         data/battle_scripts_1.o(script_data);
         data/field_effect_scripts.o(script_data);
         data/battle_scripts_2.o(script_data);
-        data/contest_ai_scripts.o(script_data);
+                data/contest_ai_scripts.o(script_data);
         data/mystery_event_script_cmd_table.o(script_data);
     } =0
 
@@ -479,24 +486,24 @@ SECTIONS {
         src/main_menu.o(.rodata);
         src/battle_controllers.o(.rodata);
         src/digit_obj_util.o(.rodata);
-	src/ss_anne.o(.rodata);
+src/ss_anne.o(.rodata);
         src/data.o(.rodata);
         src/battle_bg.o(.rodata);
         src/battle_main.o(.rodata);
         src/battle_util.o(.rodata);
-        src/battle_z_move.o(.rodata);
+src/battle_z_move.o(.rodata);
         src/battle_script_commands.o(.rodata);
         src/battle_controller_player.o(.rodata);
         src/battle_anim_smokescreen.o(.rodata);
         src/battle_controller_opponent.o(.rodata);
         src/battle_ai_switch_items.o(.rodata);
         src/battle_controller_link_opponent.o(.rodata);
-        src/battle_debug.o(.rodata);
+src/battle_debug.o(.rodata);
         src/pokemon.o(.rodata);
         src/trig.o(.rodata);
         src/util.o(.rodata);
         src/daycare.o(.rodata);
-        src/debug.o(.rodata);
+src/debug.o(.rodata);
         src/egg_hatch.o(.rodata);
         src/battle_gfx_sfx_util.o(.rodata);
         src/battle_interface.o(.rodata);
@@ -512,6 +519,7 @@ SECTIONS {
         src/field_door.o(.rodata);
         src/field_player_avatar.o(.rodata);
         src/event_object_movement.o(.rodata);
+        src/follower_helper.o(.rodata);
         src/text_window.o(.rodata);
         src/scrcmd.o(.rodata);
         src/field_control_avatar.o(.rodata);
@@ -585,7 +593,7 @@ SECTIONS {
         src/battle_anim_ground.o(.rodata);
         src/battle_anim_normal.o(.rodata);
         src/battle_anim_utility_funcs.o(.rodata);
-        src/battle_anim_new.o(.rodata);
+src/battle_anim_new.o(.rodata);
         src/battle_intro.o(.rodata);
         src/bike.o(.rodata);
         src/easy_chat.o(.rodata);
@@ -704,11 +712,11 @@ SECTIONS {
         src/battle_transition_frontier.o(.rodata);
         src/text_input_strings.o(.rodata);
         src/fonts.o(.rodata);
-        src/mystery_event_msg.o(.rodata);
+                src/mystery_event_msg.o(.rodata);
         data/mystery_gift.o(.rodata);
         src/m4a_tables.o(.rodata);
         data/sound_data.o(.rodata);
-	src/surfable_pokemon.o(.rodata);
+src/surfable_pokemon.o(.rodata);
 	src/dexnav.o(.rodata);
     } =0
 
@@ -1319,6 +1327,16 @@ SECTIONS {
     {
         src/graphics.o(.rodata);
     } =0
+
+    extra :
+    ALIGN(4)
+    {
+        src/*.o(.text);
+        gflib/*.o(.text);
+        src/*.o(.rodata);
+        gflib/*.o(.rodata);
+        data/*.o(.rodata);
+    } = 0
 
     /* DWARF debug sections.
        Symbols in the DWARF debugging sections are relative to the beginning

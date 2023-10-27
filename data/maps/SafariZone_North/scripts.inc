@@ -53,3 +53,8 @@ SafariZone_North_Text_WinFreeHMFindSecretHouse::
     .string "Trainer Tips\p"
     .string "Win a free HM for finding the\n"
     .string "Secret House.$"
+
+SafariZone_North_EventScript_Scizorite::
+	finditem ITEM_SCIZORITE, 1
+	release
+	end

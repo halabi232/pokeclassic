@@ -146,6 +146,11 @@ VictoryRoad_3F_EventScript_ItemTM50::
 	release
 	end
 
+VictoryRoad_3F_EventScript_ItemTM74::
+	finditem ITEM_TM74, 1
+	release
+	end
+
 VictoryRoad_3F_EventScript_ItemPowerStone::
 	finditem ITEM_POWER_STONE, 1
 	release

@@ -1,5 +1,6 @@
 .set LOCALID_RIVAL, 1
 .set LOCALID_FUGITIVE, 2
+.set LOCALID_LANDSLIDEWORKER, 5
 
 Route22_MapScripts::
 	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, Route22_OnReturnToField
@@ -205,3 +206,28 @@ Route22_RocketFugitive::
 	waitse
 	fadescreen FADE_FROM_BLACK
 	end
+
+Route22_EventScript_LandslideWorker::
+	lock
+	faceplayer
+	msgbox Route22_Text_LandslideWorker
+	closemessage
+	applymovement LOCALID_LANDSLIDEWORKER, Common_Movement_FaceOriginalDirection
+	waitmovement 1
+	playmoncry SPECIES_MACHOKE, CRY_MODE_NORMAL
+	msgbox Route22_Text_Machoke
+	closemessage
+	waitmoncry
+	releaseall
+	end
+
+Route22_Text_LandslideWorker::
+	.string "Ugh!! A landslide blocked the path!\n"
+	.string "We have been working nonstop\p"
+	.string "Mr. Scott ordered us to hurry up\n"
+	.string "Otherwise the Battle Tower won't\l"
+	.string "be ready to receive the visitors.\p"
+	.string "Machoke!! Let's go!!$"
+
+Route22_Text_Machoke::
+	.string "Machoke: Gwoh! Goggoh!$"

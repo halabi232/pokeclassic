@@ -982,6 +982,15 @@ static void PlayerNotOnBikeTurningInPlace(u8 direction, u16 heldKeys)
     PlayerTurnInPlace(direction);
 }
 
+static bool8 IsPlayerTryingToRun(u16 heldKeys)
+{
+    if (gSaveBlock2Ptr->optionsAutorun == 0)
+        return TRUE;
+    else if (heldKeys & B_BUTTON)
+        return TRUE;
+    return FALSE;
+}
+
 static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
 {
     u8 collision = CheckForPlayerAvatarCollision(direction);
@@ -1027,11 +1036,18 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
         return;
     }
 
-    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON) && FlagGet(FLAG_SYS_B_DASH)
+    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && IsPlayerTryingToRun(heldKeys) && FlagGet(FLAG_SYS_B_DASH)
      && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
+    {
+        if (heldKeys & B_BUTTON && gSaveBlock2Ptr->optionsAutorun == 0)
+        {
+            PlayerWalkNormal(direction);
+        }
+        else
     {
         PlayerRun(direction);
         gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_DASH;
+        }
         return;
     }
     else if (FlagGet(FLAG_SYS_DEXNAV_SEARCH) && (heldKeys & A_BUTTON))

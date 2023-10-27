@@ -6,6 +6,11 @@ PokemonTower_3F_EventScript_ItemEscapeRope::
 	release
 	end
 
+PokemonTower_3F_EventScript_ItemTM94::
+    finditem ITEM_TM94, 1
+    release
+    end
+
 PokemonTower_3F_EventScript_Patricia::
 	trainerbattle_single TRAINER_CHANNELER_PATRICIA, PokemonTower_3F_Text_PatriciaIntro, PokemonTower_3F_Text_PatriciaDefeat
 	msgbox PokemonTower_3F_Text_PatriciaPostBattle, MSGBOX_AUTOCLOSE

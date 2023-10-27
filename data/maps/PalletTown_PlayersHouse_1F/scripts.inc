@@ -9,8 +9,8 @@ PalletTown_PlayersHouse_1F_EvenScripts_Mom::
 	faceplayer
 	goto_if_le VAR_ADVENTURE_BEGINS, 2, PalletTown_PlayersHouse_1F_EventScript_BetterHurry
 	goto_if_eq VAR_ADVENTURE_BEGINS, 3, PlayersHouse_1F_EventScript_PokenavScene
-	goto_if_eq VAR_SECRET_BATTLE_CLEAR, 2, PlayersHouse_1F_EventScript_BillVisiting
-	goto_if_eq VAR_SECRET_BATTLE_CLEAR, 3, PlayersHouse_1F_EventScript_AnotherAdventure
+	goto_if_eq VAR_IS_CHAMPION, 2, PlayersHouse_1F_EventScript_BillVisiting
+	goto_if_eq VAR_IS_CHAMPION, 3, PlayersHouse_1F_EventScript_AnotherAdventure
 	goto PalletTown_PlayersHouse_1F_EventScript_MomHeal
 	end
 
@@ -26,6 +26,12 @@ PalletTown_PlayersHouse_1F_Text_BillVisiting::
 	.string "He's such a gentleman!$"
 
 PlayersHouse_1F_EventScript_AnotherAdventure::
+	msgbox PlayersHouse_1F_Text_AnotherAdventure, MSGBOX_DEFAULT
+	turnobject LOCALID_MOM, DIR_WEST
+	release
+	end
+
+PlayersHouse_1F_Text_AnotherAdventure::
 	.string "Strange stones? Hidden potential?\p"
 	.string "The adventures never stop for you\n" 
 	.string "Pokémon trainers!$"
@@ -131,7 +137,7 @@ PlayersHouse_1F_EventScript_Bill::
 	additem ITEM_MEGA_RING, 1
 	setflag FLAG_GOT_MEGA_RING
 	msgbox PlayersHouse_1F_Text_FindMegaStones, MSGBOX_NPC
-	setvar VAR_SECRET_BATTLE_CLEAR, 3
+	setvar VAR_IS_CHAMPION, 3
 	release
 	end
 
@@ -211,9 +217,20 @@ PlayersHouse_1F_Text_Gameclear::
 	.string "After everything you've been doing\n"
 	.string "I thought you'd need more rest.\p"
 	.string "...\p"
+	.string "You see, Prof. Oak told me everything...\p"
+	.string "He told me how you became a true\l"
+	.string "Pokémon master!\p"
+	.string "I'm so proud of you...\p"
 	.string "You've really grown up, {PLAYER}.\p"
-	.string "I think your Pokémon can see that, too.\p"
-	.string "They'll follow you anywhere!$"
+	.string "I think your Pokémon can see that, too!\n"
+	.string "After all, it was only through your bond\l"
+	.string "of love and friendship you have grown!\p"
+	.string "They don't see you as their master\l"
+	.string "But as their friend!\l"
+	.string "And that what makes you special!\p"
+	.string "All those Pokémon you befriended\n"
+	.string "They really adore you and I'm sure\l"
+	.string "that they'll follow you anywhere!$"
 
 PlayersHouse_1F_Text_FollowerOptions::
 	.string "Your Follower settings in the Options\n"
@@ -222,13 +239,15 @@ PlayersHouse_1F_Text_FollowerOptions::
 	.string "Pokémon will follow you around!$"
 
 PlayersHouse_1F_Text_Gameclear2::
-	.string "Mom: Just because you're the new\n"
-	.string "champion doesn't mean your story\l"
+	.string "Mom: Just because you're a\n"
+	.string "master doesn't mean your story\l"
 	.string "is over!\p"
 	.string "There's a whole world out there\n"
 	.string "for you and your Pokémon to explore!\p"
 	.string "I'm so proud of you, {PLAYER}!\n"
-	.string "Go have fun with your Pokémon!$"
+	.string "Go have fun with your Pokémon!\p"
+	.string "But don't forget to visit me\n"
+	.string "From time to time!$"
 
 PlayersHouse_1F_EventScript_MoveMomToStairs1::
 	applymovement LOCALID_MOM, Movement_MoveMomToStairs1

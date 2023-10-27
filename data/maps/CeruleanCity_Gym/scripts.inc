@@ -67,7 +67,7 @@ CeruleanCity_Gym_Text_ReceivedBadge::
 
 CeruleanCity_Gym_Text_ExplainBadge::
 	.string "The Cascade Badge makes all\n"
-    .string "Pokémon up to Lv. 30 obey.\p"
+    .string "Pokémon up to Lv. 40 obey.\p"
     .string "That includes even outsiders you\n"
     .string "got in trades.\p"
     .string "There's more. You can now use Cut\n"

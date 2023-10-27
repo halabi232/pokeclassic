@@ -420,6 +420,11 @@ extern const u8 BattleScript_MagicianActivates[];
 extern const u8 BattleScript_BeakBlastSetUp[];
 extern const u8 BattleScript_BeakBlastBurn[];
 extern const u8 BattleScript_DefDownSpeedUp[];
+extern const u8 BattleScript_AffectionBasedStatusHeal[];
+extern const u8 BattleScript_AffectionBasedEndurance[];
+extern const u8 BattleScript_SymbiosisActivates[];
+extern const u8 BattleScript_MultiHitPrintStrings[];
+extern const u8 BattleScript_BurnUpRemoveType[];
 
 // zmoves
 extern const u8 BattleScript_ZMoveActivateDamaging[];
@@ -429,5 +434,7 @@ extern const u8 BattleScript_RecoverHPZMove[];
 extern const u8 BattleScript_StatUpZMove[];
 extern const u8 BattleScript_HealReplacementZMove[];
 extern const u8 BattleScript_EffectExtremeEvoboost[];
+
+extern const u8 BattleScript_ItemDropped[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

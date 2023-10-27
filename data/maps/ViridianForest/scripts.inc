@@ -189,10 +189,14 @@ ViridianForest_EventScript_ItemAntidote::
 	finditem ITEM_ANTIDOTE, 1
 	end
 
-ViridianForest_EventScript_ItemPokeBall::
-	finditem ITEM_POKE_BALL, 1
-	end
-
 ViridianForest_EventScript_Beedrillite::
     finditem ITEM_BEEDRILLITE, 1
+    end
+
+ViridianForest_EventScript_TM85::
+    finditem ITEM_TM85, 1
+    end
+
+ViridianForest_EventScript_TM77::
+    finditem ITEM_TM77, 1
     end

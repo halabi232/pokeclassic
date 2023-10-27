@@ -131,7 +131,32 @@ PokemonLeague_HallOfFame_EventScript_ResetEliteFour::
 	return
 
 PokemonLeague_HallOfFame_EventScript_UpdatePostgameVariables::
-	setvar VAR_ADVENTURE_BEGINS, 7
+	call_if_unset FLAG_REVEALED_MEGA_STONES, Postgame_RevealMegaStones
+	return
+
+Postgame_RevealMegaStones::
+	clearflag FLAG_HIDE_VENUSAURITE
+	clearflag FLAG_HIDE_CHARIZARDITE_X
+	clearflag FLAG_HIDE_CHARIZARDITE_Y
+	clearflag FLAG_HIDE_BLASTOISINTE
+	clearflag FLAG_HIDE_BEEDRILLITE
+	clearflag FLAG_HIDE_PIDEGOTITE
+	clearflag FLAG_HIDE_ALAKAZITE
+	clearflag FLAG_HIDE_SLOWBRONITE
+	clearflag FLAG_HIDE_GENGARITE
+	clearflag FLAG_HIDE_KANGASKHANITE
+	clearflag FLAG_HIDE_PINSIRITE
+	clearflag FLAG_HIDE_GYARDOSITE
+	clearflag FLAG_HIDE_AERODACTYLITE
+	clearflag FLAG_HIDE_MEWTWONITE_Y
+	clearflag FLAG_HIDE_MEWTWONITE_X
+	clearflag FLAG_HIDE_STEELIXITE
+	clearflag FLAG_HIDE_SCIZORITE
+	clearflag FLAG_HIDE_VIRIDIAN_FOREST_TM77
+	clearflag FLAG_HIDE_VIRIDIAN_FOREST_TM85
+	clearflag FLAG_HIDE_PALLET_BILL
+	setflag FLAG_REVEALED_MEGA_STONES
+	setvar VAR_IS_CHAMPION, 1
 	return
 
 PokemonLeague_HallOfFame_EventScript_BeginPostgameRockets::

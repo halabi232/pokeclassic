@@ -6,7 +6,7 @@ MoveTutor_DoubleEdge::
 	msgbox MoveTutor_Text_DoubleEdgeTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_DoubleEdgeDeclined
 	msgbox MoveTutor_Text_DoubleEdgeWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_DOUBLE_EDGE
+	setvar VAR_0x8005, MOVE_DOUBLE_EDGE
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_DoubleEdgeDeclined
 	goto MoveTutor_EventScript_DoubleEdgeTaught
@@ -51,7 +51,7 @@ MoveTutor_Metronome::
 	msgbox MoveTutor_Text_MetronomeTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_MetronomeDeclined
 	msgbox MoveTutor_Text_MetronomeWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_METRONOME
+	setvar VAR_0x8005, MOVE_METRONOME
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_MetronomeDeclined
 	goto MoveTutor_EventScript_MetronomeTaught
@@ -94,7 +94,7 @@ MoveTutor_ThunderWave::
 	msgbox MoveTutor_Text_ThunderWaveTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_ThunderWaveDeclined
 	msgbox MoveTutor_Text_ThunderWaveWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_THUNDER_WAVE
+	setvar VAR_0x8005, MOVE_THUNDER_WAVE
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_ThunderWaveDeclined
 	goto MoveTutor_EventScript_ThunderWaveTaught
@@ -140,7 +140,7 @@ MoveTutor_Mimic::
 	msgbox MoveTutor_Text_MimicTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_MimicDeclined
 	msgbox MoveTutor_Text_MimicWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_MIMIC
+	setvar VAR_0x8005, MOVE_MIMIC
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_MimicDeclined
 	goto MoveTutor_EventScript_MimicTaught
@@ -186,7 +186,7 @@ MoveTutor_Substitute::
 	msgbox MoveTutor_Text_SubstituteTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_SubstituteDeclined
 	msgbox MoveTutor_Text_SubstituteWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_SUBSTITUTE
+	setvar VAR_0x8005, MOVE_SUBSTITUTE
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_SubstituteDeclined
 	goto MoveTutor_EventScript_SubstituteTaught
@@ -232,7 +232,7 @@ MoveTutor_DreamEater::
 	msgbox MoveTutor_Text_DreamEaterTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_DreamEaterDeclined
 	msgbox MoveTutor_Text_DreamEaterWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_DREAM_EATER
+	setvar VAR_0x8005, MOVE_DREAM_EATER
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_DreamEaterDeclined
 	goto MoveTutor_EventScript_DreamEaterTaught
@@ -276,7 +276,7 @@ MoveTutor_SeismicToss::
 	msgbox MoveTutor_Text_SeismicTossTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_SeismicTossDeclined
 	msgbox MoveTutor_Text_SeismicTossWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_SEISMIC_TOSS
+	setvar VAR_0x8005, MOVE_SEISMIC_TOSS
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_SeismicTossDeclined
 	goto MoveTutor_EventScript_SeismicTossTaught
@@ -321,7 +321,7 @@ MoveTutor_MegaPunch::
 	msgbox MoveTutor_Text_MegaPunchTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_MegaPunchDeclined
 	msgbox MoveTutor_Text_MegaPunchWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_MEGA_PUNCH
+	setvar VAR_0x8005, MOVE_MEGA_PUNCH
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_MegaPunchDeclined
 	goto MoveTutor_EventScript_MegaPunchTaught
@@ -367,7 +367,7 @@ MoveTutor_MegaKick::
 	msgbox MoveTutor_Text_MegaKickTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_MegaKickDeclined
 	msgbox MoveTutor_Text_MegaKickWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_MEGA_KICK
+	setvar VAR_0x8005, MOVE_MEGA_KICK
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_MegaKickDeclined
 	goto MoveTutor_EventScript_MegaKickTaught
@@ -413,7 +413,7 @@ MoveTutor_RockSlide::
 	msgbox MoveTutor_Text_RockSlideTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_RockSlideDeclined
 	msgbox MoveTutor_Text_RockSlideWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_ROCK_SLIDE
+	setvar VAR_0x8005, MOVE_ROCK_SLIDE
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_RockSlideDeclined
 	goto MoveTutor_EventScript_RockSlideTaught
@@ -456,7 +456,7 @@ MoveTutor_SoftBoiled::
 	msgbox MoveTutor_Text_SoftBoiledTeach, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_SoftBoiledDeclined
 	msgbox MoveTutor_Text_SoftBoiledWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_SOFT_BOILED
+	setvar VAR_0x8005, MOVE_SOFT_BOILED
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_SoftBoiledDeclined
 	goto MoveTutor_EventScript_SoftBoiledTaught
@@ -501,7 +501,7 @@ MoveTutor_Counter::
     msgbox MoveTutor_Text_CounterTeach, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_CounterDeclined
     msgbox MoveTutor_Text_CounterWhichMon, MSGBOX_DEFAULT
-    setvar VAR_0x8005, TUTOR_MOVE_COUNTER
+    setvar VAR_0x8005, MOVE_COUNTER
     call MoveTutor_EventScript_OpenPartyMenu
     goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_CounterDeclined
     goto MoveTutor_EventScript_CounterTaught
@@ -552,7 +552,7 @@ SlateportCity_PokemonFanClub_EventScript_SwaggerTutor::
 	call MoveTutor_EventScript_CanOnlyBeLearnedOnce
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_SwaggerDeclined
 	msgbox MoveTutor_Text_SwaggerWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_SWAGGER
+	setvar VAR_0x8005, MOVE_SWAGGER
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_SwaggerDeclined
 	setflag FLAG_MOVE_TUTOR_TAUGHT_SWAGGER
@@ -578,7 +578,7 @@ MauvilleCity_EventScript_RolloutTutor::
 	call MoveTutor_EventScript_CanOnlyBeLearnedOnce
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_RolloutDeclined
 	msgbox MoveTutor_Text_RolloutWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_ROLLOUT
+	setvar VAR_0x8005, MOVE_ROLLOUT
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_RolloutDeclined
 	setflag FLAG_MOVE_TUTOR_TAUGHT_ROLLOUT
@@ -604,7 +604,7 @@ VerdanturfTown_PokemonCenter_1F_EventScript_FuryCutterTutor::
 	call MoveTutor_EventScript_CanOnlyBeLearnedOnce
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_FuryCutterDeclined
 	msgbox MoveTutor_Text_FuryCutterWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_FURY_CUTTER
+	setvar VAR_0x8005, MOVE_FURY_CUTTER
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_FuryCutterDeclined
 	setflag FLAG_MOVE_TUTOR_TAUGHT_FURY_CUTTER
@@ -630,7 +630,7 @@ FortreeCity_House2_EventScript_SleepTalkTutor::
 	call MoveTutor_EventScript_CanOnlyBeLearnedOnce
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_SleepTalkDeclined
 	msgbox MoveTutor_Text_SleepTalkWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_SLEEP_TALK
+	setvar VAR_0x8005, MOVE_SLEEP_TALK
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_SleepTalkDeclined
 	setflag FLAG_MOVE_TUTOR_TAUGHT_SLEEP_TALK
@@ -656,7 +656,7 @@ MossdeepCity_EventScript_DynamicPunchTutor::
 	call MoveTutor_EventScript_CanOnlyBeLearnedOnce
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_DynamicPunchDeclined
 	msgbox MoveTutor_Text_DynamicPunchWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_DYNAMIC_PUNCH
+	setvar VAR_0x8005, MOVE_DYNAMIC_PUNCH
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_DynamicPunchDeclined
 	setflag FLAG_MOVE_TUTOR_TAUGHT_DYNAMICPUNCH
@@ -682,7 +682,7 @@ PacifidlogTown_PokemonCenter_1F_EventScript_ExplosionTutor::
 	call MoveTutor_EventScript_CanOnlyBeLearnedOnce
 	goto_if_eq VAR_RESULT, NO, MoveTutor_EventScript_ExplosionDeclined
 	msgbox MoveTutor_Text_ExplosionWhichMon, MSGBOX_DEFAULT
-	setvar VAR_0x8005, TUTOR_MOVE_EXPLOSION
+	setvar VAR_0x8005, MOVE_EXPLOSION
 	call MoveTutor_EventScript_OpenPartyMenu
 	goto_if_eq VAR_RESULT, 0, MoveTutor_EventScript_ExplosionDeclined
 	setflag FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION

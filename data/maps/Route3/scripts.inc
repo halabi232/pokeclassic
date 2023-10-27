@@ -11,6 +11,11 @@ Route3_OnResume:
 	call Common_EventScript_GetDayOrNight
 	end
 
+Route3_EventScript_TM57::
+	finditem ITEM_TM57, 1
+	release
+	end
+
 Route3_EventScript_Youngster::
 	msgbox Route3_Text_TunnelFromCeruleanTiring, MSGBOX_NPC
 	end

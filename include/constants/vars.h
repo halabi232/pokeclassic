@@ -179,9 +179,9 @@
 #define VAR_TITLE_MATCH_OPPONENT        	0x40A0 //Sets the opponent for the title match challenge
 #define VAR_TITLE_MATCHES                   0x40A1 //Tracks how many Title Matches you've completed. Every few will trigger a special battle instead of a regular trainer.
 #define VAR_BATTLE_TOWER         			0x40A2
-#define VAR_SECRET_BATTLE_CLEAR         	0x40A3 //For Events triggered after the secret battle is completed
-#define UNUSED_VARIABLE_41                	0x40A4
-#define UNUSED_VARIABLE_42  				0x40A5
+#define VAR_IS_CHAMPION         	        0x40A3 //For Events triggered after becoming champion
+#define VAR_LILYCOVE_CONTEST_LOBBY_STATE    0x40A4
+#define VAR_LILYCOVE_MUSEUM_2F_STATE    	0x40A5
 #define UNUSED_VARIABLE_43   				0x40A6
 #define UNUSED_VARIABLE_44       			0x40A7
 #define UNUSED_VARIABLE_45                  0x40A8 

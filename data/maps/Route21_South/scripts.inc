@@ -13,47 +13,47 @@ Route21_South_OnResume:
 	call Common_EventScript_GetDayOrNight
 	end
 
-Route21_South_EventScript_Johan::
-	trainerbattle_single REMATCHABLE_TRAINER_JUGGLER_JOHAN_1, Route21_South_Text_JohanIntro, Route21_South_Text_JohanDefeat, Route21_South_EventScript_RegisterJohanAfterBattle
+Route21_South_EventScript_Jared::
+	trainerbattle_single REMATCHABLE_TRAINER_JUGGLER_JARED_1, Route21_South_Text_JaredIntro, Route21_South_Text_JaredDefeat, Route21_South_EventScript_RegisterJaredAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route21_South_EventScript_JohanRematch
-	msgbox Route21_South_Text_JohanPostBattle, MSGBOX_DEFAULT
+	goto_if_eq VAR_RESULT, TRUE, Route21_South_EventScript_JaredRematch
+	msgbox Route21_South_Text_JaredPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
-Route21_South_Text_JohanIntro::
+Route21_South_Text_JaredIntro::
     .string "Watch me juggle all these\n"
     .string "Poké Balls!$"
 
-Route21_South_Text_JohanDefeat::
+Route21_South_Text_JaredDefeat::
     .string "I dropped my balls...$"
 
-Route21_South_Text_JohanPostBattle::
+Route21_South_Text_JaredPostBattle::
     .string "Only the strongest trainers\n"
     .string "can make it to the Elite Four.$"
 
-Route21_South_EventScript_RegisterJohanAfterBattle::
+Route21_South_EventScript_RegisterJaredAfterBattle::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
-	msgbox Route21_South_Text_JohanRegister, MSGBOX_DEFAULT
-	register_matchcall REMATCHABLE_TRAINER_JUGGLER_JOHAN_1
+	msgbox Route21_South_Text_JaredRegister, MSGBOX_DEFAULT
+	register_matchcall REMATCHABLE_TRAINER_JUGGLER_JARED_1
 	release
 	end
 
-Route21_South_Text_JohanRegister:
+Route21_South_Text_JaredRegister:
 	.string "I teleported out here..\p"
 	.string "but  I'm out of PP...\p"
 	.string "Can I call you for a ride later?$"
 
-Route21_South_EventScript_JohanRematch::
-	trainerbattle_rematch REMATCHABLE_TRAINER_JUGGLER_JOHAN_1, Route21_South_Text_JohanRematchIntro, Route21_South_Text_JohanDefeat
-	msgbox Route21_South_Text_JohanRematchPostBattle, MSGBOX_AUTOCLOSE
+Route21_South_EventScript_JaredRematch::
+	trainerbattle_rematch REMATCHABLE_TRAINER_JUGGLER_JARED_1, Route21_South_Text_JaredRematchIntro, Route21_South_Text_JaredDefeat
+	msgbox Route21_South_Text_JaredRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route21_South_Text_JohanRematchIntro::
+Route21_South_Text_JaredRematchIntro::
 	.string "I've been practicing my juggling!$"
 
-Route21_South_Text_JohanRematchPostBattle::
+Route21_South_Text_JaredRematchPostBattle::
 	.string "If I didn't drop out of school, I\n"
 	.string "could have been working for Silph!\p"
 	.string "But would I have been happy if I\n"

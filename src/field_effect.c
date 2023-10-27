@@ -723,7 +723,7 @@ void FieldEffectScript_LoadFadedPalette(u8 **script)
 {
     struct SpritePalette *palette = (struct SpritePalette *)FieldEffectScript_ReadWord(script);
     LoadSpritePalette(palette);
-    UpdateSpritePaletteWithWeather(IndexOfSpritePaletteTag(palette->tag), FALSE);
+    UpdateSpritePaletteWithWeather(IndexOfSpritePaletteTag(palette->tag), TRUE);
     (*script) += 4;
 }
 
@@ -866,8 +866,10 @@ u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
 u8 CreateMonSprite_FieldMove(u16 species, u32 otId, u32 personality, s16 x, s16 y, u8 subpriority)
 {
     const struct CompressedSpritePalette *spritePalette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
-    u16 spriteId = CreateMonPicSprite_HandleDeoxys(species, otId, personality, TRUE, x, y, 0, spritePalette->tag);
-    PreservePaletteInWeather(IndexOfSpritePaletteTag(spritePalette->tag) + 0x10);
+    // force load unique tag here to avoid collision with follower pokemon
+    u8 paletteSlot = AllocSpritePalette(FLDEFF_PAL_TAG_FIELD_MOVE_MON);
+    u16 spriteId = CreateMonPicSprite_HandleDeoxys(species, otId, personality, TRUE, x, y, paletteSlot, TAG_NONE);
+    PreservePaletteInWeather(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_FIELD_MOVE_MON) + 0x10);
     if (spriteId == 0xFFFF)
         return MAX_SPRITES;
     else
@@ -1003,8 +1005,8 @@ static const struct SpriteTemplate sSpriteTemplate_HofMonitor = {
 static void PokecenterHealEffect_WaitForBallFlashing(struct Task *task)
 {
     if (gSprites[task->tGlowEffectSpriteId].sState > 4)
-        task->tState++;
-}
+            task->tState++;
+    }
 
 static void PokecenterHealEffect_WaitForSoundAndEnd(struct Task *task)
 {
@@ -1041,7 +1043,7 @@ static void HallOfFameRecordEffect_Init(struct Task *task)
     u8 taskId;
     task->tState++;
     task->tGlowEffectSpriteId = CreateGlowingPokeballsEffect(task->tNumMons, task->tFirstBallX, task->tFirstBallY, FALSE);
-}
+    }
 
 static void HallOfFameRecordEffect_WaitForBallPlacement(struct Task *task)
 {
@@ -1055,8 +1057,8 @@ static void HallOfFameRecordEffect_WaitForBallPlacement(struct Task *task)
 static void HallOfFameRecordEffect_WaitForBallFlashing(struct Task *task)
 {
     if (gSprites[task->tGlowEffectSpriteId].sState > 4)
-        task->tState++;
-}
+            task->tState++;
+    }
 
 static void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Task *task)
 {
@@ -1085,7 +1087,7 @@ static u8 CreateGlowingPokeballsEffect(s16 numMons, s16 x, s16 y, bool16 playHea
     sprite = &gSprites[spriteId];
     sprite->x2 = x;
     sprite->y2 = y;
-    sprite->subpriority = 0xFF;
+sprite->subpriority = 0xFF;
     sprite->sPlayHealSe = playHealSe;
     sprite->sNumMons = numMons;
     sprite->sSpriteId = spriteId;
@@ -1126,9 +1128,9 @@ static void PokeballGlowEffect_TryPlaySe(struct Sprite *sprite)
         sprite->sCounter = 0;
         sprite->sNumFlashed = 0;
         if (sprite->sPlayHealSe)
-            PlayFanfare(MUS_HEAL);
+                    PlayFanfare(MUS_HEAL);
+        }
     }
-}
 
 static void PokeballGlowEffect_FlashFirstThree(struct Sprite *sprite)
 {
@@ -1194,18 +1196,18 @@ static void PokeballGlowEffect_Dummy(struct Sprite *sprite)
 static void PokeballGlowEffect_WaitForSound(struct Sprite *sprite)
 {
     if (sprite->sPlayHealSe == FALSE || IsFanfareTaskInactive())
-        sprite->sState++;
-}
+            sprite->sState++;
+    }
 
 static void PokeballGlowEffect_Idle(struct Sprite *sprite)
 {
-}
+    }
 
 static void SpriteCB_PokeballGlow(struct Sprite *sprite)
 {
     if (gSprites[sprite->sGlowEffectSpriteId].sState > 4)
-        FieldEffectFreeGraphicsResources(sprite);
-}
+            FieldEffectFreeGraphicsResources(sprite);
+    }
 
 #undef sState
 #undef sTimer
@@ -1225,7 +1227,7 @@ static u8 CreatePokecenterMonitorSprite(s32 x, s32 y)
     sprite = &gSprites[spriteId];
     sprite->oam.priority = 2;
     sprite->invisible = TRUE;
-    return spriteId;
+        return spriteId;
 }
 
 static void SpriteCB_PokecenterMonitor(struct Sprite *sprite)
@@ -1237,21 +1239,21 @@ static void SpriteCB_PokecenterMonitor(struct Sprite *sprite)
         StartSpriteAnim(sprite, 1);
     }
     if (sprite->animEnded)
-        FieldEffectFreeGraphicsResources(sprite);
-}
+            FieldEffectFreeGraphicsResources(sprite);
+    }
 
 #undef sStartFlash
 
 static void CreateHofMonitorSprite(s32 x, s32 y)
 {
     CreateSpriteAtEnd(&sSpriteTemplate_HofMonitor, x, y, 0);
-}
+    }
 
 static void SpriteCB_HallOfFameMonitor(struct Sprite *sprite)
 {
     if (sprite->animEnded)
         FieldEffectFreeGraphicsResources(sprite);
-}
+    }
 
 void ReturnToFieldFromFlyMapSelect(void)
 {
@@ -1456,13 +1458,13 @@ static bool8 FallWarpEffect_CameraShake(struct Task *task)
 
 static bool8 FallWarpEffect_End(struct Task *task)
 {
-    s16 x, y;
+s16 x, y;
     gPlayerAvatar.preventStep = FALSE;
     ScriptContext2_Disable();
     CameraObjectReset1();
     UnfreezeObjectEvents();
     InstallCameraPanAheadCallback();
-    PlayerGetDestCoords(&x, &y);
+PlayerGetDestCoords(&x, &y);
     if (MetatileBehavior_IsSurfableInSeafoamIslands(MapGridGetMetatileBehaviorAt(x, y)) == TRUE)
     {
         VarSet(VAR_TEMP_1, 1);
@@ -1488,7 +1490,7 @@ static void HideFollowerForFieldEffect(void) {
     if (!followerObj || followerObj->invisible)
         return;
     ClearObjectEventMovement(followerObj, &gSprites[followerObj->spriteId]);
-    gSprites[followerObj->spriteId].animCmdIndex = 0; // Avoids a visual glitch with follower's animation frame
+gSprites[followerObj->spriteId].animCmdIndex = 0; // Avoids a visual glitch with follower's animation frame
     ObjectEventSetHeldMovement(followerObj, MOVEMENT_ACTION_ENTER_POKEBALL);
 }
 
@@ -1527,6 +1529,7 @@ static bool8 EscalatorWarpOut_WaitForPlayer(struct Task *task)
     if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
     {
         ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(GetPlayerFacingDirection()));
+        objectEvent->noShadow = TRUE; // hide shadow for cleaner movement
         task->tState++;
         task->data[2] = 0;
         task->data[3] = 0;
@@ -1648,6 +1651,7 @@ static bool8 EscalatorWarpIn_Init(struct Task *task)
     u8 behavior;
     CameraObjectReset2();
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    objectEvent->noShadow = TRUE;
     ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(DIR_EAST));
     PlayerGetDestCoords(&x, &y);
     behavior = MapGridGetMetatileBehaviorAt(x, y);
@@ -1744,6 +1748,7 @@ static bool8 EscalatorWarpIn_End(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    objectEvent->noShadow = FALSE;
     if (ObjectEventClearHeldMovementIfFinished(objectEvent))
     {
         CameraObjectReset1();
@@ -1896,6 +1901,7 @@ static bool8 LavaridgeGymB1FWarpEffect_Init(struct Task *task, struct ObjectEven
     SetCameraPanningCallback(NULL);
     gPlayerAvatar.preventStep = TRUE;
     objectEvent->fixedPriority = 1;
+    objectEvent->noShadow = TRUE;
     task->data[1] = 1;
     task->data[0]++;
     if (objectEvent->localId == OBJ_EVENT_ID_PLAYER) // Hide follower before warping
@@ -2090,6 +2096,7 @@ static bool8 LavaridgeGym1FWarpEffect_Init(struct Task *task, struct ObjectEvent
     CameraObjectReset2();
     gPlayerAvatar.preventStep = TRUE;
     objectEvent->fixedPriority = 1;
+    objectEvent->noShadow = TRUE;
     task->data[0]++;
     if (objectEvent->localId == OBJ_EVENT_ID_PLAYER) // Hide follower before warping
         HideFollowerForFieldEffect();
@@ -2355,7 +2362,7 @@ static void TeleportWarpOutFieldEffect_SpinExit(struct Task *task)
     {
         sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
     }
-    if (task->data[4] >= 0xa8)
+    if (task->data[4] >= DISPLAY_HEIGHT + 8)
     {
         task->tState++;
         TryFadeOutOldMapMusic();
@@ -2568,7 +2575,7 @@ static void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *task)
     u16 delta = ((REG_BG0CNT >> 8) << 11);
     CpuCopy16(sFieldMoveStreaksOutdoors_Gfx, (void *)(VRAM + offset), 0x200);
     CpuFill32(0, (void *)(VRAM + delta), 0x800);
-    LoadPalette(sFieldMoveStreaksOutdoors_Pal, 0xf0, sizeof(sFieldMoveStreaksOutdoors_Pal));
+    LoadPalette(sFieldMoveStreaksOutdoors_Pal, BG_PLTT_ID(15), sizeof(sFieldMoveStreaksOutdoors_Pal));
     LoadFieldMoveOutdoorStreaksTilemap(delta);
     task->tState++;
 }
@@ -2731,7 +2738,7 @@ static void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *task)
     task->data[12] = delta;
     CpuCopy16(sFieldMoveStreaksIndoors_Gfx, (void *)(VRAM + offset), 0x80);
     CpuFill32(0, (void *)(VRAM + delta), 0x800);
-    LoadPalette(sFieldMoveStreaksIndoors_Pal, 0xf0, sizeof(sFieldMoveStreaksIndoors_Pal));
+    LoadPalette(sFieldMoveStreaksIndoors_Pal, BG_PLTT_ID(15), sizeof(sFieldMoveStreaksIndoors_Pal));
     task->tState++;
 }
 
@@ -3035,7 +3042,7 @@ u8 FldEff_RayquazaSpotlight(void)
     SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(14, 14));
     SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
-    LoadPalette(sSpotlight_Pal, 0xC0, sizeof(sSpotlight_Pal));
+    LoadPalette(sSpotlight_Pal, BG_PLTT_ID(12), sizeof(sSpotlight_Pal));
     SetGpuReg(REG_OFFSET_BG0VOFS, 120);
     for (i = 3; i < 15; i++)
     {
@@ -3810,7 +3817,7 @@ static void Task_MoveDeoxysRock(u8 taskId)
             data[6] = SAFE_DIV(data[2] * 16 - data[4], data[8]);
             data[7] = SAFE_DIV(data[3] * 16 - data[5], data[8]);
             data[0]++;
-        case 1:
+                    case 1:
             if (data[8] != 0)
             {
                 data[8]--;

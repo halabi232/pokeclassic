@@ -132,7 +132,7 @@ static void ResetAllPlayerLinkStates(void);
 static void UpdateHeldKeyCode(u16);
 static void UpdateAllLinkPlayers(u16*, s32);
 static u8 FlipVerticalAndClearForced(u8, u8);
-static u8 LinkPlayerDetectCollision(u8, u8, s16, s16);
+static u8 LinkPlayerGetCollision(u8, u8, s16, s16);
 static void CreateLinkPlayerSprite(u8, u8);
 static void GetLinkPlayerCoords(u8, u16 *, u16 *);
 static u8 GetLinkPlayerFacingDirection(u8);
@@ -200,6 +200,7 @@ u8 gFieldLinkPlayerCount;
 
 u8 gTimeOfDay;
 struct TimeBlendSettings currentTimeBlend;
+u16 gTimeUpdateCounter; // playTimeVBlanks will eventually overflow, so this is used to update TOD
 
 // EWRAM vars
 EWRAM_DATA static u8 sObjectEventLoadFlag = 0;
@@ -373,11 +374,11 @@ static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, st
 void DoWhiteOut(void)
 {
     ScriptContext2_RunNewScript(EventScript_WhiteOut);
-    #if B_WHITEOUT_MONEY == GEN_3
+#if B_WHITEOUT_MONEY == GEN_3
     SetMoney(&gSaveBlock1Ptr->money, GetMoney(&gSaveBlock1Ptr->money) / 2);
-    #endif
+#endif
     HealPlayerParty();
-    //UpdateFollowingPokemon(); //Since I call RemoveFollowingPokemon often, is this needed as a fallback?
+//UpdateFollowingPokemon(); //Since I call RemoveFollowingPokemon often, is this needed as a fallback?
     Overworld_ResetStateAfterWhiteOut();
     SetWarpDestinationToLastHealLocation();
     WarpIntoMap();
@@ -391,7 +392,7 @@ void Overworld_ResetStateAfterFly(void)
     FlagClear(FLAG_SYS_SAFARI_MODE);
     FlagClear(FLAG_SYS_USE_STRENGTH);
     FlagClear(FLAG_SYS_USE_FLASH);
-    VarSet(VAR_SAFARI_ZONE_STATE,0);
+VarSet(VAR_SAFARI_ZONE_STATE,0);
 }
 
 void Overworld_ResetStateAfterTeleport(void)
@@ -413,7 +414,7 @@ void Overworld_ResetStateAfterDigEscRope(void)
     FlagClear(FLAG_SYS_SAFARI_MODE);
     FlagClear(FLAG_SYS_USE_STRENGTH);
     FlagClear(FLAG_SYS_USE_FLASH);
-    VarSet(VAR_SAFARI_ZONE_STATE,0);
+VarSet(VAR_SAFARI_ZONE_STATE,0);
 }
 
 static void Overworld_ResetStateAfterWhiteOut(void)
@@ -424,7 +425,7 @@ static void Overworld_ResetStateAfterWhiteOut(void)
     FlagClear(FLAG_SYS_SAFARI_MODE);
     FlagClear(FLAG_SYS_USE_STRENGTH);
     FlagClear(FLAG_SYS_USE_FLASH);
-    VarSet(VAR_SAFARI_ZONE_STATE,0);
+VarSet(VAR_SAFARI_ZONE_STATE,0);
     #if VAR_TERRAIN != 0
         VarSet(VAR_TERRAIN, 0);
     #endif
@@ -440,7 +441,7 @@ static void Overworld_ResetStateAfterWhiteOut(void)
 static void UpdateMiscOverworldStates(void)
 {
     FlagClear(FLAG_SYS_SAFARI_MODE);
-    VarSet(VAR_SAFARI_ZONE_STATE,0);
+VarSet(VAR_SAFARI_ZONE_STATE,0);
     ChooseAmbientCrySpecies();
     ResetCyclingRoadChallengeData();
     UpdateLocationHistoryForRoamer();
@@ -506,7 +507,7 @@ void LoadObjEventTemplatesFromHeader(void)
             // set up object for seamless map transitions
             gSaveBlock1Ptr->objectEventTemplates[i].elevation = gMapHeader.events->objectEvents[i].elevation;
             gSaveBlock1Ptr->objectEventTemplates[i].trainerType = gMapHeader.events->objectEvents[i].trainerType;
-            gSaveBlock1Ptr->objectEventTemplates[i].trainerRange_berryTreeId = gMapHeader.events->objectEvents[i].trainerRange_berryTreeId;
+              gSaveBlock1Ptr->objectEventTemplates[i].trainerRange_berryTreeId = gMapHeader.events->objectEvents[i].trainerRange_berryTreeId;
             gSaveBlock1Ptr->objectEventTemplates[i].inConnection = 0xFF;
         }
         else
@@ -835,7 +836,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     LoadObjEventTemplatesFromHeader();
     TrySetMapSaveWarpStatus();
     ClearTempFieldEventData();
-    ResetDexNavSearch();
+ResetDexNavSearch();
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
     TryUpdateRandomTrainerRematches(mapGroup, mapNum);
@@ -847,10 +848,9 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     RunOnTransitionMapScript();
     InitMap();
     CopySecondaryTilesetToVramUsingHeap(gMapHeader.mapLayout);
-    LoadSecondaryTilesetPalette(gMapHeader.mapLayout);
+    LoadSecondaryTilesetPalette(gMapHeader.mapLayout, TRUE); // skip copying to Faded, gamma shift will take care of it
 
-    for (paletteIndex = 6; paletteIndex < 13; paletteIndex++) // TODO: Optimize gamma shifts
-        ApplyWeatherGammaShiftToPal(paletteIndex);
+    ApplyWeatherColorMapToPals(NUM_PALS_IN_PRIMARY, NUM_PALS_TOTAL - NUM_PALS_IN_PRIMARY); // palettes [6,12]
 
     InitSecondaryTilesetAnimation();
     UpdateLocationHistoryForRoamer();
@@ -886,7 +886,7 @@ static void LoadMapFromWarp(bool32 a1)
     CheckLeftFriendsSecretBase();
     TrySetMapSaveWarpStatus();
     ClearTempFieldEventData();
-    ResetDexNavSearch();
+ResetDexNavSearch();
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
     TryUpdateRandomTrainerRematches(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
@@ -917,7 +917,7 @@ static void LoadMapFromWarp(bool32 a1)
 
 void ResetInitialPlayerAvatarState(void)
 {
-    gSaveBlock2Ptr->surfMon = SPECIES_NONE;
+gSaveBlock2Ptr->surfMon = SPECIES_NONE;
     sInitialPlayerAvatarState.direction = DIR_SOUTH;
     sInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_ON_FOOT;
 }
@@ -956,7 +956,7 @@ static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState *pla
         return PLAYER_AVATAR_FLAG_ON_FOOT;
     else if (mapType == MAP_TYPE_UNDERWATER)
         return PLAYER_AVATAR_FLAG_UNDERWATER;
-    else if (MetatileBehavior_IsSurfableInSeafoamIslands(metatileBehavior) == TRUE)
+else if (MetatileBehavior_IsSurfableInSeafoamIslands(metatileBehavior) == TRUE)
         return PLAYER_AVATAR_FLAG_ON_FOOT;
     else if (MetatileBehavior_IsSurfableWaterOrUnderwater(metatileBehavior) == TRUE)
         return PLAYER_AVATAR_FLAG_SURFING;
@@ -998,7 +998,7 @@ static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState *playerStr
         return DIR_EAST;
     else if (MetatileBehavior_IsEastArrowWarp(metatileBehavior) == TRUE)
         return DIR_WEST;
-    else if (MetatileBehavior_IsDirectionalUpRightStairWarp(metatileBehavior) == TRUE || MetatileBehavior_IsDirectionalDownRightStairWarp(metatileBehavior) == TRUE)
+else if (MetatileBehavior_IsDirectionalUpRightStairWarp(metatileBehavior) == TRUE || MetatileBehavior_IsDirectionalDownRightStairWarp(metatileBehavior) == TRUE)
         return DIR_WEST;
     else if (MetatileBehavior_IsDirectionalUpLeftStairWarp(metatileBehavior) == TRUE || MetatileBehavior_IsDirectionalDownLeftStairWarp(metatileBehavior) == TRUE)
         return DIR_EAST;
@@ -1071,43 +1071,43 @@ static bool16 ShouldLegendaryMusicPlayAtLocation(struct WarpData *warp)
 {
     if (!FlagGet(FLAG_SYS_WEATHER_CTRL))
         return FALSE;
-    if (warp->mapGroup == 0)
-    {
-        switch (warp->mapNum)
-        {
-        case MAP_NUM(LILYCOVE_CITY):
-        case MAP_NUM(MOSSDEEP_CITY):
-        case MAP_NUM(SOOTOPOLIS_CITY):
-        case MAP_NUM(EVER_GRANDE_CITY):
-        case MAP_NUM(ROUTE124):
-        case MAP_NUM(ROUTE125):
-        case MAP_NUM(ROUTE126):
-        case MAP_NUM(ROUTE127):
-        case MAP_NUM(ROUTE128):
-            return TRUE;
-        default:
-            /*if (VarGet(VAR_SOOTOPOLIS_CITY_STATE) < 4)
-                return FALSE;*/
-            switch (warp->mapNum)
-            {
-            case MAP_NUM(ROUTE129):
-            case MAP_NUM(ROUTE130):
-            case MAP_NUM(ROUTE131):
-                return TRUE;
-            }
-        }
-    }
+    //if (warp->mapGroup == 0)
+    //{
+    //    switch (warp->mapNum)
+    //    {
+    //    case MAP_NUM(LILYCOVE_CITY):
+    //    case MAP_NUM(MOSSDEEP_CITY):
+    //    case MAP_NUM(SOOTOPOLIS_CITY):
+    //    case MAP_NUM(EVER_GRANDE_CITY):
+    //    case MAP_NUM(ROUTE124):
+    //    case MAP_NUM(ROUTE125):
+    //    case MAP_NUM(ROUTE126):
+    //    case MAP_NUM(ROUTE127):
+    //    case MAP_NUM(ROUTE128):
+    //        return TRUE;
+    //    default:
+    //        /*if (VarGet(VAR_SOOTOPOLIS_CITY_STATE) < 4)
+    //            return FALSE;*/
+    //        switch (warp->mapNum)
+    //        {
+    //        case MAP_NUM(ROUTE129):
+    //        case MAP_NUM(ROUTE130):
+    //        case MAP_NUM(ROUTE131):
+    //            return TRUE;
+    //        }
+    //    }
+    //}
     return FALSE;
 }
 
 static bool16 NoMusicInSotopolisWithLegendaries(struct WarpData *warp)
 {
-        return FALSE; //Removed function, SkyPillar unused in PokeClassic
+    return FALSE; //Removed function, SkyPillar unused in PokeClassic
 }
 
 static bool16 IsInfiltratedWeatherInstitute(struct WarpData *warp)
 {
-        return FALSE; //Removed function, Weather Institute unused in PokeClassic
+    return FALSE; //Removed function, Weather Institute unused in PokeClassic
 }
 
 static bool16 IsInflitratedSpaceCenter(struct WarpData *warp)
@@ -1134,10 +1134,10 @@ u16 GetCurrLocationDefaultMusic(void)
     u16 music;
 
     // Play the desert music only when the sandstorm is active on Route 111.
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE111)
-     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE111)
-     && GetSavedWeather() == WEATHER_SANDSTORM)
-        return MUS_ROUTE111;
+    //if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE111)
+    // && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE111)
+    // && GetSavedWeather() == WEATHER_SANDSTORM)
+    //    return MUS_ROUTE111;
 
     music = GetLocationMusic(&gSaveBlock1Ptr->location);
     if (music != MUS_ROUTE118)
@@ -1162,10 +1162,10 @@ u16 GetWarpDestinationMusic(void)
     }
     else
     {
-        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAUVILLE_CITY)
-         && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAUVILLE_CITY))
-            return MUS_ROUTE110;
-        else
+        //if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAUVILLE_CITY)
+        // && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAUVILLE_CITY))
+        //    return MUS_ROUTE110;
+        //else
             return MUS_ROUTE119;
     }
 }
@@ -1255,15 +1255,15 @@ void TryFadeOutOldMapMusic(void)
     u16 warpMusic = GetWarpDestinationMusic();
     if (FlagGet(FLAG_DONT_TRANSITION_MUSIC) != TRUE && warpMusic != GetCurrentMapMusic())
     {
-        if (currentMusic == MUS_SURF
-            //&& VarGet(VAR_SKY_PILLAR_STATE) == 2
-            && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(SOOTOPOLIS_CITY)
-            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(SOOTOPOLIS_CITY)
-            && sWarpDestination.mapGroup == MAP_GROUP(SOOTOPOLIS_CITY)
-            && sWarpDestination.mapNum == MAP_NUM(SOOTOPOLIS_CITY)
-            && sWarpDestination.x == 29
-            && sWarpDestination.y == 53)
-            return;
+        //if (currentMusic == MUS_SURF
+        //    //&& VarGet(VAR_SKY_PILLAR_STATE) == 2
+        //    && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(SOOTOPOLIS_CITY)
+        //    && gSaveBlock1Ptr->location.mapNum == MAP_NUM(SOOTOPOLIS_CITY)
+        //    && sWarpDestination.mapGroup == MAP_GROUP(SOOTOPOLIS_CITY)
+        //    && sWarpDestination.mapNum == MAP_NUM(SOOTOPOLIS_CITY)
+        //    && sWarpDestination.x == 29
+        //    && sWarpDestination.y == 53)
+        //    return;
         FadeOutMapMusic(GetMapMusicFadeoutSpeed());
     }
 }
@@ -1321,7 +1321,7 @@ void UpdateAmbientCry(s16 *state, u16 *delayCounter)
                 break;
             }
         }
-        *delayCounter = ((Random() % 1200) + 1200) / divBy;
+                *delayCounter = ((Random() % 1200) + 1200) / divBy;
         *state = 3;
         break;
     case 3:
@@ -1339,19 +1339,19 @@ void UpdateAmbientCry(s16 *state, u16 *delayCounter)
 
 static void ChooseAmbientCrySpecies(void)
 {
-    if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE130)
-     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE130))
-     && !IsMirageIslandPresent())
-    {
-        // Only play water pokemon cries on this route
-        // when Mirage Island is not present
-        sIsAmbientCryWaterMon = TRUE;
-        sAmbientCrySpecies = GetLocalWaterMon();
-    }
-    else
-    {
+    //if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE130)
+    // && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE130))
+    // && !IsMirageIslandPresent())
+    //{
+    //    // Only play water pokemon cries on this route
+    //    // when Mirage Island is not present
+    //    sIsAmbientCryWaterMon = TRUE;
+    //    sAmbientCrySpecies = GetLocalWaterMon();
+    //}
+    //else
+    //{
         sAmbientCrySpecies = GetLocalWildMon(&sIsAmbientCryWaterMon);
-    }
+    //}
 }
 
 u8 GetMapTypeByGroupAndId(s8 mapGroup, s8 mapNum)
@@ -1495,35 +1495,35 @@ const struct BlendSettings gTimeOfDayBlend[] =
 };
 
 u8 UpdateTimeOfDay(void) {
-  s8 hours, minutes;
+  s32 hours, minutes;
   RtcCalcLocalTime();
   hours = gLocalTime.hours;
   minutes = gLocalTime.minutes;
-  if (hours >= 22 || hours < 4) { // night
+  if (hours >= 19 || hours < 5) { // night
     currentTimeBlend.weight = 256;
     return gTimeOfDay = currentTimeBlend.time0 = currentTimeBlend.time1 = TIME_OF_DAY_NIGHT;
-  } else if (hours >= 4 && hours < 7) { // night->twilight
+  } else if (hours >= 5 && hours < 6) { // night->twilight
     currentTimeBlend.time0 = TIME_OF_DAY_NIGHT;
     currentTimeBlend.time1 = TIME_OF_DAY_TWILIGHT;
-    currentTimeBlend.weight = 256 - 256 * ((hours - 4) * 60 + minutes) / ((7-4)*60);
+    currentTimeBlend.weight = 256 - 256 * ((hours - 5) * 60 + minutes) / ((6-5)*60);
     return gTimeOfDay = TIME_OF_DAY_DAY;
-  } else if (hours >= 7 && hours < 10) { // twilight->day
+  } else if (hours >= 6 && hours < 7) { // twilight->day
     currentTimeBlend.time0 = TIME_OF_DAY_TWILIGHT;
     currentTimeBlend.time1 = TIME_OF_DAY_DAY;
-    currentTimeBlend.weight = 256 - 256 * ((hours - 7) * 60 + minutes) / ((10-7)*60);
+    currentTimeBlend.weight = 256 - 256 * ((hours - 6) * 60 + minutes) / ((7-6)*60);
     return gTimeOfDay = TIME_OF_DAY_DAY;
-  } else if (hours >= 10 && hours < 18) { // day
+  } else if (hours >= 7 && hours < 17) { // day
     currentTimeBlend.weight = 256;
     return gTimeOfDay = currentTimeBlend.time0 = currentTimeBlend.time1 = TIME_OF_DAY_DAY;
-  } else if (hours >= 18 && hours < 20) { // day->twilight
+  } else if (hours >= 17 && hours < 18) { // day->twilight
     currentTimeBlend.time0 = TIME_OF_DAY_DAY;
     currentTimeBlend.time1 = TIME_OF_DAY_TWILIGHT;
-    currentTimeBlend.weight = 256 - 256 * ((hours - 18) * 60 + minutes) / ((20-18)*60);
+    currentTimeBlend.weight = 256 - 256 * ((hours - 17) * 60 + minutes) / ((18-17)*60);
     return gTimeOfDay = TIME_OF_DAY_TWILIGHT;
-  } else if (hours >= 20 && hours < 22) { // twilight->night
+  } else if (hours >= 18 && hours < 19) { // twilight->night
     currentTimeBlend.time0 = TIME_OF_DAY_TWILIGHT;
     currentTimeBlend.time1 = TIME_OF_DAY_NIGHT;
-    currentTimeBlend.weight = 256 - 256 * ((hours - 20) * 60 + minutes) / ((22-20)*60);
+    currentTimeBlend.weight = 256 - 256 * ((hours - 18) * 60 + minutes) / ((19-18)*60);
     return gTimeOfDay = TIME_OF_DAY_NIGHT;
   } else { // This should never occur
     currentTimeBlend.weight = 256;
@@ -1536,15 +1536,40 @@ bool8 MapHasNaturalLight(u8 mapType) { // Whether a map type is naturally lit/ou
       || mapType == MAP_TYPE_OCEAN_ROUTE;
 }
 
+// Update & mix day / night bg palettes (into unfaded)
+void UpdateAltBgPalettes(u16 palettes) {
+    const struct Tileset *primary = gMapHeader.mapLayout->primaryTileset;
+    const struct Tileset *secondary = gMapHeader.mapLayout->secondaryTileset;
+    u32 i = 1;
+    if (!MapHasNaturalLight(gMapHeader.mapType))
+        return;
+    palettes &= ~((1 << NUM_PALS_IN_PRIMARY) - 1) | primary->swapPalettes;
+    palettes &= ((1 << NUM_PALS_IN_PRIMARY) - 1) | (secondary->swapPalettes << NUM_PALS_IN_PRIMARY);
+    palettes &= 0x1FFE; // don't blend palette 0, [13,15]
+    palettes >>= 1; // start at palette 1
+    if (!palettes)
+        return;
+    while (palettes) {
+        if (palettes & 1) {
+            if (i < NUM_PALS_IN_PRIMARY)
+                AvgPaletteWeighted(&((u16*)primary->palettes)[i*16], &((u16*)primary->palettes)[((i+9)%16)*16], gPlttBufferUnfaded + i * 16, currentTimeBlend.altWeight);
+            else
+                AvgPaletteWeighted(&((u16*)secondary->palettes)[i*16], &((u16*)secondary->palettes)[((i+9)%16)*16], gPlttBufferUnfaded + i * 16, currentTimeBlend.altWeight);
+        }
+        i++;
+        palettes >>= 1;
+    }
+}
+
 void UpdatePalettesWithTime(u32 palettes) {
   if (MapHasNaturalLight(gMapHeader.mapType)) {
     u16 i;
-    u16 tempPaletteBuffer[16];
+u16 tempPaletteBuffer[16];
     u32 mask = 1 << 16;
     for (i = 0; i < 16; i++, mask <<= 1) {
-      if (GetSpritePaletteTagByPaletteNum(i) >> 15) // Don't blend special sprite palette tags
-        palettes &= ~(mask);
-    }
+        if (GetSpritePaletteTagByPaletteNum(i) >> 15) // Don't blend special sprite palette tags
+          palettes &= ~(mask);
+}
     palettes &= 0xFFFF1FFF; // Don't blend tile palettes [13,15]
     if (!palettes)
       return;
@@ -1585,18 +1610,20 @@ static void OverworldBasic(void)
     UpdateTilesetAnimations();
     DoScheduledBgTilemapCopiesToVram();
     // Every minute if no palette fade is active, update TOD blending as needed
-    if (!(gPaletteFade.active || (++sTimeUpdateCounter % 3600))) {
+    if (!gPaletteFade.active && ++gTimeUpdateCounter >= 3600) {
       struct TimeBlendSettings cachedBlend = {
         .time0 = currentTimeBlend.time0,
         .time1 = currentTimeBlend.time1,
         .weight = currentTimeBlend.weight,
       };
-      sTimeUpdateCounter = 0;
+      gTimeUpdateCounter = 0;
       UpdateTimeOfDay();
       if (cachedBlend.time0 != currentTimeBlend.time0
        || cachedBlend.time1 != currentTimeBlend.time1
-       || cachedBlend.weight != currentTimeBlend.weight)
-         UpdatePalettesWithTime(PALETTES_ALL);
+       || cachedBlend.weight != currentTimeBlend.weight) {
+           UpdateAltBgPalettes(PALETTES_BG);
+           UpdatePalettesWithTime(PALETTES_ALL);
+       }
     }
 }
 
@@ -1862,7 +1889,7 @@ void CB2_ContinueSavedGame(void)
     PlayTimeCounter_Start();
     ScriptContext1_Init();
     ScriptContext2_Disable();
-    gExitStairsMovementDisabled = TRUE;
+gExitStairsMovementDisabled = TRUE;
     InitMatchCallCounters();
     if (UseContinueGameWarp() == TRUE)
     {
@@ -1948,7 +1975,7 @@ static bool32 LoadMapInStepsLink(u8 *state)
         (*state)++;
         break;
     case 1:
-        gExitStairsMovementDisabled = FALSE;
+gExitStairsMovementDisabled = FALSE;
         LoadMapFromWarp(TRUE);
         (*state)++;
         break;
@@ -3227,7 +3254,7 @@ static bool8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayer
     linkDirection(objEvent) = FlipVerticalAndClearForced(dir, linkDirection(objEvent));
     ObjectEventMoveDestCoords(objEvent, linkDirection(objEvent), &x, &y);
 
-    if (LinkPlayerDetectCollision(linkPlayerObjEvent->objEventId, linkDirection(objEvent), x, y))
+    if (LinkPlayerGetCollision(linkPlayerObjEvent->objEventId, linkDirection(objEvent), x, y))
     {
         return FALSE;
     }
@@ -3287,7 +3314,7 @@ static u8 FlipVerticalAndClearForced(u8 newFacing, u8 oldFacing)
     return oldFacing;
 }
 
-static bool8 LinkPlayerDetectCollision(u8 selfObjEventId, u8 direction, s16 x, s16 y)
+static u8 LinkPlayerGetCollision(u8 selfObjEventId, u8 direction, s16 x, s16 y)
 {
     u8 i;
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
@@ -3297,7 +3324,7 @@ static bool8 LinkPlayerDetectCollision(u8 selfObjEventId, u8 direction, s16 x, s
             if ((gObjectEvents[i].currentCoords.x == x && gObjectEvents[i].currentCoords.y == y)
              || (gObjectEvents[i].previousCoords.x == x && gObjectEvents[i].previousCoords.y == y))
             {
-                return TRUE;
+                return 1;
             }
         }
     }

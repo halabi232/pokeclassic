@@ -67,7 +67,7 @@ PlayersHouse_2F_EventScript_PostGame1::
 	setflag FLAG_HIDE_MOM_PLAYERS_ROOM
 	playse SE_EXIT
 	removeobject LOCALID_MOM
-	setvar VAR_SECRET_BATTLE_CLEAR, 2
+	setvar VAR_IS_CHAMPION, 2
 	releaseall
 	end
 
@@ -121,7 +121,7 @@ PlayersHouse_2F_EventScript_PostGame2::
 	setflag FLAG_HIDE_MOM_PLAYERS_ROOM
 	playse SE_EXIT
 	removeobject LOCALID_MOM
-	setvar VAR_SECRET_BATTLE_CLEAR, 2
+	setvar VAR_IS_CHAMPION, 2
 	releaseall
 	end
 
@@ -175,7 +175,7 @@ PlayersHouse_2F_EventScript_PostGame3::
 	setflag FLAG_HIDE_MOM_PLAYERS_ROOM
 	playse SE_EXIT
 	removeobject LOCALID_MOM
-	setvar VAR_SECRET_BATTLE_CLEAR, 2
+	setvar VAR_IS_CHAMPION, 2
 	releaseall
 	end
 
@@ -251,11 +251,17 @@ MomGoesDownstairs:
 	step_end
 
 PalletTown_PlayersHouse_2F_Text_WeHaveAVisitor:
-	.string "Mom: {PLAYER}! I should have\p"
-	.string "known I'd find you playing\n"
-	.string "games up here again.\p"
-	.string "You should head downstairs.\n"
-	.string "Someone is here to see you!$"
+	.string "Mom: {PLAYER}! Oh, honey!\n"
+	.string "You are already up?\l"
+	.string "You became Champion, darling!\p"
+	.string "I'm so proud of you!\p"
+	.string "I knew that you would achieve\n"
+	.string "great things when you left that\l"
+	.string "that day with Pikachu!\p"
+	.string "But, oh! Look at the time!\l"
+	.string "We talk later, we should hurry!\p"
+	.string "Let's go downstairs.\n"
+	.string "We have a visitor!$"
 
 PalletTown_PlayersHouse_2F_Text_LookAtTheTime:
 	.string "Mom: {PLAYER}! There you are!\p"

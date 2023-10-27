@@ -176,6 +176,11 @@ Route10_EventScript_LightBall::
 	release
 	end
 
+Route10_EventScript_TM59::
+	finditem ITEM_TM59, 1
+	release
+	end
+
 Route10_EventScript_BerryLass::
 	lock
 	faceplayer

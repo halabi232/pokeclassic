@@ -2003,6 +2003,69 @@ Cry_MewtwoMegaX::
 Cry_MewtwoMegaY::
 	.incbin "sound/direct_sound_samples/cries/mega_mewtwo_y.bin"
 
+	.align 2
+Cry_SteelixMega::
+	.incbin "sound/direct_sound_samples/cries/mega_steelix.bin"
+
+	.align 2
+Cry_ScizorMega::
+	.incbin "sound/direct_sound_samples/cries/mega_scizor.bin"
+	
+	.align 2
+Cry_Electivire::
+	.incbin "sound/direct_sound_samples/cries/electivire.bin"
+
+	.align 2
+Cry_Glaceon::
+	.incbin "sound/direct_sound_samples/cries/glaceon.bin"
+
+	.align 2
+Cry_Happiny::
+	.incbin "sound/direct_sound_samples/cries/happiny.bin"
+
+	.align 2
+Cry_Leafeon::
+	.incbin "sound/direct_sound_samples/cries/leafeon.bin"
+
+	.align 2
+Cry_Lickilicky::
+	.incbin "sound/direct_sound_samples/cries/lickilicky.bin"
+
+	.align 2
+Cry_Magmortar::
+	.incbin "sound/direct_sound_samples/cries/magmortar.bin"
+
+	.align 2
+Cry_Magnezone::
+	.incbin "sound/direct_sound_samples/cries/magnezone.bin"
+
+	.align 2
+Cry_MimeJr::
+	.incbin "sound/direct_sound_samples/cries/mime_jr.bin"
+
+	.align 2
+Cry_Munchlax::
+	.incbin "sound/direct_sound_samples/cries/munchlax.bin"
+
+	.align 2
+Cry_PorygonZ::
+	.incbin "sound/direct_sound_samples/cries/porygon_z.bin"
+
+	.align 2
+Cry_Rhyperior::
+	.incbin "sound/direct_sound_samples/cries/rhyperior.bin"
+
+	.align 2
+Cry_Sylveon::
+	.incbin "sound/direct_sound_samples/cries/sylveon.bin"
+
+	.align 2
+Cry_Tangrowth::
+	.incbin "sound/direct_sound_samples/cries/tangrowth.bin"
+
+	.align 2
+Cry_Annihilape::
+	.incbin "sound/direct_sound_samples/cries/annihilape.bin"
 
 	.align 2
 DirectSoundWaveData_register_noise::

@@ -922,9 +922,18 @@ static void GetItemName(s8 *dest, u16 itemId)
         }
         else
         {
+            if (itemId < ITEM_TM100)
+            {
             // Get TM number
             ConvertIntToDecimalStringN(gStringVar1, itemId - ITEM_TM01 + 1, STR_CONV_MODE_LEADING_ZEROS, 2);
             StringExpandPlaceholders(dest, gText_NumberItem_TMBerry);
+            }
+            else
+            {
+            // Get TM number
+            ConvertIntToDecimalStringN(gStringVar1, itemId - ITEM_TM01 + 1, STR_CONV_MODE_LEADING_ZEROS, 3);
+            StringExpandPlaceholders(dest, gText_NumberItem_TMBerry);
+            }
         }
         break;
     case BERRIES_POCKET:

@@ -111,6 +111,12 @@
 #define SAFE_DIV(a, b) ((a) / (b))
 #endif
 
+// The below macro does a%n, but (to match) will switch to a&(n-1) if n is a power of 2.
+// There are cases where GF does a&(n-1) where we would really like to have a%n, because
+// if n is changed to a value that isn't a power of 2 then a&(n-1) is unlikely to work as
+// intended, and a%n for powers of 2 isn't always optimized to use &.
+#define MOD(a, n)(((n) & ((n)-1)) ? ((a) % (n)) : ((a) & ((n)-1)))
+
 // Extracts the upper 16 bits of a 32-bit number
 #define HIHALF(n) (((n) & 0xFFFF0000) >> 16)
 
@@ -159,6 +165,13 @@
 #define NUM_DEX_FLAG_BYTES ROUND_BITS_TO_BYTES(NUM_SPECIES)
 #define NUM_FLAG_BYTES ROUND_BITS_TO_BYTES(FLAGS_COUNT)
 #define NUM_ADDITIONAL_PHRASE_BYTES ROUND_BITS_TO_BYTES(NUM_ADDITIONAL_PHRASES)
+
+// This returns the number of arguments passed to it (up to 8).
+#define NARG_8(...) NARG_8_(_, ##__VA_ARGS__, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#define NARG_8_(_, a, b, c, d, e, f, g, h, N, ...) N
+
+#define CAT(a, b) CAT_(a, b)
+#define CAT_(a, b) a ## b
 
 // This produces an error at compile-time if expr is zero.
 // It looks like file.c:line: size of array `id' is negative
@@ -511,6 +524,7 @@ struct SaveBlock2
     /*0x14*/ u16 optionsTextSpeed:3; // OPTIONS_TEXT_SPEED_[SLOW/MID/FAST]
              u16 optionsWindowFrameType:5; // Specifies one of the 20 decorative borders for text boxes
              u16 optionsSound:1; // OPTIONS_SOUND_[MONO/STEREO]
+             bool8 optionsAutorun; //OPTIONS_AUTORUN
              u16 optionsBattleStyle:1; // OPTIONS_BATTLE_STYLE_[SHIFT/SET]
              u16 optionsBattleSceneOff:1; // whether battle animations are disabled
              u16 regionMapZoom:1; // whether the map is zoomed in

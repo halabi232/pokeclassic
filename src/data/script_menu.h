@@ -254,6 +254,16 @@ static const struct MenuAction MultichoiceList_GameCornerCushions[] =
     {gText_PikachuCushionAndPrice},
 };
 
+static const struct MenuAction MultichoiceList_GameCornerTms[] =
+{
+    {gText_TM80AndPrice},
+    {gText_TM83AndPrice},
+    {gText_TM84AndPrice},
+    {gText_TM97AndPrice},
+    {gText_TM98AndPrice},
+    {gText_TM99AndPrice},
+};
+
 static const struct MenuAction MultichoiceList_GameCornerCoins[] =
 {
     {gText_50CoinsAndPrice},
@@ -928,6 +938,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_GAME_CORNER_DOLLS]          = MULTICHOICE(MultichoiceList_GameCornerDolls),
     [MULTI_GAME_CORNER_BIG_DOLLS]      = MULTICHOICE(MultichoiceList_GameCornerBigDolls),
     [MULTI_GAME_CORNER_CUSHIONS]       = MULTICHOICE(MultichoiceList_GameCornerCushions),
+    [MULTI_GAME_CORNER_TM]             = MULTICHOICE(MultichoiceList_GameCornerTms),
     [MULTI_GAME_CORNER_COINS]          = MULTICHOICE(MultichoiceList_GameCornerCoins),
     [MULTI_HOWS_FISHING]               = MULTICHOICE(MultichoiceList_HowsFishing),
     [MULTI_SSTIDAL_SLATEPORT_WITH_BF]  = MULTICHOICE(MultichoiceList_SSTidalSlateportWithBF),

@@ -73,6 +73,11 @@ PokemonMansion_B1F_EventScript_ItemTM14::
 	release
 	end
 
+PokemonMansion_B1F_EventScript_ItemTM61::
+	finditem ITEM_TM61, 1
+	release
+	end
+
 PokemonMansion_B1F_EventScript_OldSeaMap::
 	lock
 	msgbox PokemonMansion_B1F_Text_OldMap, MSGBOX_SIGN

@@ -1037,3 +1037,11 @@ gMetatiles_HallOfFame:: @ 82D415C
 	.align 1
 gMetatileAttributes_HallOfFame:: @ 82D48BC
 	.incbin "data/tilesets/secondary/hall_of_fame/metatile_attributes.bin"
+
+	.align 1
+gMetatiles_ContestPrim::
+	.incbin "data/tilesets/primary/contestprim/metatiles.bin"
+
+	.align 1
+gMetatileAttributes_ContestPrim::
+	.incbin "data/tilesets/primary/contestprim/metatile_attributes.bin"

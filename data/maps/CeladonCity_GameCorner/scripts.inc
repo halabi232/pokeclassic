@@ -714,7 +714,15 @@ GameCorner_EventScript_RocketBattle::
 
 GameCorner_Text_GruntIntro::
     .string "Hey! What gives!?\n"
-    .string "You're not supposed to press that!\p"
+	.string "You got the documents?\p"
+	.string "Wait a minute...\n"
+	.string "You are not one of ours!!\p"
+	.string "Where is that stupid grunt with\n"
+	.string "our documents?\p"
+	.string "Is he slacking off at the condominiums\n"
+	.string "roof again??\p"
+	.string "Anyway, to the matter at hands!\n"
+    .string "You're not supposed to press that!\l"
     .string "Go away, or else!$"
 
 GameCorner_Text_GruntDefeat::

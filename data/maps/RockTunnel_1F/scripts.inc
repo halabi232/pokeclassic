@@ -137,3 +137,13 @@ RockTunnel_1F_EventScript_ItemRepel::
 	finditem ITEM_REPEL, 1
 	release
 	end
+
+RockTunnel_1F_EventScript_ItemTM68::
+	finditem ITEM_TM68, 1
+	release
+	end
+
+RockTunnel_1F_EventScript_ItemTM71::
+	finditem ITEM_TM71, 1
+	release
+	end

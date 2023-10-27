@@ -14,6 +14,7 @@
 #include "overworld.h"
 #include "palette.h"
 #include "pokedex.h"
+#include "pokedex_plus_hgss.h"
 #include "pokedex_area_screen.h"
 #include "pokedex_cry_screen.h"
 #include "scanline_effect.h"
@@ -1588,9 +1589,15 @@ static void ResetPokedexView(struct PokedexView *pokedexView)
     for (i = 0; i < ARRAY_COUNT(pokedexView->unkArr3); i++)
         pokedexView->unkArr3[i] = 0;
 }
+#define HGSS_DEX TRUE
 
 void CB2_OpenPokedex(void)
 {
+    if (HGSS_DEX)
+    {
+        CB2_OpenPokedexPlusHGSS();
+        return;
+    }
     switch (gMain.state)
     {
     case 0:
@@ -4394,7 +4401,7 @@ bool16 HasAllHoennMons(void)
     u16 i;
 
     // -2 excludes Jirachi and Deoxys
-    for (i = 0; i < HOENN_DEX_COUNT - 2; i++)
+    for (i = 0; i < HOENN_DEX_COUNT; i++)
     {
         if (!GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_CAUGHT))
             return FALSE;
@@ -4407,7 +4414,7 @@ bool8 HasAllKantoMons(void)
     u16 i;
 
     // -1 excludes Mew
-    for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
+    for (i = 0; i < KANTO_DEX_COUNT; i++)
     {
         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
             return FALSE;
@@ -4420,21 +4427,21 @@ bool16 HasAllMons(void)
     u16 i;
 
     // -1 excludes Mew
-    for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
+    for (i = 0; i < KANTO_DEX_COUNT; i++)
     {
         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
             return FALSE;
     }
 
     // -3 excludes Lugia, Ho-Oh, and Celebi
-    for (i = KANTO_DEX_COUNT; i < JOHTO_DEX_COUNT - 3; i++)
+    for (i = KANTO_DEX_COUNT; i < JOHTO_DEX_COUNT; i++)
     {
         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
             return FALSE;
     }
 
     // -2 excludes Jirachi and Deoxys
-    for (i = JOHTO_DEX_COUNT; i < NATIONAL_DEX_COUNT - 2; i++)
+    for (i = JOHTO_DEX_COUNT; i < NATIONAL_DEX_COUNT; i++)
     {
         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
             return FALSE;

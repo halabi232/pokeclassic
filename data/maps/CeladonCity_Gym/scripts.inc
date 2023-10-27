@@ -83,10 +83,12 @@ CeladonCity_Gym_Text_ReceivedBadge::
     .string "Badge from Erika!$"
 
 CeladonCity_Gym_Text_ExplainBadge::
-    .string "The Rainbow Badge will make\n"
-    .string "Pokémon up to Lv. 50 obey.\p"
+    .string "The Rainbow Badge will enable Pokémon\n"
+    .string "to be trained or obey up to Lv. 50!\p"
     .string "It also allows Pokémon to use\n"
-    .string "Strength in and out of battle.$"
+    .string "Fly out of battle./p"
+	.string "That way they can carry you\n"
+	.string "beautifully around Kanto.$"
 
 CeladonCity_Gym_EventScript_GetTM::
 	msgbox CeladonCity_Gym_Text_TakeThisWithYou, MSGBOX_DEFAULT

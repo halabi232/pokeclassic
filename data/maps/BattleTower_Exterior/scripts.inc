@@ -98,6 +98,19 @@ BattleTower_Exterior_Punk::
 	releaseall
 	end
 
+BattleTower_Exterior_Contest::
+	lockall
+	faceplayer
+	msgbox BattleTower_Exterior_Text_Contest, MSGBOX_DEFAULT
+	releaseall
+	end
+
+BattleTower_Exterior_Text_Contest::
+	.string "I'm terrible sorry\n"
+	.string "The Contest Hall is still not ready.\p"
+	.string "Please, come back once we finish\n"
+	.string "setting the stage.$"
+
 BattleTower_Exterior_Text_GotCarded::
 	.string "I can't believe it!\p"
 	.string "I yelled at the referee and she gave\n"
@@ -117,9 +130,17 @@ BattleTower_Exterior_BattleTowerSign::
 	msgbox BattleTower_Exterior_Text_BattleTowerSign, MSGBOX_SIGN
 	end
 
+BattleTower_Exterior_ContestHallSign::
+	msgbox BattleTower_Exterior_Text_ContestHall, MSGBOX_SIGN
+	end
+
 BattleTower_Exterior_Text_BattleTowerSign::
-    .string "The Kanto Battle Tower!\n"
+    .string "Kanto Battle Tower\n"
     .string "Rise to the top!$"
+
+BattleTower_Exterior_Text_ContestHall::
+	.string "Kanto Contest Hall\n"
+	.string "Shine on stage!$"
 
 BattleTower_Exterior_BattleTowerHouse::
 	msgbox BattleTower_Exterior_Text_BattleTowerHouse, MSGBOX_SIGN

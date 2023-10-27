@@ -31,7 +31,7 @@
   ],
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_GREAT_BALL",
+      "graphics_id": "OBJ_EVENT_GFX_ULTRA_BALL",
       "in_connection": false,
       "x": 9,
       "y": 8,
@@ -43,6 +43,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route23_EventScript_ItemTM10",
       "flag": "FLAG_HIDE_ROUTE23_TM10"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ULTRA_BALL",
+      "in_connection": false,
+      "x": 9,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route23_EventScript_ItemTM89",
+      "flag": "FLAG_HIDE_ROUTE_23_TM89"
     }
   ],
   "warp_events": [

@@ -390,6 +390,37 @@ gCryTable::
 	cry Cry_Chimecho
 	cry Cry_PikachuPartner
 	cry Cry_Rival_Eevee
+	cry Cry_Electivire
+	cry Cry_Glaceon
+	cry Cry_Happiny
+	cry Cry_Leafeon
+	cry Cry_Lickilicky
+	cry Cry_Magmortar
+	cry Cry_Magnezone
+	cry Cry_MimeJr
+	cry Cry_Munchlax
+	cry Cry_PorygonZ
+	cry Cry_Rhyperior
+	cry Cry_Sylveon
+	cry Cry_Tangrowth
+	cry Cry_Annihilape
+	cry Cry_VenusaurMega
+	cry Cry_CharizardMegaX
+	cry Cry_CharizardMegaY
+	cry Cry_BlastoiseMega
+	cry Cry_BeedrillMega
+	cry Cry_PidgeotMega
+	cry Cry_AlakazamMega
+	cry Cry_SlowbroMega
+	cry Cry_GengarMega
+	cry Cry_KangaskhanMega
+	cry Cry_PinsirMega
+	cry Cry_GyaradosMega
+	cry Cry_AerodactylMega
+	cry Cry_MewtwoMegaX
+	cry Cry_MewtwoMegaY
+	cry Cry_SteelixMega
+	cry Cry_ScizorMega
 
 	.align 2
 gCryTable_Reverse::
@@ -783,3 +814,34 @@ gCryTable_Reverse::
 	cry_reverse Cry_Chimecho
 	cry_reverse Cry_PikachuPartner
 	cry_reverse Cry_Rival_Eevee
+	cry_reverse Cry_Electivire
+	cry_reverse Cry_Glaceon
+	cry_reverse Cry_Happiny
+	cry_reverse Cry_Leafeon
+	cry_reverse Cry_Lickilicky
+	cry_reverse Cry_Magmortar
+	cry_reverse Cry_Magnezone
+	cry_reverse Cry_MimeJr
+	cry_reverse Cry_Munchlax
+	cry_reverse Cry_PorygonZ
+	cry_reverse Cry_Rhyperior
+	cry_reverse Cry_Sylveon
+	cry_reverse Cry_Tangrowth
+	cry_reverse Cry_Annihilape
+	cry_reverse Cry_VenusaurMega
+	cry_reverse Cry_CharizardMegaX
+	cry_reverse Cry_CharizardMegaY
+	cry_reverse Cry_BlastoiseMega
+	cry_reverse Cry_BeedrillMega
+	cry_reverse Cry_PidgeotMega
+	cry_reverse Cry_AlakazamMega
+	cry_reverse Cry_SlowbroMega
+	cry_reverse Cry_GengarMega
+	cry_reverse Cry_KangaskhanMega
+	cry_reverse Cry_PinsirMega
+	cry_reverse Cry_GyaradosMega
+	cry_reverse Cry_AerodactylMega
+	cry_reverse Cry_MewtwoMegaX
+	cry_reverse Cry_MewtwoMegaY
+	cry_reverse Cry_SteelixMega
+	cry_reverse Cry_ScizorMega

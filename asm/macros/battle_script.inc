@@ -1980,6 +1980,16 @@
 	various BS_ATTACKER, VARIOUS_SWAP_SIDE_STATUSES
 	.endm
 
+	.macro checkparentalbondcounter counter:req, ptr:req
+	various BS_ATTACKER, VARIOUS_CHECK_PARENTAL_BOND_COUNTER
+	.byte \counter
+	.4byte \ptr
+	.endm
+
+	.macro givedroppeditems
+	various BS_FAINTED, VARIOUS_GIVE_DROPPED_ITEMS
+	.endm
+
 @ helpful macros
 	.macro setstatchanger stat:req, stages:req, down:req
 	setbyte sSTATCHANGER, \stat | \stages << 3 | \down << 7

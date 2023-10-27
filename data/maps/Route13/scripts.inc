@@ -11,6 +11,11 @@ Route13_OnResume:
 	call Common_EventScript_GetDayOrNight
 	end
 
+Route13_EventScript_ItemTM55::
+	finditem ITEM_TM55, 1
+    release
+	end
+
 Route13_EventScript_TrainerTips1::
 	msgbox Route13_Text_LookToLeftOfThatPost, MSGBOX_SIGN
 	end
@@ -71,19 +76,19 @@ Route13_Text_SheilaPostBattle::
     .string "The ones I use… I picked them\n"
     .string "for their looks!$"
 
-Route13_EventScript_Jared::
-	trainerbattle_single TRAINER_BIKER_JARED, Route13_Text_JaredIntro, Route13_Text_JaredDefeat
-	msgbox Route13_Text_JaredPostBattle, MSGBOX_AUTOCLOSE
+Route13_EventScript_Jarem::
+	trainerbattle_single TRAINER_BIKER_JAREM, Route13_Text_JaremIntro, Route13_Text_JaremDefeat
+	msgbox Route13_Text_JaremPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route13_Text_JaredIntro::
+Route13_Text_JaremIntro::
     .string "What're you lookin' at?$"
 
-Route13_Text_JaredDefeat::
+Route13_Text_JaremDefeat::
     .string "Dang!\n"
     .string "Stripped gears!$"
 
-Route13_Text_JaredPostBattle::
+Route13_Text_JaremPostBattle::
     .string "Get lost!$"
 
 Route13_EventScript_Sebastian::

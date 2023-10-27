@@ -147,6 +147,7 @@ struct ProtectStruct
     u16 pranksterElevated:1;
     u16 quickDraw:1;
     u16 beakBlastCharge:1;
+    u16 quash:1;
     u32 physicalDmg;
     u32 specialDmg;
     u8 physicalBattlerId;
@@ -163,21 +164,27 @@ struct SpecialStatus
     u8 ppNotAffectedByPressure:1;
     u8 faintedHasReplacement:1;
     u8 focusBanded:1;
+    // End of byte
     u8 focusSashed:1;
     u8 sturdied:1;
     u8 stormDrainRedirected:1;
     u8 switchInAbilityDone:1;
     u8 switchInItemDone:1;
     u8 instructedChosenTarget:3;
+    // End of byte
     u8 berryReduced:1;
     u8 gemBoost:1;
     u8 rototillerAffected:1;  // to be affected by rototiller
+    u8 parentalBondState:2;
+    u8 multiHitOn:1;
+    // End of byte, two bits unused
     u8 gemParam;
     u8 damagedMons:4; // Mons that have been damaged directly by using a move, includes substitute.
     u8 dancerUsedMove:1;
     u8 dancerOriginalTarget:3;
     u8 announceNeutralizingGas:1;   // See Cmd_switchineffects
     u8 neutralizingGasRemoved:1;    // See VARIOUS_TRY_END_NEUTRALIZING_GAS
+    u8 affectionEndured:1;
     s32 dmg;
     s32 physicalDmg;
     s32 specialDmg;
@@ -243,6 +250,27 @@ struct AI_SavedBattleMon
     u16 moves[MAX_MON_MOVES];
     u16 heldItem;
     u16 species;
+};
+
+struct AiPartyMon
+{
+    u16 species;
+    u16 item;
+    u16 heldEffect;
+    u16 ability;
+    u16 gender;
+    u16 level;
+    u16 moves[MAX_MON_MOVES];
+    u32 status;
+    bool8 isFainted;
+    bool8 wasSentInBattle;
+    u8 switchInCount; // Counts how many times this Pokemon has been sent out or switched into in a battle.
+};
+
+struct AIPartyData // Opposing battlers - party mons.
+{
+    struct AiPartyMon mons[2][PARTY_SIZE]; // 2 parties(player, opponent). Used to save information on opposing party.
+    u8 count[2];
 };
 
 struct AiLogicData
@@ -313,6 +341,7 @@ struct BattleResources
     struct StatsArray* beforeLvlUp;
     struct AI_ThinkingStruct *ai;
     struct AiLogicData *aiData;
+    struct AIPartyData *aiParty;
     struct BattleHistory *battleHistory;
     u8 bufferA[MAX_BATTLERS_COUNT][0x200];
     u8 bufferB[MAX_BATTLERS_COUNT][0x200];
@@ -320,6 +349,7 @@ struct BattleResources
 
 #define AI_THINKING_STRUCT ((struct AI_ThinkingStruct *)(gBattleResources->ai))
 #define AI_DATA ((struct AiLogicData *)(gBattleResources->aiData))
+#define AI_PARTY ((struct AIPartyData *)(gBattleResources->aiParty))
 #define BATTLE_HISTORY ((struct BattleHistory *)(gBattleResources->battleHistory))
 
 struct BattleResults
@@ -620,6 +650,10 @@ struct BattleStruct
     u8 stickyWebUser;
     u8 appearedInBattle; // Bitfield to track which Pokemon appeared in battle. Used for Burmy's form change
     u8 skyDropTargets[MAX_BATTLERS_COUNT]; // For Sky Drop, to account for if multiple Pokemon use Sky Drop in a double battle.
+    // When using a move which hits multiple opponents which is then bounced by a target, we need to make sure, the move hits both opponents, the one with bounce, and the one without.
+    u8 attackerBeforeBounce:2;
+    u8 targetsDone[MAX_BATTLERS_COUNT]; // Each battler as a bit.
+    u16 overwrittenAbilities[MAX_BATTLERS_COUNT];    // abilities overwritten during battle (keep separate from battle history in case of switching)
 };
 
 #define F_DYNAMIC_TYPE_1 (1 << 6)
@@ -926,6 +960,7 @@ extern struct FieldTimer gFieldTimers;
 extern u8 gBattlerAbility;
 extern u16 gPartnerSpriteId;
 extern struct TotemBoost gTotemBoosts[MAX_BATTLERS_COUNT];
+extern bool8 gExpShareCheck;
 
 extern void (*gPreBattleCallback1)(void);
 extern void (*gBattleMainFunc)(void);

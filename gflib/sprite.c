@@ -93,7 +93,7 @@ static void ApplyAffineAnimFrame(u8 matrixNum, struct AffineAnimFrameCmd *frameC
 static u8 IndexOfSpriteTileTag(u16 tag);
 static void AllocSpriteTileRange(u16 tag, u16 start, u16 count);
 static void DoLoadSpritePalette(const u16 *src, u16 paletteOffset);
-static void UpdateSpriteMatrixAnchorPos(struct Sprite*, s32, s32);
+static void UpdateSpriteMatrixAnchorPos(struct Sprite *, s32, s32);
 
 typedef void (*AnimFunc)(struct Sprite *);
 typedef void (*AnimCmdFunc)(struct Sprite *);
@@ -102,9 +102,9 @@ typedef void (*AffineAnimCmdFunc)(u8 matrixNum, struct Sprite *);
 #define DUMMY_OAM_DATA                      \
 {                                           \
     .y = DISPLAY_HEIGHT,                    \
-    .affineMode = 0,                        \
+    .affineMode = ST_OAM_AFFINE_OFF,        \
     .objMode = 0,                           \
-    .mosaic = 0,                            \
+    .mosaic = FALSE,                        \
     .bpp = 0,                               \
     .shape = SPRITE_SHAPE(8x8),             \
     .x = DISPLAY_WIDTH + 64,                \
@@ -1200,7 +1200,7 @@ u8 GetSpriteMatrixNum(struct Sprite *sprite)
 
 // Used to shift a sprite's position as it scales.
 // Only used by the minigame countdown, so that for instance the numbers don't slide up as they squish down before jumping.
-void SetSpriteMatrixAnchor(struct Sprite* sprite, s16 x, s16 y)
+void SetSpriteMatrixAnchor(struct Sprite *sprite, s16 x, s16 y)
 {
     sprite->sAnchorX = x;
     sprite->sAnchorY = y;
@@ -1496,6 +1496,21 @@ u16 LoadSpriteSheet(const struct SpriteSheet *sheet)
     }
 }
 
+// Like LoadSpriteSheet, but checks if already, and uses template image frames
+u16 LoadSpriteSheetByTemplate(const struct SpriteTemplate *template, u8 frame) {
+    u16 tileStart;
+    struct SpriteSheet tempSheet;
+    // error if template is null or tile tag or images not set
+    if (!template || template->tileTag == TAG_NONE || !template->images)
+        return 0xFFFF;
+    if ((tileStart = GetSpriteTileStartByTag(template->tileTag)) != 0xFFFF) // return if already loaded
+        return tileStart;
+    tempSheet.data = template->images[frame].data;
+    tempSheet.size = template->images[frame].size;
+    tempSheet.tag = template->tileTag;
+    return LoadSpriteSheet(&tempSheet);
+}
+
 void LoadSpriteSheets(const struct SpriteSheet *sheets)
 {
     u8 i;
@@ -1604,7 +1619,7 @@ u8 LoadSpritePalette(const struct SpritePalette *palette)
         for (i = 0; i < 16; i++) {
           debugPtr[i] = sSpritePaletteTags[i];
         }
-        DoLoadSpritePalette(palette->data, index * 16);
+        DoLoadSpritePalette(palette->data, PLTT_ID(index));
         return index;
     }
 }
@@ -1617,9 +1632,16 @@ void LoadSpritePalettes(const struct SpritePalette *palettes)
             break;
 }
 
+u8 LoadSpritePaletteInSlot(const struct SpritePalette *palette, u8 paletteNum) {
+    paletteNum = min(15, paletteNum);
+    sSpritePaletteTags[paletteNum] = palette->tag;
+    DoLoadSpritePalette(palette->data, paletteNum * 16);
+    return paletteNum;
+}
+
 void DoLoadSpritePalette(const u16 *src, u16 paletteOffset)
 {
-    LoadPalette(src, paletteOffset + 0x100, 32);
+    LoadPaletteFast(src, paletteOffset + OBJ_PLTT_OFFSET, PLTT_SIZE_4BPP);
 }
 
 u8 AllocSpritePalette(u16 tag)
@@ -1756,7 +1778,7 @@ bool8 AddSubspritesToOamBuffer(struct Sprite *sprite, struct OamData *destOam, u
             destOam[i].y = baseY + y;
             destOam[i].tileNum = tileNum + subspriteTable->subsprites[i].tileOffset;
 
-            if (sprite->subspriteMode != SUBSPRITES_IGNORE_PRIORITY)
+            if (sprite->subspriteMode < SUBSPRITES_IGNORE_PRIORITY)
                 destOam[i].priority = subspriteTable->subsprites[i].priority;
         }
     }

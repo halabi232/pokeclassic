@@ -414,6 +414,21 @@ const struct LevelUpMove *const gLevelUpLearnsets[NUM_SPECIES] =
     [SPECIES_JIRACHI] = sJirachiLevelUpLearnset,
     [SPECIES_DEOXYS] = sDeoxysLevelUpLearnset,
     [SPECIES_CHIMECHO] = sChimechoLevelUpLearnset,
+    [SPECIES_ELECTIVIRE] = sElectivireLevelUpLearnset,
+    [SPECIES_GLACEON] = sGlaceonLevelUpLearnset,
+    [SPECIES_HAPPINY] = sHappinyLevelUpLearnset,
+    [SPECIES_LEAFEON] = sLeafeonLevelUpLearnset,
+    [SPECIES_LICKILICKY] = sLickilickyLevelUpLearnset,
+    [SPECIES_MAGMORTAR] = sMagmortarLevelUpLearnset,
+    [SPECIES_MAGNEZONE] = sMagnezoneLevelUpLearnset,
+    [SPECIES_MIME_JR] = sMimeJrLevelUpLearnset,
+    [SPECIES_MUNCHLAX] = sMunchlaxLevelUpLearnset,
+    [SPECIES_PORYGON_Z] = sPorygonZLevelUpLearnset,
+    [SPECIES_RHYPERIOR] = sRhyperiorLevelUpLearnset,
+    [SPECIES_SYLVEON] = sSylveonLevelUpLearnset,
+    [SPECIES_TANGROWTH] = sTangrowthLevelUpLearnset,
+    [SPECIES_ANNIHILAPE] = sAnnihilapeLevelUpLearnset, 
+
     //Megas
     [SPECIES_VENUSAUR_MEGA] = sVenusaurLevelUpLearnset,
     [SPECIES_CHARIZARD_MEGA_X] = sCharizardLevelUpLearnset,
@@ -430,4 +445,6 @@ const struct LevelUpMove *const gLevelUpLearnsets[NUM_SPECIES] =
     [SPECIES_AERODACTYL_MEGA] = sAerodactylLevelUpLearnset,
     [SPECIES_MEWTWO_MEGA_X] = sMewtwoLevelUpLearnset,
     [SPECIES_MEWTWO_MEGA_Y] = sMewtwoLevelUpLearnset,
+    [SPECIES_STEELIX_MEGA] = sSteelixLevelUpLearnset,
+    [SPECIES_SCIZOR_MEGA] = sScizorLevelUpLearnset,
 };

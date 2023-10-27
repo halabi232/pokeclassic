@@ -820,6 +820,7 @@ CinnabarIsland_Gym_EventScript_DefeatedLeaderGetBadge::
 	message CinnabarIsland_Gym_Text_ReceivedBadge
 	waitfanfare
 	waitmessage
+	msgbox CinnabarIsland_Gym_Text_ExplainBadge, MSGBOX_DEFAULT
 	setflag FLAG_BADGE07_GET
 	setflag FLAG_DAILY_BLAINE_REMATCH
 	settrainerflag	TRAINER_SUPER_NERD_ERIK						
@@ -839,6 +840,13 @@ CinnabarIsland_Gym_Text_GetBadge::
 CinnabarIsland_Gym_Text_ReceivedBadge::
 	.string "{PLAYER} received the Volcano\n"
     .string "Badge from Blaine!$"
+
+CinnabarIsland_Gym_Text_ExplainBadge::
+	.string "The Volcano Badge will allow you\n"
+	.string "to train Pokémon up to Lv. 70!\p"
+	.string "Now you can get them ready and hot\n"
+	.string "for the next challenges!$"
+
 
 CinnabarIsland_Gym_EventScript_GetTM::
 	msgbox CinnabarIsland_Gym_Text_TakeThisWithYou, MSGBOX_DEFAULT

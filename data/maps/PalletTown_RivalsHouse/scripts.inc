@@ -60,7 +60,8 @@ PalletTown_RivalsHouse_EventScript_Daisy1::
 PalletTown_RivalsHouse_Text_HiBrothersAtLab::
     .string "Daisy: Hi, {PLAYER}!\p"
     .string "My brother, {RIVAL}, is out at\n"
-    .string "Grandpa's Lab.$"
+    .string "Grandpa's Lab.\p"
+	.string "You should go and say hi to him!$"
 
 PalletTown_RivalsHouse_EventScript_Daisy2::
 	msgbox PalletTown_RivalsHouse_Text_HeardYouBattledRival, MSGBOX_DEFAULT
@@ -96,6 +97,7 @@ PalletTown_RivalsHouse_Text_GetRivalNumber::
     .string "Here, let me help you.$"
 
 PalletTown_RivalsHouse_EventScript_GroomMon:: @TODO
+	goto_if_unset FLAG_RECEIVED_CONTEST_PASS, PalletTown_RivalsHouse_EventScript_ContestPass
 	goto_if_lt VAR_MASSAGE_COOLDOWN_STEP_COUNTER, 500, PalletTown_RivalsHouse_EventScript_RateMonFriendship
 	msgbox PalletTown_RivalsHouse_Text_LikeMeToGroomMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, PalletTown_RivalsHouse_EventScript_DeclineGrooming
@@ -120,15 +122,75 @@ PalletTown_RivalsHouse_EventScript_GroomMon:: @TODO
 	applymovement LOCALID_DAISY, Common_Movement_Heart
 	applymovement LOCALID_DAISY, Common_Movement_Delay48
 	waitmovement 1
-	release
+	releaseall
 	end
+
+PalletTown_RivalsHouse_EventScript_ContestPass::
+	msgbox PalletTown_RivalsHouse_Text_KantoContests
+	closemessage
+	applymovement LOCALID_DAISY, Common_Movement_QuestionMark
+	waitmovement 1
+	msgbox PalletTown_RivalsHouse_Text_DontHaveContestPass
+	setflag FLAG_RECEIVED_CONTEST_PASS
+	playfanfare MUS_RG_OBTAIN_KEY_ITEM
+	msgbox PalletTown_RivalsHouse_Text_ObtainedContestPass, MSGBOX_DEFAULT
+	additem ITEM_CONTEST_PASS
+	waitfanfare
+	msgbox PalletTown_RivalsHouse_Text_SeeYouAtContestHall MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_DAISY, Common_Movement_Heart
+	waitmovement 1
+	releaseall
+	end
+
+PalletTown_RivalsHouse_Text_KantoContests::
+	.string "Daisy: Hi, {PLAYER}!\n"
+	.string "Have you heard about the\l"
+	.string "new place that just opened?\p"
+	.string "It's the Kanto Contest Hall!\p"
+	.string "In there Pokémon Contests take place!\n"
+	.string "It is a amazing event that happens\l"
+	.string "oftenly in the Hoenn region!\p"
+	.string "I'm so glad Mr.Scott brought it\n"
+	.string "to Kanto!\p"
+	.string "I already won a lot of\l"
+	.string "Master Rank Contests!\p"
+	.string "You should enter one some time!$"
+
+PalletTown_RivalsHouse_Text_DontHaveContestPass::
+	.string "Huh? You don't have a Contest Pass?\p"
+	.string "Oh! I see! They have run out of Passes!\p"
+	.string "They are limiting the number of\n"
+	.string "entries since they are not fully\l"
+	.string "set up yet.\p"
+	.string "Lucky I got one extra that was going\n"
+	.string "to my brother\p"
+	.string "But, as you know, he thinks anything\n"
+	.string "besides training is a waste of time\p"
+	.string "Here, you can have it!$"
+
+PalletTown_RivalsHouse_Text_ObtainedContestPass::
+	.string "Obtained a Contest Pass!\p"
+	.string "{PLAYER} put the Contest Pass\n"
+	.string "in the Key Items pocket.$"
+
+PalletTown_RivalsHouse_Text_SeeYouAtContestHall::
+	.string "I hope to see you in a Contest!\p"
+	.string "You and your Pokémon need to be in sync\n"
+	.string "and in great shape in order to win one.\p"
+	.string "What? Of course I won't give you tips!\n"
+	.string "We are competitors now!\p"
+	.string "I can't go on telling you my secrets!\n"
+	.string "Giggle…\p"
+	.string "See you on the Contest Hall!\n"
+	.string "Hehe!$"
 
 PalletTown_RivalsHouse_Text_LikeMeToGroomMon::
     .string "Daisy: Hi, {PLAYER}!\n"
     .string "Good timing.\p"
     .string "I'm about to have some tea.\n"
     .string "Would you like to join me?\p"
-    .string "Oh, but look.\n"
+    .string "Oh, but look!\n"
     .string "Your Pokémon are a little dirty.\p"
     .string "Would you like me to groom one?$"
 

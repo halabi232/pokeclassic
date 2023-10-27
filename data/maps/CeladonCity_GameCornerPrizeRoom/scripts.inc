@@ -6,6 +6,12 @@
     .set PREMIUM_DOLL_COINS,  		750
 	.set BIG_DOLL_COINS,  			1500
 	.set PREMIUM_BIG_DOLL_COINS,  	3000
+	.set TM80_COINS,  				3500
+	.set TM83_COINS,  				1500
+	.set TM84_COINS,  				2000
+	.set TM97_COINS,  				4000
+	.set TM98_COINS,  				4000
+	.set TM99_COINS,  				4000
 
 CeladonCity_GameCornerPrizeRoom_MapScripts::
 	.byte 0
@@ -531,6 +537,192 @@ CeladonCity_GameCorner_EventScript_NoRoomForCushion::
 	end
 
 CeladonCity_GameCorner_EventScript_CancelCushionSelect::
+	msgbox CeladonCity_GameCorner_Text_SeeYouAgain, MSGBOX_DEFAULT
+	hidecoinsbox 0, 0
+	release
+	end
+
+CeladonCity_GameCorner_EventScript_PrizeCornerTMs::
+	lock
+	faceplayer
+	msgbox CeladonCity_GameCorner_Text_ExchangeCoinsForPrizes, MSGBOX_DEFAULT
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, TRUE, CeladonCity_GameCorner_EventScript_ChooseTMsPrizeMessage
+	release
+	end
+
+CeladonCity_GameCorner_EventScript_ChooseTMsPrizeMessage::
+	message CeladonCity_GameCorner_Text_WhichPrize
+	waitmessage
+	setvar VAR_TEMP_1, 0
+	showcoinsbox 1, 1
+	goto CeladonCity_GameCorner_EventScript_ChooseTMsPrize
+
+CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize::
+	message CeladonCity_GameCorner_Text_WhichPrize
+	waitmessage
+	goto CeladonCity_GameCorner_EventScript_ChooseTMsPrize
+
+CeladonCity_GameCorner_EventScript_ChooseTMsPrize::
+	multichoice 12, 0, MULTI_GAME_CORNER_TM, FALSE
+	switch VAR_RESULT
+	case 0, CeladonCity_GameCorner_EventScript_TM80
+	case 1, CeladonCity_GameCorner_EventScript_TM83
+	case 2, CeladonCity_GameCorner_EventScript_TM84
+	case 3, CeladonCity_GameCorner_EventScript_TM97
+	case 4, CeladonCity_GameCorner_EventScript_TM98
+	case 5, CeladonCity_GameCorner_EventScript_TM99
+	goto CeladonCity_GameCorner_EventScript_CancelTMSelect
+	end
+
+CeladonCity_GameCorner_EventScript_TM80::
+	setvar VAR_TEMP_1, 1
+	bufferitemname STR_VAR_1, ITEM_TM80
+	setvar VAR_0x8004, ITEM_TM80
+	goto CeladonCity_GameCorner_EventScript_ConfirmTMPrize
+
+CeladonCity_GameCorner_EventScript_TM83::
+	setvar VAR_TEMP_1, 2
+	bufferitemname STR_VAR_1, ITEM_TM83
+	setvar VAR_0x8004, ITEM_TM83
+	goto CeladonCity_GameCorner_EventScript_ConfirmTMPrize
+
+CeladonCity_GameCorner_EventScript_TM84::
+	setvar VAR_TEMP_1, 3
+	bufferitemname STR_VAR_1, ITEM_TM84
+	setvar VAR_0x8004, ITEM_TM84
+	goto CeladonCity_GameCorner_EventScript_ConfirmTMPrize
+
+CeladonCity_GameCorner_EventScript_TM97::
+	setvar VAR_TEMP_1, 4
+	bufferitemname STR_VAR_1, ITEM_TM97
+	setvar VAR_0x8004, ITEM_TM97
+	goto CeladonCity_GameCorner_EventScript_ConfirmTMPrize
+
+CeladonCity_GameCorner_EventScript_TM98::
+	setvar VAR_TEMP_1, 5
+	bufferitemname STR_VAR_1, ITEM_TM98
+	setvar VAR_0x8004, ITEM_TM98
+	goto CeladonCity_GameCorner_EventScript_ConfirmTMPrize
+
+CeladonCity_GameCorner_EventScript_TM99::
+	setvar VAR_TEMP_1, 6
+	bufferitemname STR_VAR_1, ITEM_TM99
+	setvar VAR_0x8004, ITEM_TM99
+	goto CeladonCity_GameCorner_EventScript_ConfirmTMPrize
+
+CeladonCity_GameCorner_EventScript_ConfirmTMPrize::
+	special BufferTMHMMoveName
+	msgbox CeladonCity_GameCorner_Text_SoYourChoiceIsTheTMX, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CeladonCity_GameCorner_EventScript_CancelTMSelect
+	switch VAR_TEMP_1
+	case 1, CeladonCity_GameCorner_EventScript_BuyTM80
+	case 2, CeladonCity_GameCorner_EventScript_BuyTM83
+	case 3, CeladonCity_GameCorner_EventScript_BuyTM84
+	case 4, CeladonCity_GameCorner_EventScript_BuyTM97
+	case 5, CeladonCity_GameCorner_EventScript_BuyTM98
+	case 6, CeladonCity_GameCorner_EventScript_BuyTM99
+	end
+
+CeladonCity_GameCorner_EventScript_BuyTM80::
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, TM80_COINS, CeladonCity_GameCorner_EventScript_NotEnoughCoinsForTM
+	checkitem ITEM_TM80, 1
+	goto_if_eq VAR_RESULT, TRUE, CeladonCity_GameCorner_EventScript_YouAlreadyHaveThis
+	removecoins TM80_COINS
+	additem ITEM_TM80
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	msgbox CeladonCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
+	goto CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize
+	end
+
+CeladonCity_GameCorner_EventScript_BuyTM83::
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, TM83_COINS, CeladonCity_GameCorner_EventScript_NotEnoughCoinsForTM
+	checkitem ITEM_TM83, 1
+	goto_if_eq VAR_RESULT, TRUE, CeladonCity_GameCorner_EventScript_YouAlreadyHaveThis
+	removecoins TM83_COINS
+	additem ITEM_TM83
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	msgbox CeladonCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
+	goto CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize
+	end
+
+CeladonCity_GameCorner_EventScript_BuyTM84::
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, TM84_COINS, CeladonCity_GameCorner_EventScript_NotEnoughCoinsForTM
+	checkitem ITEM_TM84, 1
+	goto_if_eq VAR_RESULT, TRUE, CeladonCity_GameCorner_EventScript_YouAlreadyHaveThis
+	removecoins TM84_COINS
+	additem ITEM_TM84
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	msgbox CeladonCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
+	goto CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize
+	end
+
+
+CeladonCity_GameCorner_EventScript_BuyTM97::
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, TM97_COINS, CeladonCity_GameCorner_EventScript_NotEnoughCoinsForTM
+	checkitem ITEM_TM97, 1
+	goto_if_eq VAR_RESULT, TRUE, CeladonCity_GameCorner_EventScript_YouAlreadyHaveThis
+	removecoins TM97_COINS
+	additem ITEM_TM97
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	msgbox CeladonCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
+	goto CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize
+	end
+
+CeladonCity_GameCorner_EventScript_BuyTM98::
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, TM98_COINS, CeladonCity_GameCorner_EventScript_NotEnoughCoinsForTM
+	checkitem ITEM_TM98, 1
+	goto_if_eq VAR_RESULT, TRUE, CeladonCity_GameCorner_EventScript_YouAlreadyHaveThis
+	removecoins TM98_COINS
+	additem ITEM_TM98
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	msgbox CeladonCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
+	goto CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize
+	end
+
+CeladonCity_GameCorner_EventScript_BuyTM99::
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, TM99_COINS, CeladonCity_GameCorner_EventScript_NotEnoughCoinsForTM
+	checkitem ITEM_TM99, 1
+	goto_if_eq VAR_RESULT, TRUE, CeladonCity_GameCorner_EventScript_YouAlreadyHaveThis
+	removecoins TM99_COINS
+	additem ITEM_TM99
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	msgbox CeladonCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
+	goto CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize
+	end
+
+CeladonCity_GameCorner_EventScript_NotEnoughCoinsForTM::
+	msgbox CeladonCity_GameCorner_Text_NotEnoughCoins, MSGBOX_DEFAULT
+	goto CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize
+	end
+
+
+CeladonCity_GameCorner_Text_HereYouGo:
+	.string "Here you go!$"
+
+CeladonCity_GameCorner_Text_SoYourChoiceIsTheTMX:
+	.string "So your choice is\n"
+	.string "the {STR_VAR_1} {STR_VAR_2}?$"
+
+CeladonCity_GameCorner_EventScript_YouAlreadyHaveThis::
+    msgbox gText_SpaceForVar1Full, MSGBOX_AUTOCLOSE
+	goto CeladonCity_GameCorner_EventScript_ReturnToChooseTMsPrize
+	end
+
+
+CeladonCity_GameCorner_EventScript_CancelTMSelect::
 	msgbox CeladonCity_GameCorner_Text_SeeYouAgain, MSGBOX_DEFAULT
 	hidecoinsbox 0, 0
 	release

@@ -7,7 +7,7 @@ PalletTown_MapScripts::
 
 PalletTown_OnTransition:
 	setflag FLAG_VISITED_PALLET_TOWN
-	call_if_eq VAR_SECRET_BATTLE_CLEAR, 3, EventScript_UpdatePostgame
+	call_if_eq VAR_IS_CHAMPION, 3, EventScript_UpdatePostgame
 	call_if_eq VAR_OAK_LAB_STATE, 7, EventScript_UpdateOakLabState
 	call Common_EventScript_GetDayOrNight
 	end
@@ -17,7 +17,7 @@ PalletTown_OnResume:
 	end
 
 EventScript_UpdatePostgame::
-	setvar VAR_SECRET_BATTLE_CLEAR, 4
+	setvar VAR_IS_CHAMPION, 4
 	setflag FLAG_HIDE_PALLET_BILL
 	return
 

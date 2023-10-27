@@ -34,3 +34,8 @@ SafariZone_Center_EventScript_Pinsirte::
 	finditem ITEM_PINSIRITE, 1
 	release
 	end
+
+SafariZone_Center_EventScript_ItemTM72::
+	finditem ITEM_TM72, 1
+	release
+	end

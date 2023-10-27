@@ -633,6 +633,12 @@ static bool8 IsPaletteNotActive(void)
         return FALSE;
 }
 
+// pauses script until palette fade inactive
+bool8 ScrFunc_WaitPaletteNotActive(struct ScriptContext *ctx) {
+    SetupNativeScript(ctx, IsPaletteNotActive);
+    return TRUE;
+}
+
 bool8 ScrCmd_fadescreen(struct ScriptContext *ctx)
 {
     FadeScreen(ScriptReadByte(ctx), 0);
@@ -653,7 +659,7 @@ bool8 ScrCmd_fadescreenspeed(struct ScriptContext *ctx)
 bool8 ScrCmd_fadescreenswapbuffers(struct ScriptContext *ctx)
 {
     u8 mode = ScriptReadByte(ctx);
-
+    
     switch (mode)
     {
     case FADE_TO_BLACK:
@@ -669,7 +675,7 @@ bool8 ScrCmd_fadescreenswapbuffers(struct ScriptContext *ctx)
         break;
     }
 
-    SetupNativeScript(ctx, IsPaletteNotActive);
+        SetupNativeScript(ctx, IsPaletteNotActive);
     return TRUE;
 }
 
@@ -1005,17 +1011,19 @@ bool8 ScrCmd_applymovement(struct ScriptContext *ctx)
     const void *movementScript = (const void *)ScriptReadWord(ctx);
     struct ObjectEvent *objEvent;
 
-
+    // When applying script movements to follower, it may have frozen animation that must be cleared
+    if (localId == OBJ_EVENT_ID_FOLLOWER && (objEvent = GetFollowerObject()) && objEvent->frozen) {
+        ClearObjectEventMovement(objEvent, &gSprites[objEvent->spriteId]);
+        gSprites[objEvent->spriteId].animCmdIndex = 0; // Needed to set start frame of animation
+    }
     ScriptMovement_StartObjectMovementScript(localId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, movementScript);
     sMovingNpcId = localId;
     if (localId != OBJ_EVENT_ID_FOLLOWER && !FlagGet(FLAG_SAFE_FOLLOWER_MOVEMENT)) { // Force follower into pokeball
       objEvent = GetFollowerObject();
       // return early if no follower or in shadowing state
-      if (objEvent == NULL || gSprites[objEvent->spriteId].data[1] == 0) {
+      if (objEvent == NULL || gSprites[objEvent->spriteId].data[1] == 0)
         return FALSE;
-      }
       ClearObjectEventMovement(objEvent, &gSprites[objEvent->spriteId]);
-      gSprites[objEvent->spriteId].animCmdIndex = 0; // Needed to set start frame of animation
       ScriptMovement_StartObjectMovementScript(OBJ_EVENT_ID_FOLLOWER, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, EnterPokeballMovement);
     }
     return FALSE;
@@ -1182,10 +1190,7 @@ bool8 ScrCmd_resetobjectsubpriority(struct ScriptContext *ctx)
 bool8 ScrCmd_faceplayer(struct ScriptContext *ctx)
 {
     if (gObjectEvents[gSelectedObjectEvent].active)
-    {
-        ObjectEventFaceOppositeDirection(&gObjectEvents[gSelectedObjectEvent],
-          GetPlayerFacingDirection());
-    }
+        ObjectEventFaceOppositeDirection(&gObjectEvents[gSelectedObjectEvent], GetPlayerFacingDirection());
     return FALSE;
 }
 
@@ -1209,7 +1214,7 @@ bool8 ScrCmd_setobjectmovementtype(struct ScriptContext *ctx)
 
 bool8 ScrCmd_createvobject(struct ScriptContext *ctx)
 {
-    u16 graphicsId = ScriptReadHalfword(ctx);
+    u16 graphicsId = ScriptReadByte(ctx); // Support u16 in createvobject
     u8 virtualObjId = ScriptReadByte(ctx);
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u32 y = VarGet(ScriptReadHalfword(ctx));
@@ -1590,7 +1595,7 @@ bool8 ScrCmd_vmessage(struct ScriptContext *ctx)
 bool8 ScrCmd_bufferspeciesname(struct ScriptContext *ctx)
 {
     u8 stringVarIndex = ScriptReadByte(ctx);
-    u16 species = VarGet(ScriptReadHalfword(ctx));
+    u16 species = VarGet(ScriptReadHalfword(ctx)) & ((1 << 10) - 1); // ignore possible shiny / form bits
 
     StringCopy(sScriptStringVars[stringVarIndex], gSpeciesNames[species]);
     return FALSE;
@@ -1613,7 +1618,7 @@ bool8 ScrFunc_bufferlivemonnickname(struct ScriptContext *ctx)
 
     GetMonData(GetFirstLiveMon(), MON_DATA_NICKNAME, sScriptStringVars[stringVarIndex]);
     StringGet_Nickname(sScriptStringVars[stringVarIndex]);
-    
+
     return FALSE;
 }
 
@@ -1922,14 +1927,14 @@ bool8 ScrCmd_setwildbattle(struct ScriptContext *ctx)
     u16 species = ScriptReadHalfword(ctx);
     u8 level = ScriptReadByte(ctx);
     u16 item = ScriptReadHalfword(ctx);
-    u16 species2 = ScriptReadHalfword(ctx);
+u16 species2 = ScriptReadHalfword(ctx);
     u8 level2 = ScriptReadByte(ctx);
     u16 item2 = ScriptReadHalfword(ctx);
 
-    if(species2 == SPECIES_NONE)
+if(species2 == SPECIES_NONE)
     {
-        CreateScriptedWildMon(species, level, item);
-        gIsScriptedWildDouble = FALSE;
+    CreateScriptedWildMon(species, level, item);
+gIsScriptedWildDouble = FALSE;
     }
     else
     { 
@@ -1942,10 +1947,10 @@ bool8 ScrCmd_setwildbattle(struct ScriptContext *ctx)
 
 bool8 ScrCmd_dowildbattle(struct ScriptContext *ctx)
 {
-    if(gIsScriptedWildDouble == FALSE)
+if(gIsScriptedWildDouble == FALSE)
     {
-        BattleSetup_StartScriptedWildBattle();
-        ScriptContext1_Stop();
+    BattleSetup_StartScriptedWildBattle();
+    ScriptContext1_Stop();
     }
     else
     {
@@ -2115,15 +2120,15 @@ bool8 ScrCmd_setmetatile(struct ScriptContext *ctx)
 {
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
-    u16 tileId = VarGet(ScriptReadHalfword(ctx));
-    u16 isImpassable = VarGet(ScriptReadHalfword(ctx));
+    u16 metatileId = VarGet(ScriptReadHalfword(ctx));
+    bool16 isImpassable = VarGet(ScriptReadHalfword(ctx));
 
     x += MAP_OFFSET;
     y += MAP_OFFSET;
     if (!isImpassable)
-        MapGridSetMetatileIdAt(x, y, tileId);
+        MapGridSetMetatileIdAt(x, y, metatileId);
     else
-        MapGridSetMetatileIdAt(x, y, tileId | MAPGRID_COLLISION_MASK);
+        MapGridSetMetatileIdAt(x, y, metatileId | MAPGRID_COLLISION_MASK);
     return FALSE;
 }
 

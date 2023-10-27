@@ -917,7 +917,7 @@ static bool8 ShouldUseItem(void)
             *(gBattleStruct->AI_itemFlags + gActiveBattler / 2) = 0;
             if (gDisableStructs[gActiveBattler].isFirstTurn == 0)
                 break;
-        #ifndef ITEM_EXPANSION
+        #ifdef ITEM_EXPANSION
             if (itemEffects[0] & ITEM0_X_ATTACK)
                 *(gBattleStruct->AI_itemFlags + gActiveBattler / 2) |= (1 << AI_X_ATTACK);
             if (itemEffects[1] & ITEM1_X_DEFEND)

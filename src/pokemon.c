@@ -4,6 +4,7 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
+#include "battle_main.h"
 #include "battle_message.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
@@ -15,6 +16,7 @@
 #include "event_data.h"
 #include "evolution_scene.h"
 #include "field_specials.h"
+#include "field_weather.h"
 #include "item.h"
 #include "link.h"
 #include "main.h"
@@ -25,6 +27,7 @@
 #include "pokeblock.h"
 #include "pokemon.h"
 #include "pokemon_animation.h"
+#include "pokemon_icon.h"
 #include "pokemon_summary_screen.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
@@ -49,6 +52,8 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "constants/battle_config.h"
+#include "data/trainer_spreads.h"
+#include "daycare.h"
 
 struct SpeciesItem
 {
@@ -61,7 +66,6 @@ static union PokemonSubstruct *GetSubstruct(struct BoxPokemon *boxMon, u32 perso
 static void EncryptBoxMon(struct BoxPokemon *boxMon);
 static void DecryptBoxMon(struct BoxPokemon *boxMon);
 static void Task_PlayMapChosenOrBattleBGM(u8 taskId);
-static u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
 static bool8 ShouldSkipFriendshipChange(void);
 
 EWRAM_DATA static u8 sLearningMoveTableID = 0;
@@ -510,6 +514,21 @@ static const u16 sSpeciesToHoennPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_HOENN(JIRACHI),
     SPECIES_TO_HOENN(DEOXYS),
     SPECIES_TO_HOENN(CHIMECHO),
+    SPECIES_TO_HOENN(MIME_JR),
+    SPECIES_TO_HOENN(MUNCHLAX),
+    SPECIES_TO_HOENN(HAPPINY),
+    SPECIES_TO_HOENN(ELECTIVIRE),
+    SPECIES_TO_HOENN(LICKILICKY),
+    SPECIES_TO_HOENN(MAGMORTAR),
+    SPECIES_TO_HOENN(MAGNEZONE),
+    SPECIES_TO_HOENN(PORYGON_Z),
+    SPECIES_TO_HOENN(RHYPERIOR),
+    SPECIES_TO_HOENN(TANGROWTH),
+    SPECIES_TO_HOENN(LEAFEON),
+    SPECIES_TO_HOENN(GLACEON),
+    SPECIES_TO_HOENN(SYLVEON),
+    SPECIES_TO_HOENN(ANNIHILAPE),
+
 
     [SPECIES_PIKACHU_PARTNER - 1] = NATIONAL_DEX_PIKACHU,
     [SPECIES_RIVAL_EEVEE - 1] = NATIONAL_DEX_EEVEE,
@@ -528,6 +547,8 @@ static const u16 sSpeciesToHoennPokedexNum[NUM_SPECIES - 1] =
     [SPECIES_AERODACTYL_MEGA - 1] = NATIONAL_DEX_AERODACTYL,
     [SPECIES_MEWTWO_MEGA_X - 1] = NATIONAL_DEX_MEWTWO,
     [SPECIES_MEWTWO_MEGA_Y - 1] = NATIONAL_DEX_MEWTWO,
+    [SPECIES_STEELIX_MEGA - 1] = NATIONAL_DEX_STEELIX,
+    [SPECIES_SCIZOR_MEGA - 1] = NATIONAL_DEX_SCIZOR,
 };
 
 // Assigns all species to the National Dex Index (Summary No. for National Dex)
@@ -944,6 +965,20 @@ static const u16 sSpeciesToNationalPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_NATIONAL(JIRACHI),
     SPECIES_TO_NATIONAL(DEOXYS),
     SPECIES_TO_NATIONAL(CHIMECHO),
+    SPECIES_TO_NATIONAL(MIME_JR),
+    SPECIES_TO_NATIONAL(MUNCHLAX),
+    SPECIES_TO_NATIONAL(HAPPINY),
+    SPECIES_TO_NATIONAL(ELECTIVIRE),
+    SPECIES_TO_NATIONAL(LICKILICKY),
+    SPECIES_TO_NATIONAL(MAGMORTAR),
+    SPECIES_TO_NATIONAL(MAGNEZONE),
+    SPECIES_TO_NATIONAL(PORYGON_Z),
+    SPECIES_TO_NATIONAL(RHYPERIOR),
+    SPECIES_TO_NATIONAL(TANGROWTH),
+    SPECIES_TO_NATIONAL(LEAFEON),
+    SPECIES_TO_NATIONAL(GLACEON),
+    SPECIES_TO_NATIONAL(SYLVEON),
+    SPECIES_TO_NATIONAL(ANNIHILAPE),
 
     [SPECIES_PIKACHU_PARTNER - 1] = NATIONAL_DEX_PIKACHU,
     [SPECIES_RIVAL_EEVEE - 1] = NATIONAL_DEX_EEVEE,
@@ -963,6 +998,8 @@ static const u16 sSpeciesToNationalPokedexNum[NUM_SPECIES - 1] =
     [SPECIES_AERODACTYL_MEGA - 1] = NATIONAL_DEX_AERODACTYL,
     [SPECIES_MEWTWO_MEGA_X - 1] = NATIONAL_DEX_MEWTWO,
     [SPECIES_MEWTWO_MEGA_Y - 1] = NATIONAL_DEX_MEWTWO,
+    [SPECIES_STEELIX_MEGA - 1] = NATIONAL_DEX_STEELIX,
+    [SPECIES_SCIZOR_MEGA - 1] = NATIONAL_DEX_SCIZOR,
 };
 
 // Assigns all Hoenn Dex Indexes to a National Dex Index
@@ -1169,7 +1206,21 @@ static const u16 sHoennToNationalOrder[NUM_SPECIES - 1] =
     HOENN_TO_NATIONAL(GROUDON),
     HOENN_TO_NATIONAL(RAYQUAZA),
     HOENN_TO_NATIONAL(JIRACHI),
-    HOENN_TO_NATIONAL(DEOXYS),
+    HOENN_TO_NATIONAL(DEOXYS),    
+    HOENN_TO_NATIONAL(MIME_JR),
+    HOENN_TO_NATIONAL(MUNCHLAX),
+    HOENN_TO_NATIONAL(HAPPINY),
+    HOENN_TO_NATIONAL(ELECTIVIRE),
+    HOENN_TO_NATIONAL(LICKILICKY),
+    HOENN_TO_NATIONAL(MAGMORTAR),
+    HOENN_TO_NATIONAL(MAGNEZONE),
+    HOENN_TO_NATIONAL(PORYGON_Z),
+    HOENN_TO_NATIONAL(RHYPERIOR),
+    HOENN_TO_NATIONAL(TANGROWTH),
+    HOENN_TO_NATIONAL(LEAFEON),
+    HOENN_TO_NATIONAL(GLACEON),
+    HOENN_TO_NATIONAL(SYLVEON),
+    HOENN_TO_NATIONAL(ANNIHILAPE),
     HOENN_TO_NATIONAL(BULBASAUR), // Pokémon from here onwards are UNSEEN in the HoennDex.
     HOENN_TO_NATIONAL(IVYSAUR),
     HOENN_TO_NATIONAL(VENUSAUR),
@@ -1421,14 +1472,15 @@ const s8 gNatureStatTable[NUM_NATURES][NUM_NATURE_STATS] =
     [NATURE_QUIRKY]  = {    0,  0,  0,     0,     0},
 };
 
-#include "data/pokemon/tmhm_learnsets.h"
 #include "data/pokemon/trainer_class_lookups.h"
 #include "data/pokemon/cry_ids.h"
 #include "data/pokemon/experience_tables.h"
 #include "data/pokemon/base_stats.h"
 #include "data/pokemon/level_up_learnsets.h"
+#include "data/pokemon/teachable_learnsets.h"
 #include "data/pokemon/evolution.h"
 #include "data/pokemon/level_up_learnset_pointers.h"
+#include "data/pokemon/teachable_learnset_pointers.h"
 #include "data/pokemon/form_species_tables.h"
 #include "data/pokemon/form_species_table_pointers.h"
 
@@ -1824,6 +1876,21 @@ static const u8 sMonFrontAnimIdsTable[NUM_SPECIES - 1] =
     [SPECIES_JIRACHI - 1]     = ANIM_SWING_CONVEX,
     [SPECIES_DEOXYS - 1]      = ANIM_H_PIVOT,
     [SPECIES_CHIMECHO - 1]    = ANIM_H_SLIDE_WOBBLE,
+    [SPECIES_ELECTIVIRE - 1]    = ANIM_GLOW_YELLOW,
+    [SPECIES_GLACEON - 1]       = ANIM_V_STRETCH,
+    [SPECIES_HAPPINY - 1]       = ANIM_V_SQUISH_AND_BOUNCE_SLOW,
+    [SPECIES_LEAFEON - 1]       = ANIM_SHRINK_GROW,
+    [SPECIES_LICKILICKY - 1]    = ANIM_V_SQUISH_AND_BOUNCE,
+    [SPECIES_MAGMORTAR - 1]     = ANIM_V_STRETCH,
+    [SPECIES_MAGNEZONE - 1]     = ANIM_H_SLIDE_WOBBLE,
+    [SPECIES_MIME_JR - 1]       = ANIM_H_SLIDE_SLOW,
+    [SPECIES_MUNCHLAX - 1]      = ANIM_V_SQUISH_AND_BOUNCE_SLOW,
+    [SPECIES_PORYGON_Z - 1]     = ANIM_CIRCLE_C_CLOCKWISE_SLOW,
+    [SPECIES_RHYPERIOR - 1]     = ANIM_V_SHAKE_TWICE,
+    [SPECIES_SYLVEON - 1]       = ANIM_SHRINK_GROW,
+    [SPECIES_TANGROWTH - 1]     = ANIM_H_STRETCH,
+    [SPECIES_ANNIHILAPE - 1]    = ANIM_BOUNCE_ROTATE_TO_SIDES_SMALL,
+
 };
 
 static const u8 sMonAnimationDelayTable[NUM_SPECIES - 1] =
@@ -1966,7 +2033,7 @@ const struct SpriteTemplate gBattlerSpriteTemplates[MAX_BATTLERS_COUNT] =
         .anims = NULL,
         .images = gBattlerPicTable_OpponentLeft,
         .affineAnims = gAffineAnims_BattleSpriteOpponentSide,
-        .callback = SpriteCb_WildMon,
+        .callback = SpriteCB_WildMon,
     },
     [B_POSITION_PLAYER_RIGHT] = {
         .tileTag = TAG_NONE,
@@ -1984,7 +2051,7 @@ const struct SpriteTemplate gBattlerSpriteTemplates[MAX_BATTLERS_COUNT] =
         .anims = NULL,
         .images = gBattlerPicTable_OpponentRight,
         .affineAnims = gAffineAnims_BattleSpriteOpponentSide,
-        .callback = SpriteCb_WildMon
+        .callback = SpriteCB_WildMon
     },
 };
 
@@ -2159,7 +2226,7 @@ static const u8 sGetMonDataEVConstants[] =
 // For stat-raising items
 static const u8 sStatsToRaise[] =
 {
-#ifndef ITEM_EXPANSION
+#ifdef ITEM_EXPANSION
     STAT_ATK, STAT_ATK, STAT_SPEED, STAT_DEF, STAT_SPATK, STAT_ACC
 #else
     STAT_ATK, STAT_ATK, STAT_DEF, STAT_SPEED, STAT_SPATK, STAT_SPDEF, STAT_ACC
@@ -2173,14 +2240,14 @@ static const s8 sFriendshipEventModifiers[][3] =
     [FRIENDSHIP_EVENT_GROW_LEVEL]      = { 5,  3,  2},
     [FRIENDSHIP_EVENT_IV_CANDY]        = { 5,  3,  2},
     [FRIENDSHIP_EVENT_BATTLE_ITEM]     = { 1,  1,  0},
-    [FRIENDSHIP_EVENT_LEAGUE_BATTLE]   = { 3,  2,  1},
+    [FRIENDSHIP_EVENT_LEAGUE_BATTLE]   = { 10,  5,  2},
     [FRIENDSHIP_EVENT_LEARN_TMHM]      = { 1,  1,  0},
     [FRIENDSHIP_EVENT_WALKING]         = { 1,  1,  1},
-    [FRIENDSHIP_EVENT_MASSAGE]         = { 3,  3,  3},
+    [FRIENDSHIP_EVENT_MASSAGE]         = { 30,  30, 30},
     [FRIENDSHIP_EVENT_FAINT_SMALL]     = {-1, -1, -1},
-    [FRIENDSHIP_EVENT_FAINT_FIELD_PSN] = {-5, -5, -10},
+    [FRIENDSHIP_EVENT_FAINT_FIELD_PSN] = {-20, -20, -40},
     [FRIENDSHIP_EVENT_FAINT_LARGE]     = {-5, -5, -10},
-    [FRIENDSHIP_EVENT_EFFORT_BERRIES]  = {10, 5, 2},
+    [FRIENDSHIP_EVENT_EFFORT_BERRIES]  = { 20, 15, 10},
 };
 
 #define HM_MOVES_END 0xFFFF
@@ -3035,7 +3102,7 @@ u16 GiveMoveToMon(struct Pokemon *mon, u16 move)
     return GiveMoveToBoxMon(&mon->box, move);
 }
 
-static u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
+u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
 {
     s32 i;
     for (i = 0; i < MAX_MON_MOVES; i++)
@@ -3216,8 +3283,15 @@ u8 CountAliveMonsInBattle(u8 caseId)
                 retVal++;
         }
         break;
+    
+    case BATTLE_ALIVE_EXCEPT_ATTACKER:
+        for (i = 0; i < MAX_BATTLERS_COUNT; i++)
+        {
+            if (i != gBattlerAttacker && !(gAbsentBattlerFlags & gBitTable[i]))
+                retVal++;
+        }
+        break;
     }
-
     return retVal;
 }
 
@@ -4719,7 +4793,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                 gBattleMons[gActiveBattler].status2 |= STATUS2_FOCUS_ENERGY;
                 retVal = FALSE;
             }
-        #ifndef ITEM_EXPANSION
+        #ifdef ITEM_EXPANSION
             // X Attack
             if ((itemEffect[i] & ITEM0_X_ATTACK)
              && gBattleMons[gActiveBattler].statStages[STAT_ATK] < MAX_STAT_STAGE)
@@ -4736,7 +4810,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
             break;
 
         // Handle ITEM1 effects (in-battle stat boosting effects)
-        #ifndef ITEM_EXPANSION
+        #ifdef ITEM_EXPANSION
         case 1:
             // X Defend
             if ((itemEffect[i] & ITEM1_X_DEFEND)
@@ -4889,7 +4963,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
 
             // Rare Candy
             if ((itemEffect[i] & ITEM3_LEVEL_UP)
-             && GetMonData(mon, MON_DATA_LEVEL, NULL) != MAX_LEVEL)
+             && GetMonData(mon, MON_DATA_LEVEL, NULL) < GetCurrentPartyLevelCap())
             {
                 dataUnsigned = gExperienceTables[gBaseStats[GetMonData(mon, MON_DATA_SPECIES, NULL)].growthRate][GetMonData(mon, MON_DATA_LEVEL, NULL) + 1];
                 SetMonData(mon, MON_DATA_EXP, &dataUnsigned);
@@ -5445,7 +5519,7 @@ u8 *UseStatIncreaseItem(u16 itemId)
 
     gPotentialItemEffectBattler = gBattlerInMenuId;
 
-#ifndef ITEM_EXPANSION
+#ifdef ITEM_EXPANSION
     for (i = 0; i < 3; i++)
     {
         if (itemEffect[i] & (ITEM0_X_ATTACK | ITEM1_X_SPEED | ITEM2_X_SPATK))
@@ -5521,7 +5595,7 @@ u8 GetNatureFromPersonality(u32 personality)
 
 u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
 {
-    int i;
+    int i, j;
     u16 targetSpecies = 0;
     u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
     u16 heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, 0);
@@ -5531,6 +5605,7 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
     u8 beauty = GetMonData(mon, MON_DATA_BEAUTY, 0);
     u16 upperPersonality = personality >> 16;
     u8 holdEffect;
+    u16 currentMap;
 
     if (heldItem == ITEM_ENIGMA_BERRY)
         #ifndef FREE_ENIGMA_BERRY
@@ -5603,6 +5678,93 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
             case EVO_BEAUTY:
                 if (gEvolutionTable[species][i].param <= beauty)
                     targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            case EVO_LEVEL_FEMALE:
+                if (gEvolutionTable[species][i].param <= level && GetMonGender(mon) == MON_FEMALE)
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            case EVO_LEVEL_MALE:
+                if (gEvolutionTable[species][i].param <= level && GetMonGender(mon) == MON_MALE)
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            case EVO_LEVEL_NIGHT:
+                UpdateTimeOfDay();
+                if (gLocalTime.hours >= 0 && gLocalTime.hours < 7 && gEvolutionTable[species][i].param <= level)
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                if (gLocalTime.hours >= 19 && gLocalTime.hours < 24 && gEvolutionTable[species][i].param <= level)
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            case EVO_LEVEL_DAY:
+                UpdateTimeOfDay();
+                if (gLocalTime.hours >= 7 && gLocalTime.hours < 19 && gEvolutionTable[species][i].param <= level)
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            case EVO_ITEM_HOLD_NIGHT:
+                UpdateTimeOfDay();
+                if (gLocalTime.hours >= 0 && gLocalTime.hours < 7 && heldItem == gEvolutionTable[species][i].param)
+                {
+                    heldItem = 0;
+                    SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                }
+                if (gLocalTime.hours >= 19 && gLocalTime.hours < 24 && heldItem == gEvolutionTable[species][i].param)
+                {
+                    heldItem = 0;
+                    SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                }
+                break;
+            case EVO_ITEM_HOLD_DAY:
+                UpdateTimeOfDay();
+                if (gLocalTime.hours >= 7 && gLocalTime.hours < 19 && heldItem == gEvolutionTable[species][i].param)
+                {
+                    heldItem = 0;
+                    SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                }
+                break;
+            case EVO_ITEM_HOLD:
+                if (heldItem == gEvolutionTable[species][i].param)
+                {
+                    heldItem = 0;
+                    SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                }
+                break;
+            case EVO_MAPSEC:
+                if (gMapHeader.regionMapSectionId == gEvolutionTable[species][i].param)
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            case EVO_SPECIFIC_MAP:
+                currentMap = ((gSaveBlock1Ptr->location.mapGroup) << 8 | gSaveBlock1Ptr->location.mapNum);
+                if (currentMap == gEvolutionTable[species][i].param)
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            case EVO_MOVE:
+                if (MonKnowsMove(mon, gEvolutionTable[species][i].param))
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+             case EVO_FRIENDSHIP_MOVE_TYPE:
+                if (friendship >= 220)
+                {
+                    for (j = 0; j < MAX_MON_MOVES; j++)
+                    {
+                        if (gBattleMoves[GetMonData(mon, MON_DATA_MOVE1 + j, NULL)].type == gEvolutionTable[species][i].param)
+                        {
+                            targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                            break;
+                        }
+                    }
+                }
+            case EVO_MOVE_TYPE:
+                for (j = 0; j < 4; j++)
+                {
+                    if (gBattleMoves[GetMonData(mon, MON_DATA_MOVE1 + j, NULL)].type == gEvolutionTable[species][i].param)
+                    {
+                        targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                        break;
+                    }
+                }
                 break;
             }
         }
@@ -5936,7 +6098,20 @@ u16 ModifyStatByNature(u8 nature, u16 stat, u8 statIndex)
     ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)                                           \
     && (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR    \
      || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LEADER        \
-     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_CHAMPION))    \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_CHAMPION      \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_BROCK         \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_MISTY         \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LTSURGE       \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ERIKA         \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_KOGA          \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_SABRINA       \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_BLAINE        \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_GIOVANNI      \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LORELEI       \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_BRUNO         \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_AGATHA        \
+     || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LANCE         \
+     ))    \
 
 void AdjustFriendship(struct Pokemon *mon, u8 event)
 {
@@ -6043,9 +6218,9 @@ void MonGainEVs(struct Pokemon *mon, u16 defeatedSpecies)
             break;
 
         if (CheckPartyHasHadPokerus(mon, 0))
-            multiplier = 2;
+            multiplier = 4;
         else
-            multiplier = 1;
+            multiplier = 2;
 
         switch (i)
         {
@@ -6273,12 +6448,12 @@ bool8 TryIncrementMonLevel(struct Pokemon *mon)
     u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
     u8 nextLevel = GetMonData(mon, MON_DATA_LEVEL, 0) + 1;
     u32 expPoints = GetMonData(mon, MON_DATA_EXP, 0);
-    if (expPoints > gExperienceTables[gBaseStats[species].growthRate][MAX_LEVEL])
+    if (expPoints > gExperienceTables[gBaseStats[species].growthRate][GetCurrentPartyLevelCap()])
     {
-        expPoints = gExperienceTables[gBaseStats[species].growthRate][MAX_LEVEL];
+        expPoints = gExperienceTables[gBaseStats[species].growthRate][GetCurrentPartyLevelCap()];
         SetMonData(mon, MON_DATA_EXP, &expPoints);
     }
-    if (nextLevel > MAX_LEVEL || expPoints < gExperienceTables[gBaseStats[species].growthRate][nextLevel])
+    if (nextLevel > GetCurrentPartyLevelCap() || expPoints < gExperienceTables[gBaseStats[species].growthRate][nextLevel])
     {
         return FALSE;
     }
@@ -6289,46 +6464,59 @@ bool8 TryIncrementMonLevel(struct Pokemon *mon)
     }
 }
 
-u32 CanMonLearnTMHM(struct Pokemon *mon, u8 tm)
-{
-    u16 species = GetMonData(mon, MON_DATA_SPECIES2, 0);
-    if (species == SPECIES_EGG)
-    {
-        return 0;
-    }
-    else if (tm < 32)
-    {
-        u32 mask = 1 << tm;
-        return gTMHMLearnsets[species][0] & mask;
-    }
-    else
-    {
-        u32 mask = 1 << (tm - 32);
-        return gTMHMLearnsets[species][1] & mask;
-    }
-}
-
-u32 CanSpeciesLearnTMHM(u16 species, u8 tm)
+u8 CanLearnTeachableMove(u16 species, u16 move)
 {
     if (species == SPECIES_EGG)
     {
-        return 0;
+        return FALSE;
     }
-    else if (tm < 32)
+    else if (species == SPECIES_MEW)
     {
-        u32 mask = 1 << tm;
-        return gTMHMLearnsets[species][0] & mask;
+        switch (move)
+        {
+        case MOVE_BADDY_BAD:
+        case MOVE_BLAST_BURN:
+        case MOVE_BOUNCY_BUBBLE:
+        case MOVE_BUZZY_BUZZ:
+        case MOVE_DRACO_METEOR:
+        case MOVE_DRAGON_ASCENT:
+        case MOVE_FIRE_PLEDGE:
+        case MOVE_FLOATY_FALL:
+        case MOVE_FREEZY_FROST:
+        case MOVE_FRENZY_PLANT:
+        case MOVE_GLITZY_GLOW:
+        case MOVE_GRASS_PLEDGE:
+        case MOVE_HYDRO_CANNON:
+        case MOVE_RELIC_SONG:
+        case MOVE_SAPPY_SEED:
+        case MOVE_SECRET_SWORD:
+        case MOVE_SIZZLY_SLIDE:
+        case MOVE_SPARKLY_SWIRL:
+        case MOVE_SPLISHY_SPLASH:
+        case MOVE_STEEL_BEAM:
+        case MOVE_VOLT_TACKLE:
+        case MOVE_WATER_PLEDGE:
+        case MOVE_ZIPPY_ZAP:
+            return FALSE;
+        default:
+            return TRUE;
+        }
     }
     else
     {
-        u32 mask = 1 << (tm - 32);
-        return gTMHMLearnsets[species][1] & mask;
+        u8 i;
+        for (i = 0; gTeachableLearnsets[species][i] != MOVE_UNAVAILABLE; i++)
+        {
+            if (gTeachableLearnsets[species][i] == move)
+                return TRUE;
+        }
+        return FALSE;
     }
 }
 
 u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves)
 {
-    u16 learnedMoves[MAX_MON_MOVES];
+    u16 learnedMoves[MAX_MON_MOVES]; 
     u8 numMoves = 0;
     u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
     u8 level = GetMonData(mon, MON_DATA_LEVEL, 0);
@@ -6360,6 +6548,56 @@ u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves)
                     moves[numMoves++] = gLevelUpLearnsets[species][i].move;
             }
         }
+    }
+
+    return numMoves;
+}
+
+u8 GetEggMoveTutorMoves(struct Pokemon *mon, u16 *moves)
+{   
+    u16 baseSpecies = GetMonData(mon, MON_DATA_SPECIES, 0);
+    u16 learnedMoves[MAX_MON_MOVES]; 
+    u16 eggMoveBuffer[EGG_MOVES_ARRAY_COUNT];
+    u8 numEggMoves;
+    u8 numMoves = 0;
+    bool8 found = FALSE;
+    int i, j, k;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+        learnedMoves[i] = GetMonData(mon, MON_DATA_MOVE1 + i, 0);
+
+    for (i = 0; i < EVOS_PER_MON; i++)
+    {
+        found = FALSE;
+        for (j = 1; j < NUM_SPECIES; j++)
+        {
+            for (k = 0; k < EVOS_PER_MON; k++)
+            {
+                if (gEvolutionTable[j][k].targetSpecies == baseSpecies)
+                {
+                    baseSpecies = j;
+                    found = TRUE;
+                    break;
+                }
+            }
+
+            if (found)
+                break;
+        }
+
+        if (j == NUM_SPECIES)
+            break;
+    }
+
+    numEggMoves = GetEggMoves2(baseSpecies, eggMoveBuffer);
+    if(numEggMoves != 0)
+    {
+        for (i = 0; i < EGG_MOVES_ARRAY_COUNT; i++)
+            if (learnedMoves[0] != eggMoveBuffer[i]
+                && learnedMoves[1] != eggMoveBuffer[i]
+                && learnedMoves[2] != eggMoveBuffer[i]
+                && learnedMoves[3] != eggMoveBuffer[i])
+                moves[numMoves++] = eggMoveBuffer[i];
     }
 
     return numMoves;
@@ -6414,6 +6652,60 @@ u8 GetNumberOfRelearnableMoves(struct Pokemon *mon)
                     moves[numMoves++] = gLevelUpLearnsets[species][i].move;
             }
         }
+    }
+
+    return numMoves;
+}
+
+u8 GetNumberOfEggMoves(struct Pokemon *mon)
+{
+
+    u16 baseSpecies = GetMonData(mon, MON_DATA_SPECIES, 0);
+    u16 learnedMoves[MAX_MON_MOVES]; 
+    u16 eggMoveBuffer[EGG_MOVES_ARRAY_COUNT];
+    u16 moves[EGG_MOVES_ARRAY_COUNT];
+    u8 numEggMoves;
+    u8 numMoves = 0;
+    bool8 found = FALSE;
+    int i, j, k;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+        learnedMoves[i] = GetMonData(mon, MON_DATA_MOVE1 + i, 0);
+
+    for (i = 0; i < EVOS_PER_MON; i++)
+    {
+        found = FALSE;
+        for (j = 1; j < NUM_SPECIES; j++)
+        {
+            for (k = 0; k < EVOS_PER_MON; k++)
+            {
+                if (gEvolutionTable[j][k].targetSpecies == baseSpecies)
+                {
+                    baseSpecies = j;
+                    found = TRUE;
+                    break;
+                }
+            }
+
+            if (found)
+                break;
+        }
+
+        if (j == NUM_SPECIES)
+            break;
+    }
+
+    numEggMoves = GetEggMoves2(baseSpecies, eggMoveBuffer);
+    if(numEggMoves != 0)
+    {
+        for (i = 0; i < numEggMoves; i++)
+            if (eggMoveBuffer[i] == MOVE_STRUGGLE)
+                break;
+            else if (learnedMoves[0] != eggMoveBuffer[i]
+                && learnedMoves[1] != eggMoveBuffer[i]
+                && learnedMoves[2] != eggMoveBuffer[i]
+                && learnedMoves[3] != eggMoveBuffer[i])
+                moves[numMoves++] = eggMoveBuffer[i];
     }
 
     return numMoves;
@@ -6479,6 +6771,14 @@ u16 GetBattleBGM(void)
         case TRAINER_CLASS_MAGMA_ADMIN:
             return MUS_VS_AQUA_MAGMA;
         case TRAINER_CLASS_LEADER:
+        case TRAINER_CLASS_BROCK:   
+        case TRAINER_CLASS_MISTY:  
+        case TRAINER_CLASS_LTSURGE: 
+        case TRAINER_CLASS_ERIKA:   
+        case TRAINER_CLASS_KOGA:    
+        case TRAINER_CLASS_SABRINA: 
+        case TRAINER_CLASS_BLAINE:  
+        case TRAINER_CLASS_GIOVANNI: 
             return MUS_RG_VS_GYM_LEADER;
         case TRAINER_CLASS_CHAMPION:
             return MUS_RG_VS_CHAMPION;
@@ -6489,6 +6789,10 @@ u16 GetBattleBGM(void)
                 return MUS_RG_VS_TRAINER;
             return MUS_RG_VS_TRAINER;
         case TRAINER_CLASS_ELITE_FOUR:
+        case TRAINER_CLASS_LORELEI:
+        case TRAINER_CLASS_BRUNO:  
+        case TRAINER_CLASS_AGATHA: 
+        case TRAINER_CLASS_LANCE:  
             return MUS_VS_ELITE_FOUR;
         case TRAINER_CLASS_SALON_MAIDEN:
         case TRAINER_CLASS_DOME_ACE:
@@ -7288,3 +7592,22 @@ u16 GetTrainerFrontSpriteBasedOnPlayerCostumeAndGender(u8 costumeId, u8 playerGe
     return trainerPic;
 }
 
+u32 GetMonFriendshipScore(struct Pokemon *pokemon)
+{
+    u32 friendshipScore = GetMonData(pokemon, MON_DATA_FRIENDSHIP, NULL);
+
+    if (friendshipScore == MAX_FRIENDSHIP)
+        return FRIENDSHIP_MAX;
+    if (friendshipScore >= 200)
+        return FRIENDSHIP_200_TO_254;
+    if (friendshipScore >= 150)
+        return FRIENDSHIP_150_TO_199;
+    if (friendshipScore >= 100)
+        return FRIENDSHIP_100_TO_149;
+    if (friendshipScore >= 50)
+        return FRIENDSHIP_50_TO_99;
+    if (friendshipScore >= 1)
+        return FRIENDSHIP_1_TO_49;
+
+    return FRIENDSHIP_NONE;
+}

@@ -875,7 +875,7 @@ PalletTown_ProfessorOaksLab_Text_CatchingCharmReward::
 	.string "This should help you complete your Pokédex!$"
 
 PalletTown_ProfessorOaksLab_Text_ReceivedCatchingCharm::
-	.string "{PLAYER} earned the Catching Charm!"
+	.string "{PLAYER} earned the Catching Charm!$"
 
 PalletTown_ProfessorOaksLab_EventScript_GetOvalCharm::
 	goto_if_unset FLAG_CLEARED_SECRET_BATTLE, PalletTown_ProfessorOaksLab_EventScript_CedarCheckNext

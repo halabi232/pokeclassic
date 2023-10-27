@@ -66,7 +66,7 @@ ViridianCity_Mart_EventScript_Clerk::
 	goto_if_le VAR_OAK_LAB_STATE, 7, ViridianCity_Mart_EventScript_SayHiToOak
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemart ViridianCity_Pokemart
+	pokemart 0
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end

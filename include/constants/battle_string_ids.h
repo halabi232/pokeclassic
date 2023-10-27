@@ -624,12 +624,21 @@
 #define STRINGID_ZMOVESTATUP                          622
 #define STRINGID_ZMOVEHPTRAP                          623
 #define STRINGID_TERRAINREMOVED                       624
+#define STRINGID_ATTACKEREXPELLEDTHEPOISON            625
+#define STRINGID_ATTACKERSHOOKITSELFAWAKE             626
+#define STRINGID_ATTACKERBROKETHROUGHPARALYSIS        627
+#define STRINGID_ATTACKERHEALEDITSBURN                628
+#define STRINGID_ATTACKERMELTEDTHEICE                 629
+#define STRINGID_TARGETTOUGHEDITOUT                   630
 
-#define STRINGID_PLAYERWHITEOUT3					  625
-#define STRINGID_PLAYERPAIDPRIZEMONEYNOWHITEOUT		  626
-#define STRINGID_PLAYERDROPPEDMONEYNOWHITEOUT		  627
+#define STRINGID_PLAYERWHITEOUT3					  631
+#define STRINGID_PLAYERPAIDPRIZEMONEYNOWHITEOUT		  632
+#define STRINGID_PLAYERDROPPEDMONEYNOWHITEOUT		  633
+#define STRINGID_PKMNDROPPEDITEM                      634
+#define STRINGID_PKMNGAINEDEXPALL                     635
+#define STRINGID_BAGISFULL                            636
 
-#define BATTLESTRINGS_COUNT                           628
+#define BATTLESTRINGS_COUNT                           637
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,
@@ -907,5 +916,9 @@
 #define B_MSG_Z_RECOVER_HP    4
 #define B_MSG_Z_STAT_UP       5
 #define B_MSG_Z_HP_TRAP       6
+
+// gItemDroppedStringIds
+#define B_MSG_ITEM_DROPPED   0
+#define B_MSG_BAG_IS_FULL    1
 
 #endif // GUARD_CONSTANTS_BATTLE_STRING_IDS_H

@@ -11,6 +11,11 @@ PokemonTower_5F_EventScript_ItemNugget::
 	release
 	end
 
+PokemonTower_5F_EventScript_ItemTM81::
+    finditem ITEM_TM81, 1
+    release
+    end
+
 PokemonTower_5F_EventScript_Channeler::
 	msgbox PokemonTower_5F_Text_RestHereInPurifiedSpace, MSGBOX_NPC
 	end

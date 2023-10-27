@@ -789,7 +789,15 @@ void DrawMainBattleBackground(void)
         if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
         {
             u8 trainerClass = gTrainers[gTrainerBattleOpponent_A].trainerClass;
-            if (trainerClass == TRAINER_CLASS_LEADER)
+            if (trainerClass == TRAINER_CLASS_LEADER  \
+            || trainerClass == TRAINER_CLASS_BROCK    \
+            || trainerClass == TRAINER_CLASS_MISTY    \
+            || trainerClass == TRAINER_CLASS_LTSURGE  \
+            || trainerClass == TRAINER_CLASS_ERIKA    \
+            || trainerClass == TRAINER_CLASS_KOGA     \
+            || trainerClass == TRAINER_CLASS_SABRINA  \
+            || trainerClass == TRAINER_CLASS_BLAINE   \
+            || trainerClass == TRAINER_CLASS_GIOVANNI )
             {
                 LZDecompressVram(gBattleTerrainTiles_Building, (void*)(BG_CHAR_ADDR(2)));
                 LZDecompressVram(gBattleTerrainTilemap_Building, (void*)(BG_SCREEN_ADDR(26)));
@@ -1184,7 +1192,15 @@ void DrawBattleEntryBackground(void)
         if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
         {
             u8 trainerClass = gTrainers[gTrainerBattleOpponent_A].trainerClass;
-            if (trainerClass == TRAINER_CLASS_LEADER)
+            if (trainerClass == TRAINER_CLASS_LEADER  \
+            || trainerClass == TRAINER_CLASS_BROCK    \
+            || trainerClass == TRAINER_CLASS_MISTY    \
+            || trainerClass == TRAINER_CLASS_LTSURGE  \
+            || trainerClass == TRAINER_CLASS_ERIKA    \
+            || trainerClass == TRAINER_CLASS_KOGA     \
+            || trainerClass == TRAINER_CLASS_SABRINA  \
+            || trainerClass == TRAINER_CLASS_BLAINE   \
+            || trainerClass == TRAINER_CLASS_GIOVANNI )
             {
                 LZDecompressVram(gBattleTerrainAnimTiles_Building, (void*)(BG_CHAR_ADDR(1)));
                 LZDecompressVram(gBattleTerrainAnimTilemap_Building, (void*)(BG_SCREEN_ADDR(28)));
@@ -1241,7 +1257,15 @@ bool8 LoadChosenBattleElement(u8 caseId)
             if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
             {
                 u8 trainerClass = gTrainers[gTrainerBattleOpponent_A].trainerClass;
-                if (trainerClass == TRAINER_CLASS_LEADER)
+                if (trainerClass == TRAINER_CLASS_LEADER  \
+                || trainerClass == TRAINER_CLASS_BROCK    \
+                || trainerClass == TRAINER_CLASS_MISTY    \
+                || trainerClass == TRAINER_CLASS_LTSURGE  \
+                || trainerClass == TRAINER_CLASS_ERIKA    \
+                || trainerClass == TRAINER_CLASS_KOGA     \
+                || trainerClass == TRAINER_CLASS_SABRINA  \
+                || trainerClass == TRAINER_CLASS_BLAINE   \
+                || trainerClass == TRAINER_CLASS_GIOVANNI )
                 {
                     LZDecompressVram(gBattleTerrainTiles_Building, (void*)(BG_CHAR_ADDR(2)));
                     break;
@@ -1303,7 +1327,15 @@ bool8 LoadChosenBattleElement(u8 caseId)
             if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
             {
                 u8 trainerClass = gTrainers[gTrainerBattleOpponent_A].trainerClass;
-                if (trainerClass == TRAINER_CLASS_LEADER)
+                if (trainerClass == TRAINER_CLASS_LEADER  \
+                || trainerClass == TRAINER_CLASS_BROCK    \
+                || trainerClass == TRAINER_CLASS_MISTY    \
+                || trainerClass == TRAINER_CLASS_LTSURGE  \
+                || trainerClass == TRAINER_CLASS_ERIKA    \
+                || trainerClass == TRAINER_CLASS_KOGA     \
+                || trainerClass == TRAINER_CLASS_SABRINA  \
+                || trainerClass == TRAINER_CLASS_BLAINE   \
+                || trainerClass == TRAINER_CLASS_GIOVANNI )
                 {
                     LZDecompressVram(gBattleTerrainTilemap_Building, (void*)(BG_SCREEN_ADDR(26)));
                     break;
@@ -1365,7 +1397,15 @@ bool8 LoadChosenBattleElement(u8 caseId)
             if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
             {
                 u8 trainerClass = gTrainers[gTrainerBattleOpponent_A].trainerClass;
-                if (trainerClass == TRAINER_CLASS_LEADER)
+                if (trainerClass == TRAINER_CLASS_LEADER  \
+                || trainerClass == TRAINER_CLASS_BROCK    \
+                || trainerClass == TRAINER_CLASS_MISTY    \
+                || trainerClass == TRAINER_CLASS_LTSURGE  \
+                || trainerClass == TRAINER_CLASS_ERIKA    \
+                || trainerClass == TRAINER_CLASS_KOGA     \
+                || trainerClass == TRAINER_CLASS_SABRINA  \
+                || trainerClass == TRAINER_CLASS_BLAINE   \
+                || trainerClass == TRAINER_CLASS_GIOVANNI )
                 {
                     LoadCompressedPalette(gBattleTerrainPalette_BuildingLeader, 0x20, 0x60);
                     break;

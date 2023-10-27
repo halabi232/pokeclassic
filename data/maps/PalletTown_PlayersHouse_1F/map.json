@@ -83,7 +83,7 @@
       "x": 4,
       "y": 8,
       "elevation": 0,
-      "var": "VAR_SECRET_BATTLE_CLEAR",
+      "var": "VAR_IS_CHAMPION",
       "var_value": "2",
       "script": "NULL"
     },
@@ -92,7 +92,7 @@
       "x": 4,
       "y": 8,
       "elevation": 0,
-      "var": "VAR_SECRET_BATTLE_CLEAR",
+      "var": "VAR_IS_CHAMPION",
       "var_value": "2",
       "script": "PlayersHouse_1F_EventScript_DontLeaveYet"
     }

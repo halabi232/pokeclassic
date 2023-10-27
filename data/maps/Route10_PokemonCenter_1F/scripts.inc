@@ -45,13 +45,13 @@ Route10_PokemonCenter_1F_Text_HeardGhostsHauntLavender::
 Route10_PokemonCenter_1F_EventScript_Aide::
     lock
     faceplayer
-    goto_if_set FLAG_RECEIVED_AIDE_EVERSTONE, Route10_PokemonCenter_1F_EventScript_AlreadyGotReward
+    goto_if_set FLAG_RECEIVED_EXP_SHARE, Route10_PokemonCenter_1F_EventScript_AlreadyGotReward
     msgbox Route10_PokemonCenter_1F_Text_GiveReward, MSGBOX_DEFAULT
-    checkitemspace ITEM_EVERSTONE, 1
+    checkitemspace ITEM_EXP_SHARE, 1
     goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
-    giveitem ITEM_EVERSTONE, 1
+    giveitem ITEM_EXP_SHARE, 1
     waitmessage
-    setflag FLAG_RECEIVED_AIDE_EVERSTONE
+    setflag FLAG_RECEIVED_EXP_SHARE
     setflag FLAG_HIDE_AIDE_ROUTE10
     clearflag FLAG_AIDE_LOCATION_2
     clearflag FLAG_QUEUE_AIDE_CALL
@@ -62,16 +62,13 @@ Route10_PokemonCenter_1F_EventScript_Aide::
     end
 
 Route10_PokemonCenter_1F_Text_GiveReward::
-    .string "Oh… {PLAYER}!\n"
-    .string "I've been looking for you!\p"
-    .string "It's me, Cedar, the ever-present\n"
-    .string "aide to Prof. Oak.\p"
-    .string "How's your Pokédex coming along?\p"
-    .string "Give Prof. Oak a call sometime to\n"
-    .string "review your progress!\p"
-    .string "Anyway, he entrusted me with this\n"
-    .string "Everstone.\p"
-    .string "So, {PLAYER}, here you go!.$"
+    .string "{PLAYER}!\p"
+    .string "You're really on a roll.\p"
+    .string "As your journey continues, \n"
+    .string "raising Pokémon may get harder,\l"
+    .string "especially if your team changes!\p"
+    .string "So we came up with a device that\n"
+    .string "might make raising Pokémon easier.$"
 
 Route10_PokemonCenter_1F_EventScript_AlreadyGotReward::
     msgbox Route10_PokemonCenter_1F_Text_ExplainReward, MSGBOX_DEFAULT
@@ -79,14 +76,12 @@ Route10_PokemonCenter_1F_EventScript_AlreadyGotReward::
     end
 
 Route10_PokemonCenter_1F_Text_ExplainReward::
-    .string "Making Pokémon evolve certainly\n"
-    .string "can add to the Pokédex.\p"
-    .string "However, at times, you may not\n"
-    .string "want a certain Pokémon to evolve.\p"
-    .string "In that case, give the Everstone\n"
-    .string "to that Pokémon.\p"
-    .string "It will prevent evolution according\n"
-    .string "to the Professor.$"
+    .string "You can turn Exp. Share on in you\n"
+    .string "Key Items bag.\p"
+    .string "It spreads EXP. Points to Pokémon\n"
+    .string "in your party, even if they didn't\l"
+    .string "participate in the battle.\p"
+    .string "You can turn it off at any time, too!$"
 
 Route10_PokemonCenter_1F_EventScript_AideNextLocation::
     setflag FLAG_QUEUE_AIDE_CALL
